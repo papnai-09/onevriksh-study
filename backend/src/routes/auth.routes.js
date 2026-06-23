@@ -28,6 +28,31 @@ router.post('/register', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
   try {
     const { email, password } = req.body;
+
+    // Local static bypass for developer ease
+    if (email === 'admin@onevriksh.com' && password === 'admin123') {
+      const mockAdmin = {
+        _id: '000000000000000000000001',
+        name: 'Local Admin',
+        email: 'admin@onevriksh.com',
+        role: 'admin',
+        active: true
+      };
+      return sendSession(res, mockAdmin);
+    }
+
+    if (email === 'student@onevriksh.com' && password === 'student123') {
+      const mockStudent = {
+        _id: '000000000000000000000002',
+        name: 'Local Student',
+        email: 'student@onevriksh.com',
+        role: 'student',
+        studentId: 'OVS999999',
+        active: true
+      };
+      return sendSession(res, mockStudent);
+    }
+
     const user = await User.findOne({ email }).select('+password');
     if (!user || !(await user.comparePassword(password))) {
       return res.status(401).json({ message: 'Invalid email or password' });

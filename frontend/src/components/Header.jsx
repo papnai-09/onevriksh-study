@@ -49,6 +49,7 @@ export function Header() {
               </Link>
             ))}
             <Link href="/demo" className="nav-mobile-demo" onClick={() => setOpen(false)}>Free demo</Link>
+            <Link href="/login" className="nav-mobile-login" onClick={() => setOpen(false)}>Login</Link>
           </nav>
           <div className="nav-actions">
             <button className="icon-button" onClick={toggleTheme} aria-label="Toggle color theme" title="Toggle theme">

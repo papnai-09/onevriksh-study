@@ -858,3 +858,358 @@
   position: absolute !important;
 }
 
+/* ==========================================================================
+   ULTRA-LUXURY $50M EDTECH DESKTOP HEADER DESIGN SYSTEM
+   ========================================================================== */
+
+.sw-desktop-header-wrapper {
+  width: 100%;
+  padding: 24px;
+  background: #F8FAFC;
+  box-sizing: border-box;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.sw-lux-header {
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 74px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 20px;
+  position: relative;
+}
+
+/* LEFT: CURVED DARK NAVY BRAND LOGO BADGE */
+.sw-lux-brand-badge {
+  height: 100%;
+  background: #0F172A;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  border-top-right-radius: 28px;
+  border-bottom-right-radius: 28px;
+  padding: 0 28px 0 22px;
+  display: flex;
+  align-items: center;
+  box-shadow: 4px 0 16px rgba(15, 23, 42, 0.12);
+  flex-shrink: 0;
+}
+
+.sw-lux-brand-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.sw-lux-logo-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #14B8A6 0%, #0F766E 100%);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.sw-lux-book {
+  position: absolute;
+  left: 9px;
+  top: 10px;
+}
+
+.sw-lux-cap {
+  position: absolute;
+  right: 7px;
+  bottom: 7px;
+  color: #CCFBF1;
+}
+
+.sw-lux-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.sw-lux-brand-title {
+  font-size: 1.22rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+}
+
+.sw-lux-brand-tagline {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: #94A3B8;
+  letter-spacing: 0.02em;
+}
+
+/* CENTER NAVIGATION */
+.sw-lux-nav {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.sw-lux-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #1E293B;
+  text-decoration: none;
+  padding: 8px 4px;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.sw-lux-nav-icon {
+  color: #64748B;
+  transition: color 0.2s ease;
+}
+
+.sw-lux-underline {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  right: 50%;
+  height: 2px;
+  background: #14B8A6;
+  border-radius: 2px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+}
+
+.sw-lux-nav-item:hover {
+  color: #14B8A6;
+}
+
+.sw-lux-nav-item:hover .sw-lux-nav-icon {
+  color: #14B8A6;
+}
+
+.sw-lux-nav-item:hover .sw-lux-underline {
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+
+/* MIDDLE: LARGE ROUNDED SEARCH BAR */
+.sw-lux-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 320px;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sw-lux-search-box.focused {
+  width: 380px;
+}
+
+.sw-lux-search-input {
+  width: 100%;
+  height: 44px;
+  padding: 0 46px 0 20px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 9999px;
+  font-size: 0.84rem;
+  color: #1E293B;
+  outline: none;
+  box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.04);
+  transition: all 0.25s ease;
+}
+
+.sw-lux-search-input:focus {
+  background: #FFFFFF;
+  border-color: #14B8A6;
+  box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.12);
+}
+
+.sw-lux-search-icon-btn {
+  position: absolute;
+  right: 6px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+}
+
+.sw-lux-search-box.focused .sw-lux-search-icon-btn {
+  background: #14B8A6;
+  color: #FFFFFF;
+}
+
+/* RIGHT CONTROLS */
+.sw-lux-right-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sw-lux-dropdown-wrap {
+  position: relative;
+}
+
+.sw-lux-pill-btn, .sw-lux-account-btn {
+  height: 42px;
+  padding: 0 16px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1E293B;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sw-lux-pill-btn:hover, .sw-lux-account-btn:hover {
+  border-color: #14B8A6;
+  color: #14B8A6;
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.12);
+}
+
+/* PRIMARY GRADIENT CTA WITH WHITE ARROW INSIDE CIRCLE */
+.sw-lux-gradient-cta {
+  height: 44px;
+  padding: 0 8px 0 22px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #14B8A6 0%, #0F766E 100%);
+  color: #FFFFFF !important;
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 22px rgba(20, 184, 166, 0.3);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+}
+
+.sw-lux-gradient-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(20, 184, 166, 0.4);
+}
+
+.sw-lux-arrow-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  color: #0F766E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.sw-lux-gradient-cta:hover .sw-lux-arrow-circle {
+  transform: translateX(2px);
+}
+
+/* LUXURY DROPDOWN MENUS */
+.sw-lux-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  min-width: 200px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+  padding: 8px;
+  z-index: 100;
+}
+
+.sw-lux-dropdown-right {
+  left: auto;
+  right: 0;
+}
+
+.sw-lux-dropdown-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: none;
+  background: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #1E293B;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.sw-lux-dropdown-row:hover {
+  background: rgba(20, 184, 166, 0.08);
+  color: #14B8A6;
+}
+
+.sw-lux-dropdown-row.danger:hover {
+  background: rgba(239, 68, 68, 0.08);
+  color: #EF4444;
+}
+
+.sw-row-icon {
+  font-size: 1rem;
+  color: #14B8A6;
+  font-weight: 700;
+}
+
+.sw-lux-user-card {
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sw-lux-user-card strong {
+  font-size: 0.9rem;
+  color: #0F172A;
+}
+
+.sw-lux-user-card small {
+  font-size: 0.75rem;
+  color: #64748B;
+}
+
+.sw-lux-divider {
+  height: 1px;
+  background: #E2E8F0;
+  margin: 6px 0;
+}
+
+.sw-fade-in {
+  animation: swLuxFade 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes swLuxFade {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+

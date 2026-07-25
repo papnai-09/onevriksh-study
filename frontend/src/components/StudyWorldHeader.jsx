@@ -17,7 +17,8 @@ import {
   X,
   BookOpen,
   Sparkles,
-  ChevronRight
+  ChevronRight,
+  Menu
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from './Brand';
@@ -68,7 +69,8 @@ const countries = [
 ];
 
 /**
- * UpGrad-Style Fully Stretched Onevriksh Navigation Header
+ * Fully Responsive upGrad-Style Onevriksh Navigation Header
+ * Works seamlessly across Desktop, Laptop, Tablet, and Mobile
  */
 export function StudyWorldHeader() {
   const { user, login, register, logout } = useAuth();
@@ -78,7 +80,9 @@ export function StudyWorldHeader() {
   const [searchFocused, setSearchFocused] = useState(false);
   const [regionDropdownOpen, setRegionDropdownOpen] = useState(false);
   const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
-  
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+
   const [selectedLang, setSelectedLang] = useState(languages[0]);
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
 
@@ -97,21 +101,36 @@ export function StudyWorldHeader() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Prevent background scrolling when mobile drawer is open
+  useEffect(() => {
+    if (mobileDrawerOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileDrawerOpen]);
+
   const handleLoginClick = (e) => {
     if (e) e.preventDefault();
     setAccountDropdownOpen(false);
+    setMobileDrawerOpen(false);
     login();
   };
 
   const handleRegisterClick = (e) => {
     if (e) e.preventDefault();
     setAccountDropdownOpen(false);
+    setMobileDrawerOpen(false);
     register();
   };
 
   const handleLogoutClick = (e) => {
     if (e) e.preventDefault();
     setAccountDropdownOpen(false);
+    setMobileDrawerOpen(false);
     logout();
   };
 
@@ -123,8 +142,8 @@ export function StudyWorldHeader() {
           <Brand />
         </div>
 
-        {/* 2. ALL COURSES BUTTON WITH DROPDOWN (UPGRAD-STYLE) */}
-        <div className="up-dropdown-container">
+        {/* 2. ALL COURSES BUTTON WITH MEGA DROPDOWN */}
+        <div className="up-dropdown-container up-desktop-only">
           <button
             className={`up-courses-btn ${allCoursesOpen ? 'active' : ''}`}
             onClick={() => {
@@ -174,8 +193,8 @@ export function StudyWorldHeader() {
           )}
         </div>
 
-        {/* 3. LARGE WIDE SEARCH BAR */}
-        <div className={`up-search-box ${searchFocused ? 'focused' : ''}`}>
+        {/* 3. LARGE 520PX DESKTOP/TABLET SEARCH BAR */}
+        <div className={`up-search-box up-desktop-tablet-only ${searchFocused ? 'focused' : ''}`}>
           <input
             type="text"
             className="up-search-input"
@@ -196,8 +215,8 @@ export function StudyWorldHeader() {
           )}
         </div>
 
-        {/* 4. CENTER NAVIGATION LINKS */}
-        <nav className="up-nav-links" aria-label="Header Links">
+        {/* 4. CENTER NAVIGATION LINKS (DESKTOP) */}
+        <nav className="up-nav-links up-desktop-only" aria-label="Header Links">
           <Link href="/courses?type=certification" className="up-nav-item">
             <Award size={17} className="up-nav-icon" />
             <span className="up-nowrap">Certification</span>
@@ -212,9 +231,9 @@ export function StudyWorldHeader() {
           </Link>
         </nav>
 
-        {/* 5. RIGHT CONTROLS GROUP */}
-        <div className="up-right-actions">
-          {/* COMBINED REGION / LANGUAGE SELECTOR (SHORT & CLEAN: 🌐 EN | 🇮🇳 IN ▼) */}
+        {/* 5. RIGHT CONTROLS GROUP (DESKTOP / TABLET) */}
+        <div className="up-right-actions up-desktop-tablet-only">
+          {/* COMBINED REGION / LANGUAGE SELECTOR */}
           <div className="up-dropdown-container">
             <button
               className="up-region-btn"
@@ -266,13 +285,13 @@ export function StudyWorldHeader() {
             )}
           </div>
 
-          {/* 6. ENROLL NOW GRADIENT CTA (SINGLE LINE) */}
+          {/* ENROLL NOW CTA (SINGLE LINE) */}
           <Link href="/courses" className="up-enroll-cta">
             <span className="up-nowrap">Enroll Now</span>
             <ArrowRight size={15} />
           </Link>
 
-          {/* 7. ACCOUNT BUTTON WITH DROPDOWN */}
+          {/* ACCOUNT BUTTON WITH DROPDOWN */}
           <div className="up-dropdown-container">
             <button
               className="up-account-btn"
@@ -325,7 +344,150 @@ export function StudyWorldHeader() {
             )}
           </div>
         </div>
+
+        {/* 6. MOBILE CONTROLS & HAMBURGER (MOBILE ONLY) */}
+        <div className="up-mobile-controls">
+          <button
+            className="up-mobile-icon-btn"
+            onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
+            aria-label="Toggle Search"
+          >
+            <Search size={19} />
+          </button>
+          <button
+            className="up-mobile-icon-btn"
+            onClick={() => setMobileDrawerOpen(true)}
+            aria-label="Open Navigation Menu"
+          >
+            <Menu size={20} />
+          </button>
+        </div>
       </header>
+
+      {/* MOBILE SEARCH BAR OVERLAY */}
+      {mobileSearchOpen && (
+        <div className="up-mobile-search-bar up-fade-in">
+          <input
+            type="text"
+            placeholder="Search courses, skills, certifications..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            autoFocus
+          />
+          <button onClick={() => setMobileSearchOpen(false)}>
+            <X size={18} />
+          </button>
+        </div>
+      )}
+
+      {/* 7. SLIDE-IN MOBILE RIGHT DRAWER (320px) */}
+      <div className={`up-drawer-backdrop ${mobileDrawerOpen ? 'visible' : ''}`} onClick={() => setMobileDrawerOpen(false)} />
+      <aside className={`up-drawer ${mobileDrawerOpen ? 'open' : ''}`}>
+        <div className="up-drawer-header">
+          <Brand />
+          <button className="up-drawer-close" onClick={() => setMobileDrawerOpen(false)}>
+            <X size={18} />
+          </button>
+        </div>
+
+        <div className="up-drawer-body">
+          {/* SEARCH IN DRAWER */}
+          <div className="up-drawer-search">
+            <Search size={16} className="up-drawer-search-icon" />
+            <input
+              type="text"
+              placeholder="Search courses..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+
+          {/* EXPLORE COURSES SECTION */}
+          <div className="up-drawer-section">
+            <div className="up-drawer-section-title">Explore Courses</div>
+            {courseCategories.map((cat) => (
+              <Link
+                key={cat.title}
+                href={cat.href}
+                className="up-drawer-nav-row"
+                onClick={() => setMobileDrawerOpen(false)}
+              >
+                <span>{cat.title}</span>
+                {cat.tag && <span className="up-tag">{cat.tag}</span>}
+              </Link>
+            ))}
+          </div>
+
+          <div className="up-drawer-divider" />
+
+          {/* MAIN NAVIGATION LINKS */}
+          <div className="up-drawer-section">
+            <div className="up-drawer-section-title">Navigation</div>
+            <Link href="/courses?type=certification" className="up-drawer-nav-row" onClick={() => setMobileDrawerOpen(false)}>
+              <Award size={17} /> <span>Certification</span>
+            </Link>
+            <Link href="/demo" className="up-drawer-nav-row" onClick={() => setMobileDrawerOpen(false)}>
+              <Globe size={17} /> <span>Study Abroad</span>
+            </Link>
+            <Link href="/contact" className="up-drawer-nav-row" onClick={() => setMobileDrawerOpen(false)}>
+              <Building2 size={17} /> <span>Offline Centers</span>
+            </Link>
+          </div>
+
+          <div className="up-drawer-divider" />
+
+          {/* REGION SELECTION */}
+          <div className="up-drawer-section">
+            <div className="up-drawer-section-title">Region & Language</div>
+            <div className="up-drawer-select-row">
+              <label>Language:</label>
+              <select
+                value={selectedLang.code}
+                onChange={(e) => setSelectedLang(languages.find((l) => l.code === e.target.value))}
+              >
+                {languages.map((l) => (
+                  <option key={l.code} value={l.code}>{l.flag} {l.name}</option>
+                ))}
+              </select>
+            </div>
+            <div className="up-drawer-select-row">
+              <label>Country:</label>
+              <select
+                value={selectedCountry.code}
+                onChange={(e) => setSelectedCountry(countries.find((c) => c.code === e.target.value))}
+              >
+                {countries.map((c) => (
+                  <option key={c.code} value={c.code}>{c.flag} {c.name}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="up-drawer-divider" />
+
+          {/* ENROLL CTA */}
+          <Link href="/courses" className="up-drawer-primary-cta" onClick={() => setMobileDrawerOpen(false)}>
+            <span>Enroll Now</span>
+            <ArrowRight size={16} />
+          </Link>
+
+          {/* AUTHENTICATION */}
+          {user ? (
+            <button className="up-drawer-auth-btn logout" onClick={handleLogoutClick}>
+              Logout ({user.name.split(' ')[0]})
+            </button>
+          ) : (
+            <div className="up-drawer-auth-grid">
+              <button className="up-drawer-auth-btn login" onClick={handleLoginClick}>
+                <LogIn size={15} /> Login
+              </button>
+              <button className="up-drawer-auth-btn signup" onClick={handleRegisterClick}>
+                <UserPlus size={15} /> Sign Up
+              </button>
+            </div>
+          )}
+        </div>
+      </aside>
     </div>
   );
 }
@@ -333,20 +495,78 @@ export function StudyWorldHeader() {
 export const StudyWorldDesktopHeader = StudyWorldHeader;
 
 /**
- * UpGrad-Style Figma Presentation Component
+ * upGrad-Style Multi-Frame Responsive Showcase
+ * Displays Desktop (1440px), Laptop (1024px), Tablet (768px), Mobile (390px), and Mobile Drawer Open
  */
 export function StudyWorldHeaderShowcase() {
+  const [activeFrame, setActiveFrame] = useState('all');
+
   return (
     <div className="up-showcase-canvas">
       <div className="up-showcase-bar">
         <div className="up-showcase-title">
-          <div className="up-showcase-badge">upGrad.com Reference System</div>
-          <h2>Onevriksh STUDY Stretched Header Architecture</h2>
-          <p>Official Onevriksh Logo, All Courses Mega Dropdown, Large 520px Search Bar, 🌐 EN | 🇮🇳 IN Region Selector & Single Line CTAs</p>
+          <div className="up-showcase-badge">Fully Responsive upGrad Header System</div>
+          <h2>Onevriksh STUDY Cross-Device Responsive Artboards</h2>
+          <p>Test Desktop (1440px), Laptop (1024px), Tablet (834px), Mobile (390px), and Mobile Drawer Open states</p>
+        </div>
+
+        <div className="up-showcase-tabs">
+          <button className={`up-tab ${activeFrame === 'all' ? 'active' : ''}`} onClick={() => setActiveFrame('all')}>All Devices</button>
+          <button className={`up-tab ${activeFrame === 'desktop' ? 'active' : ''}`} onClick={() => setActiveFrame('desktop')}>Desktop (1440px)</button>
+          <button className={`up-tab ${activeFrame === 'laptop' ? 'active' : ''}`} onClick={() => setActiveFrame('laptop')}>Laptop (1024px)</button>
+          <button className={`up-tab ${activeFrame === 'tablet' ? 'active' : ''}`} onClick={() => setActiveFrame('tablet')}>Tablet (834px)</button>
+          <button className={`up-tab ${activeFrame === 'mobile' ? 'active' : ''}`} onClick={() => setActiveFrame('mobile')}>Mobile (390px)</button>
         </div>
       </div>
-      <div className="up-showcase-frame">
-        <StudyWorldHeader />
+
+      <div className="up-showcase-grid">
+        {(activeFrame === 'all' || activeFrame === 'desktop') && (
+          <div className="up-artboard">
+            <div className="up-artboard-header">
+              <span className="up-artboard-tag">🖥️ Desktop Frame (1440px)</span>
+              <span className="up-artboard-meta">Full 100% Stretched Navbar</span>
+            </div>
+            <div className="up-artboard-viewport up-desktop-frame">
+              <StudyWorldHeader />
+            </div>
+          </div>
+        )}
+
+        {(activeFrame === 'all' || activeFrame === 'laptop') && (
+          <div className="up-artboard">
+            <div className="up-artboard-header">
+              <span className="up-artboard-tag">💻 Laptop Frame (1024px)</span>
+              <span className="up-artboard-meta">Compact Search Bar & Single Line Actions</span>
+            </div>
+            <div className="up-artboard-viewport up-laptop-frame">
+              <StudyWorldHeader />
+            </div>
+          </div>
+        )}
+
+        {(activeFrame === 'all' || activeFrame === 'tablet') && (
+          <div className="up-artboard">
+            <div className="up-artboard-header">
+              <span className="up-artboard-tag">📱 Tablet Frame (834px)</span>
+              <span className="up-artboard-meta">Compact Region Selector & Responsive Actions</span>
+            </div>
+            <div className="up-artboard-viewport up-tablet-frame">
+              <StudyWorldHeader />
+            </div>
+          </div>
+        )}
+
+        {(activeFrame === 'all' || activeFrame === 'mobile') && (
+          <div className="up-artboard">
+            <div className="up-artboard-header">
+              <span className="up-artboard-tag">📱 Mobile Viewport (390px)</span>
+              <span className="up-artboard-meta">Single-row Header with Search Trigger & Hamburger</span>
+            </div>
+            <div className="up-artboard-viewport up-mobile-frame">
+              <StudyWorldHeader />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

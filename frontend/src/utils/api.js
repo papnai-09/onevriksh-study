@@ -2,6 +2,7 @@ import { adminStats, courses, notices, recentStudents, studentData } from '../da
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 const ACCOUNTS_URL = process.env.NEXT_PUBLIC_ACCOUNTS_URL || 'https://accounts.onevriksh.in';
+const CLIENT_ID = process.env.OAUTH_CLIENT_ID || 'client_study_123';
 
 async function request(path, options = {}) {
   try {
@@ -53,14 +54,16 @@ export const api = {
 
     // Direct IdP Auth URL fallback
     const redirectUri = typeof window !== 'undefined'
-      ? `${window.location.origin}/auth/callback`
-      : 'https://study.onevriksh.in/auth/callback';
+      ? `${window.location.origin}/api/auth/callback`
+      : 'http://localhost:3000/api/auth/callback';
 
     const fallbackUrl = new URL(`${ACCOUNTS_URL}/oauth/authorize`);
-    fallbackUrl.searchParams.append('response_type', 'code');
-    fallbackUrl.searchParams.append('client_id', 'study-onevriksh-app');
+    fallbackUrl.searchParams.append('client_id', CLIENT_ID);
     fallbackUrl.searchParams.append('redirect_uri', redirectUri);
-    fallbackUrl.searchParams.append('scope', 'openid profile email phone');
+    fallbackUrl.searchParams.append('response_type', 'code');
+    fallbackUrl.searchParams.append('scope', 'openid profile email offline_access');
+    fallbackUrl.searchParams.append('state', 'xyz123');
+    fallbackUrl.searchParams.append('code_challenge_method', 'S256');
     if (options.prompt) fallbackUrl.searchParams.append('prompt', options.prompt);
 
     return fallbackUrl.toString();
@@ -72,8 +75,8 @@ export const api = {
   async handleCallback(code, state) {
     try {
       const redirectUri = typeof window !== 'undefined'
-        ? `${window.location.origin}/auth/callback`
-        : 'https://study.onevriksh.in/auth/callback';
+        ? `${window.location.origin}/api/auth/callback`
+        : 'http://localhost:3000/api/auth/callback';
 
       return await request('/auth/callback', {
         method: 'POST',

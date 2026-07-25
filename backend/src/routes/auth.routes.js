@@ -1,7 +1,6 @@
 import express from 'express';
 import { handleCallback, getSession, handleLogout, initiateLogin, refreshToken } from '../controllers/auth.controller.js';
 import { protect } from '../middleware/auth.js';
-import { User } from '../models/index.js';
 
 const router = express.Router();
 
@@ -9,7 +8,8 @@ const router = express.Router();
 router.get('/login', initiateLogin);
 router.post('/login', initiateLogin);
 
-// OAuth 2.1 Code Exchange & User Synchronization Callback
+// OAuth 2.1 Code Exchange & User Synchronization Callback (GET & POST)
+router.get('/callback', handleCallback);
 router.post('/callback', handleCallback);
 
 // Session check endpoints

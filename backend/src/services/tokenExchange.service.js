@@ -3,9 +3,9 @@
  */
 
 const getIdpBaseUrl = () => process.env.ACCOUNTS_IDP_URL || 'https://accounts.onevriksh.in';
-const getClientId = () => process.env.OAUTH_CLIENT_ID || 'study-onevriksh-app';
+const getClientId = () => process.env.OAUTH_CLIENT_ID || 'client_study_123';
 const getClientSecret = () => process.env.OAUTH_CLIENT_SECRET || 'study-oauth-secret';
-const getRedirectUri = () => process.env.OAUTH_REDIRECT_URI || 'https://study.onevriksh.in/auth/callback';
+const getRedirectUri = () => process.env.OAUTH_REDIRECT_URI || 'http://localhost:3000/api/auth/callback';
 
 /**
  * Exchange Authorization Code for Access Token, ID Token & Refresh Token
@@ -18,34 +18,44 @@ const getRedirectUri = () => process.env.OAUTH_REDIRECT_URI || 'https://study.on
 export async function exchangeCodeForTokens({ code, codeVerifier, redirectUri }) {
   const idpUrl = getIdpBaseUrl();
   const targetRedirectUri = redirectUri || getRedirectUri();
+  const clientId = getClientId();
+  const clientSecret = getClientSecret();
   
-  // Try standard OIDC token endpoint first, then API fallback
   const tokenEndpoints = [
-    `${idpUrl}/oauth/token`,
     `${idpUrl}/api/oauth/token`,
-    `${idpUrl}/api/auth/token`
+    `${idpUrl}/oauth/token`
   ];
 
-  const payload = new URLSearchParams({
+  const jsonBody = JSON.stringify({
     grant_type: 'authorization_code',
-    client_id: getClientId(),
-    client_secret: getClientSecret(),
+    client_id: clientId,
+    client_secret: clientSecret,
     code,
     redirect_uri: targetRedirectUri,
-    code_verifier: codeVerifier,
+    code_verifier: codeVerifier
   });
+
+  const formBody = new URLSearchParams({
+    grant_type: 'authorization_code',
+    client_id: clientId,
+    client_secret: clientSecret,
+    code,
+    redirect_uri: targetRedirectUri,
+    code_verifier: codeVerifier
+  }).toString();
 
   let lastError = null;
 
   for (const endpoint of tokenEndpoints) {
+    // Attempt 1: Content-Type: application/json (as specified in accounts.onevriksh.in API contract)
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: payload.toString()
+        body: jsonBody
       });
 
       if (response.ok) {
@@ -57,6 +67,24 @@ export async function exchangeCodeForTokens({ code, codeVerifier, redirectUri })
       }
     } catch (err) {
       lastError = err;
+    }
+
+    // Attempt 2: Content-Type: application/x-www-form-urlencoded (standard OIDC fallback)
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        body: formBody
+      });
+
+      if (response.ok) {
+        return await response.json();
+      }
+    } catch (err) {
+      // Ignore fallback error
     }
   }
 
@@ -71,8 +99,8 @@ export async function exchangeCodeForTokens({ code, codeVerifier, redirectUri })
 export async function fetchUserInfo(accessToken) {
   const idpUrl = getIdpBaseUrl();
   const userInfoEndpoints = [
-    `${idpUrl}/oauth/userinfo`,
     `${idpUrl}/api/oauth/userinfo`,
+    `${idpUrl}/oauth/userinfo`,
     `${idpUrl}/api/auth/me`
   ];
 
@@ -90,7 +118,6 @@ export async function fetchUserInfo(accessToken) {
 
       if (response.ok) {
         const data = await response.json();
-        // Return unwrapped user object if inside envelope
         return data.user || data;
       } else {
         const errorText = await response.text();
@@ -111,35 +138,28 @@ export async function fetchUserInfo(accessToken) {
  */
 export async function refreshIdpToken(refreshToken) {
   const idpUrl = getIdpBaseUrl();
-  const tokenEndpoints = [
-    `${idpUrl}/oauth/token`,
-    `${idpUrl}/api/oauth/token`
-  ];
+  const endpoint = `${idpUrl}/api/oauth/token`;
 
-  const payload = new URLSearchParams({
-    grant_type: 'refresh_token',
-    client_id: getClientId(),
-    client_secret: getClientSecret(),
-    refresh_token: refreshToken
-  });
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        grant_type: 'refresh_token',
+        client_id: getClientId(),
+        client_secret: getClientSecret(),
+        refresh_token: refreshToken
+      })
+    });
 
-  for (const endpoint of tokenEndpoints) {
-    try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'application/json'
-        },
-        body: payload.toString()
-      });
-
-      if (response.ok) {
-        return await response.json();
-      }
-    } catch (err) {
-      console.warn(`Refresh token attempt failed at ${endpoint}:`, err.message);
+    if (response.ok) {
+      return await response.json();
     }
+  } catch (err) {
+    console.warn(`Refresh token attempt failed:`, err.message);
   }
 
   throw new Error('Failed to refresh tokens with accounts.onevriksh.in');
@@ -151,29 +171,18 @@ export async function refreshIdpToken(refreshToken) {
  */
 export async function revokeIdpToken(token) {
   const idpUrl = getIdpBaseUrl();
-  const revokeEndpoints = [
-    `${idpUrl}/oauth/revoke`,
-    `${idpUrl}/api/oauth/revoke`
-  ];
+  const endpoint = `${idpUrl}/api/oauth/revoke`;
 
-  const payload = new URLSearchParams({
-    client_id: getClientId(),
-    client_secret: getClientSecret(),
-    token
-  });
-
-  for (const endpoint of revokeEndpoints) {
-    try {
-      await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: payload.toString()
-      });
-    } catch (err) {
-      // Non-blocking log
-      console.warn('Revoke token request failed:', err.message);
-    }
+  try {
+    await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        client_id: getClientId(),
+        token
+      })
+    });
+  } catch (err) {
+    console.warn('Revoke token request failed:', err.message);
   }
 }

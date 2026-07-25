@@ -1,18 +1,18 @@
 import { User } from '../models/index.js';
-import { exchangeCodeForTokens, fetchUserInfo, revokeIdpToken } from '../services/tokenExchange.service.js';
+import { exchangeCodeForTokens, fetchUserInfo } from '../services/tokenExchange.service.js';
 import { generateCodeChallenge, generateCodeVerifier, generateNonce, generateState, parseIdToken } from '../utils/oauth.js';
-import { sendSession, signToken } from '../utils/token.js';
+import { sendSession } from '../utils/token.js';
 
 const getIdpBaseUrl = () => process.env.ACCOUNTS_IDP_URL || 'https://accounts.onevriksh.in';
-const getClientId = () => process.env.OAUTH_CLIENT_ID || 'study-onevriksh-app';
-const getRedirectUri = () => process.env.OAUTH_REDIRECT_URI || 'https://study.onevriksh.in/auth/callback';
-const getClientUrl = () => process.env.CLIENT_URL || 'https://study.onevriksh.in';
+const getClientId = () => process.env.OAUTH_CLIENT_ID || 'client_study_123';
+const getRedirectUri = () => process.env.OAUTH_REDIRECT_URI || 'http://localhost:3000/api/auth/callback';
+const getClientUrl = () => process.env.CLIENT_URL || 'http://localhost:3000';
 
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'lax',
-  maxAge: 15 * 60 * 1000 // 15 minutes for temporary OAuth handshake cookies
+  maxAge: 15 * 60 * 1000 // 15 minutes
 };
 
 /**
@@ -20,7 +20,7 @@ const cookieOptions = {
  */
 export async function initiateLogin(req, res, next) {
   try {
-    const state = generateState();
+    const state = req.query.state || generateState();
     const nonce = generateNonce();
     const codeVerifier = generateCodeVerifier();
     const codeChallenge = generateCodeChallenge(codeVerifier);
@@ -37,7 +37,7 @@ export async function initiateLogin(req, res, next) {
       response_type: 'code',
       client_id: getClientId(),
       redirect_uri: redirectUri,
-      scope: 'openid profile email phone',
+      scope: 'openid profile email offline_access',
       state,
       nonce,
       code_challenge: codeChallenge,
@@ -48,10 +48,14 @@ export async function initiateLogin(req, res, next) {
       authParams.set('prompt', req.query.prompt.toString());
     }
 
-    // Support both standard OAuth /oauth/authorize and accounts /login route formats
     const authUrl = `${idpUrl}/oauth/authorize?${authParams.toString()}`;
 
-    res.json({
+    // If request comes as direct GET from browser link, redirect immediately
+    if (req.accepts('html') && !req.xhr) {
+      return res.redirect(authUrl);
+    }
+
+    return res.json({
       authUrl,
       state,
       idpUrl
@@ -63,21 +67,21 @@ export async function initiateLogin(req, res, next) {
 
 /**
  * Handle OAuth 2.1 Callback, Token Exchange & User Sync
+ * Supports GET (direct browser redirect from accounts.onevriksh.in) and POST (API call)
  */
 export async function handleCallback(req, res, next) {
   try {
-    const { code, state, redirectUri } = req.body;
+    const code = req.query.code || req.body?.code;
+    const state = req.query.state || req.body?.state;
+    const redirectUri = req.query.redirect_uri || req.body?.redirectUri || getRedirectUri();
+
     const storedState = req.cookies?.oauth_state;
     const codeVerifier = req.cookies?.pkce_verifier;
-    const storedNonce = req.cookies?.oauth_nonce;
-
-    // Validate state parameter for CSRF mitigation
-    if (!state || (storedState && state !== storedState)) {
-      console.warn(`OAuth CSRF warning: state mismatch. Received: ${state}, Stored: ${storedState}`);
-      // Proceed gracefully in dev if cookie wasn't attached, but log error
-    }
 
     if (!code) {
+      if (req.method === 'GET') {
+        return res.redirect(`${getClientUrl()}/login?error=missing_code`);
+      }
       return res.status(400).json({ message: 'Authorization code is missing' });
     }
 
@@ -85,30 +89,32 @@ export async function handleCallback(req, res, next) {
     let userProfile = null;
 
     try {
-      // Exchange code for tokens at IdP
+      // Exchange code for tokens at accounts.onevriksh.in/api/oauth/token
       tokens = await exchangeCodeForTokens({
         code,
         codeVerifier: codeVerifier || '',
-        redirectUri: redirectUri || getRedirectUri()
+        redirectUri
       });
 
       if (tokens && tokens.access_token) {
         try {
           userProfile = await fetchUserInfo(tokens.access_token);
         } catch (uErr) {
-          console.warn('UserInfo endpoint fetch failed, attempting ID Token fallback:', uErr.message);
+          console.warn('UserInfo fetch failed, attempting ID Token fallback:', uErr.message);
           userProfile = parseIdToken(tokens.id_token);
         }
       }
     } catch (exchangeError) {
-      console.warn('IdP exchange failed or unreachable. Attempting fallback decoding:', exchangeError.message);
-      // Fallback: If code is a simulated token or contains user info during local testing
-      if (req.body.mockUser) {
+      console.warn('IdP token exchange warning:', exchangeError.message);
+      if (req.body?.mockUser) {
         userProfile = req.body.mockUser;
       }
     }
 
     if (!userProfile) {
+      if (req.method === 'GET') {
+        return res.redirect(`${getClientUrl()}/login?error=auth_failed`);
+      }
       return res.status(401).json({ message: 'Failed to retrieve authenticated user profile from accounts.onevriksh.in' });
     }
 
@@ -126,7 +132,6 @@ export async function handleCallback(req, res, next) {
       user = await User.findOne({ accountId });
       
       if (!user) {
-        // Check by email to link existing local records
         user = await User.findOne({ email });
         if (user) {
           user.accountId = accountId;
@@ -134,7 +139,6 @@ export async function handleCallback(req, res, next) {
       }
 
       if (!user) {
-        // Create new synchronized user
         user = new User({
           accountId,
           email,
@@ -146,7 +150,6 @@ export async function handleCallback(req, res, next) {
           active: true
         });
       } else {
-        // Update user fields
         user.name = name;
         user.email = email;
         if (phone) user.phone = phone;
@@ -157,7 +160,6 @@ export async function handleCallback(req, res, next) {
 
       await user.save();
     } else {
-      // In-memory user representation when DB is disconnected
       user = {
         _id: accountId,
         id: accountId,
@@ -176,7 +178,14 @@ export async function handleCallback(req, res, next) {
     res.clearCookie('oauth_nonce');
     res.clearCookie('pkce_verifier');
 
-    // Create secure HTTP-only local session token
+    // If request is GET (direct browser redirect from accounts.onevriksh.in)
+    if (req.method === 'GET') {
+      const jwtToken = sendSession(res, user, 200);
+      const destination = user.role === 'admin' ? '/admin' : '/student';
+      return res.redirect(`${getClientUrl()}${destination}`);
+    }
+
+    // For POST requests, return standard JSON
     return sendSession(res, user);
   } catch (error) {
     return next(error);
@@ -204,13 +213,11 @@ export async function handleLogout(req, res) {
     const idpUrl = getIdpBaseUrl();
     const clientUrl = getClientUrl();
 
-    // Clear local session cookie
     res.clearCookie('access_token');
     res.clearCookie('oauth_state');
     res.clearCookie('oauth_nonce');
     res.clearCookie('pkce_verifier');
 
-    // Construct IdP Logout URL to end session on accounts.onevriksh.in
     const idpLogoutUrl = `${idpUrl}/logout?post_logout_redirect_uri=${encodeURIComponent(clientUrl)}`;
 
     return res.json({

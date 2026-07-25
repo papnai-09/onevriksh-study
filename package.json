@@ -1,0 +1,26 @@
+{
+  "name": "onevriksh-study-platform",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently -n web,api -c blue,magenta \"npm run dev -w @onevriksh/web\" \"npm run dev -w @onevriksh/api\"",
+    "dev:web": "npm run dev -w @onevriksh/web",
+    "dev:api": "npm run dev -w @onevriksh/api",
+    "build": "npm run build -w @onevriksh/web",
+    "start": "concurrently -n web,api \"npm run start -w @onevriksh/web\" \"npm run start -w @onevriksh/api\"",
+    "seed": "npm run seed -w @onevriksh/api"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "overrides": {
+    "postcss": "^8.5.10"
+  },
+  "dependencies": {
+    "compression": "^1.8.1"
+  }
+}

@@ -897,11 +897,11 @@
   flex-shrink: 0;
 }
 
-/* LEFT NAV GROUP (LOGO, ALL COURSES, NAV LINKS WITH EQUAL 20PX GAP) */
+/* LEFT NAV GROUP (LOGO, ALL COURSES, NAV LINKS WITH EQUAL 35PX GAP) */
 .up-left-nav-group {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 35px;
   flex-shrink: 0;
 }
 
@@ -1115,11 +1115,11 @@
   font-size: 0.75rem;
 }
 
-/* NAVIGATION LINKS WITH EQUAL 20PX GAP */
+/* NAVIGATION LINKS WITH EQUAL 35PX GAP */
 .up-nav-links {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 35px;
   flex-shrink: 0;
 }
 
@@ -1131,7 +1131,7 @@
   font-weight: 600;
   color: #334155;
   text-decoration: none;
-  padding: 6px 8px;
+  padding: 6px 4px;
   border-radius: 6px;
   transition: all 0.18s ease;
 }
@@ -1141,11 +1141,11 @@
   background: transparent;
 }
 
-/* RIGHT ACTIONS GROUP */
+/* RIGHT ACTIONS GROUP WITH 24PX GAP */
 .up-right-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   flex-shrink: 0;
 }
 

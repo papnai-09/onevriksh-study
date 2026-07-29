@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Search, ChevronDown, User, LogOut } from 'lucide-react';
+import { Search, ChevronDown, Check } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from './Brand';
 
@@ -48,7 +48,7 @@ const countries = [
 ];
 
 /**
- * Clean Header Component with Left-Shifted Nav Links, Search After Links & Borderless All Courses
+ * Clean Header Component with ChevronDown Dropdown Icon and Text-Only Hover Accent
  */
 export function StudyWorldHeader() {
   const { user, login, register, logout } = useAuth();
@@ -115,12 +115,12 @@ export function StudyWorldHeader() {
   return (
     <div className="up-header-wrapper" ref={navRef}>
       <header className="up-header">
-        {/* BRAND LOGO (Black_Transparent.png) */}
+        {/* BRAND LOGO (Black_Transparent.png + Study Text) */}
         <div className="up-brand-wrap">
           <Brand />
         </div>
 
-        {/* 1. ALL COURSES BUTTON (BORDERLESS WITH MEGA DROPDOWN) */}
+        {/* 1. ALL COURSES BUTTON (BORDERLESS WITH CHEVRON DOWN) */}
         <div className="up-dropdown-container up-desktop-only">
           <button
             className={`up-courses-btn ${allCoursesOpen ? 'active' : ''}`}
@@ -131,7 +131,7 @@ export function StudyWorldHeader() {
             }}
           >
             <span className="up-nowrap">All Courses</span>
-            <span className={`up-text-arrow ${allCoursesOpen ? 'open' : ''}`}>▼</span>
+            <ChevronDown size={13} className={`up-chevron ${allCoursesOpen ? 'open' : ''}`} />
           </button>
 
           {allCoursesOpen && (
@@ -164,7 +164,7 @@ export function StudyWorldHeader() {
           )}
         </div>
 
-        {/* 2. NAVIGATION LINKS SHIFTED TO THE LEFT (AFTER ALL COURSES) */}
+        {/* 2. NAVIGATION LINKS SHIFTED TO THE LEFT */}
         <nav className="up-nav-links up-desktop-only" aria-label="Header Links">
           <Link href="/courses?type=certification" className="up-nav-item">
             <span className="up-nowrap">Certification</span>
@@ -177,7 +177,7 @@ export function StudyWorldHeader() {
           </Link>
         </nav>
 
-        {/* 3. SEARCH BAR PLACED AFTER THE THREE NAV LINKS */}
+        {/* 3. SEARCH BAR PLACED AFTER NAV LINKS WITH SMALL SEARCH ICON */}
         <div className={`up-search-box up-desktop-tablet-only ${searchFocused ? 'focused' : ''}`}>
           <input
             type="text"
@@ -215,7 +215,7 @@ export function StudyWorldHeader() {
               <span>{selectedLang.code}</span>
               <span className="up-divider-pipe">|</span>
               <span>{selectedCountry.code}</span>
-              <span className={`up-text-arrow ${regionDropdownOpen ? 'open' : ''}`}>▼</span>
+              <ChevronDown size={12} className={`up-chevron ${regionDropdownOpen ? 'open' : ''}`} />
             </button>
 
             {regionDropdownOpen && (
@@ -229,7 +229,7 @@ export function StudyWorldHeader() {
                       onClick={() => setSelectedLang(l)}
                     >
                       <span>{l.name} ({l.code})</span>
-                      {selectedLang.code === l.code && <span>✓</span>}
+                      {selectedLang.code === l.code && <Check size={13} />}
                     </button>
                   ))}
                 </div>
@@ -245,7 +245,7 @@ export function StudyWorldHeader() {
                       onClick={() => setSelectedCountry(c)}
                     >
                       <span>{c.name} ({c.code})</span>
-                      {selectedCountry.code === c.code && <span>✓</span>}
+                      {selectedCountry.code === c.code && <Check size={13} />}
                     </button>
                   ))}
                 </div>
@@ -261,7 +261,7 @@ export function StudyWorldHeader() {
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
               >
                 <span className="up-nowrap">{user.name.split(' ')[0]}</span>
-                <span className={`up-text-arrow ${userDropdownOpen ? 'open' : ''}`}>▼</span>
+                <ChevronDown size={12} className={`up-chevron ${userDropdownOpen ? 'open' : ''}`} />
               </button>
 
               {userDropdownOpen && (
@@ -435,8 +435,8 @@ export function StudyWorldHeaderShowcase() {
       <div className="up-showcase-bar">
         <div className="up-showcase-title">
           <div className="up-showcase-badge">Clean Design System</div>
-          <h2>Onevriksh STUDY Minimal Header (Nav Links Left, Search After Links & Borderless All Courses)</h2>
-          <p>Black_Transparent.png Logo, borderless All Courses dropdown, Certification/Study Abroad/Offline Centers nav links, 420px search bar, EN | IN region selector, and Sign In button</p>
+          <h2>Onevriksh STUDY Minimal Header (Chevron Dropdowns, Text-Only Hover Accent & Bold Study Text)</h2>
+          <p>Black_Transparent.png Logo + Bold Light Black Study Text, ChevronDown icons, Text color hover only (no background change), EN | IN region selector, and Sign In button</p>
         </div>
 
         <div className="up-showcase-tabs">
@@ -453,7 +453,7 @@ export function StudyWorldHeaderShowcase() {
           <div className="up-artboard">
             <div className="up-artboard-header">
               <span className="up-artboard-tag">🖥️ Desktop Frame (1440px)</span>
-              <span className="up-artboard-meta">Clean Header with Left Nav Links & Search After Links</span>
+              <span className="up-artboard-meta">Text Color Hover Only & Bold Study Text Logo</span>
             </div>
             <div className="up-artboard-viewport up-desktop-frame">
               <StudyWorldHeader />

@@ -244,11 +244,6 @@ export function StudyWorldHeader() {
             )}
           </div>
 
-          {/* ENROLL NOW CTA (NO ARROW ICON) */}
-          <Link href="/courses" className="up-enroll-cta">
-            <span className="up-nowrap">Enroll Now</span>
-          </Link>
-
           {/* ACCOUNT BUTTON WITH DROPDOWN (NO USER ICON) */}
           <div className="up-dropdown-container">
             <button
@@ -411,13 +406,6 @@ export function StudyWorldHeader() {
               </select>
             </div>
           </div>
-
-          <div className="up-drawer-divider" />
-
-          {/* ENROLL CTA */}
-          <Link href="/courses" className="up-drawer-primary-cta" onClick={() => setMobileDrawerOpen(false)}>
-            <span>Enroll Now</span>
-          </Link>
 
           {/* AUTHENTICATION */}
           {user ? (

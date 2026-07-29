@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { Search, ChevronDown, User, LogOut } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from './Brand';
 
@@ -47,7 +48,7 @@ const countries = [
 ];
 
 /**
- * Clean Header Component with Black_Transparent.png Logo
+ * Clean Header Component with Very Small Search Icon and Sign In Button
  */
 export function StudyWorldHeader() {
   const { user, login, register, logout } = useAuth();
@@ -56,7 +57,7 @@ export function StudyWorldHeader() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
   const [regionDropdownOpen, setRegionDropdownOpen] = useState(false);
-  const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
@@ -71,7 +72,7 @@ export function StudyWorldHeader() {
       if (navRef.current && !navRef.current.contains(event.target)) {
         setAllCoursesOpen(false);
         setRegionDropdownOpen(false);
-        setAccountDropdownOpen(false);
+        setUserDropdownOpen(false);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
@@ -92,21 +93,21 @@ export function StudyWorldHeader() {
 
   const handleLoginClick = (e) => {
     if (e) e.preventDefault();
-    setAccountDropdownOpen(false);
+    setUserDropdownOpen(false);
     setMobileDrawerOpen(false);
     login();
   };
 
   const handleRegisterClick = (e) => {
     if (e) e.preventDefault();
-    setAccountDropdownOpen(false);
+    setUserDropdownOpen(false);
     setMobileDrawerOpen(false);
     register();
   };
 
   const handleLogoutClick = (e) => {
     if (e) e.preventDefault();
-    setAccountDropdownOpen(false);
+    setUserDropdownOpen(false);
     setMobileDrawerOpen(false);
     logout();
   };
@@ -119,14 +120,14 @@ export function StudyWorldHeader() {
           <Brand />
         </div>
 
-        {/* 1. ALL COURSES BUTTON WITH MEGA DROPDOWN (NO ICON) */}
+        {/* 1. ALL COURSES BUTTON WITH MEGA DROPDOWN */}
         <div className="up-dropdown-container up-desktop-only">
           <button
             className={`up-courses-btn ${allCoursesOpen ? 'active' : ''}`}
             onClick={() => {
               setAllCoursesOpen(!allCoursesOpen);
               setRegionDropdownOpen(false);
-              setAccountDropdownOpen(false);
+              setUserDropdownOpen(false);
             }}
           >
             <span className="up-nowrap">All Courses</span>
@@ -163,7 +164,7 @@ export function StudyWorldHeader() {
           )}
         </div>
 
-        {/* 2. LARGE 520PX DESKTOP/TABLET SEARCH BAR (NO SEARCH ICON) */}
+        {/* 2. COMPACT SEARCH BAR WITH VERY SMALL SEARCH ICON */}
         <div className={`up-search-box up-desktop-tablet-only ${searchFocused ? 'focused' : ''}`}>
           <input
             type="text"
@@ -174,14 +175,18 @@ export function StudyWorldHeader() {
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setSearchFocused(false)}
           />
-          {searchQuery && (
+          {searchQuery ? (
             <button className="up-search-clear" onClick={() => setSearchQuery('')}>
               ✕
             </button>
+          ) : (
+            <div className="up-search-icon-btn-sm" title="Search">
+              <Search size={14} />
+            </div>
           )}
         </div>
 
-        {/* 3. CENTER NAVIGATION LINKS (NO ICONS) */}
+        {/* 3. CENTER NAVIGATION LINKS */}
         <nav className="up-nav-links up-desktop-only" aria-label="Header Links">
           <Link href="/courses?type=certification" className="up-nav-item">
             <span className="up-nowrap">Certification</span>
@@ -194,16 +199,16 @@ export function StudyWorldHeader() {
           </Link>
         </nav>
 
-        {/* 4. RIGHT CONTROLS GROUP (NO ICONS) */}
+        {/* 4. RIGHT CONTROLS GROUP */}
         <div className="up-right-actions up-desktop-tablet-only">
-          {/* COMBINED REGION / LANGUAGE SELECTOR (TEXT ONLY: EN | IN ▼) */}
+          {/* COMBINED REGION / LANGUAGE SELECTOR */}
           <div className="up-dropdown-container">
             <button
               className="up-region-btn"
               onClick={() => {
                 setRegionDropdownOpen(!regionDropdownOpen);
                 setAllCoursesOpen(false);
-                setAccountDropdownOpen(false);
+                setUserDropdownOpen(false);
               }}
               title="Select Language & Country"
             >
@@ -248,64 +253,52 @@ export function StudyWorldHeader() {
             )}
           </div>
 
-          {/* ACCOUNT BUTTON WITH DROPDOWN (NO USER ICON) */}
-          <div className="up-dropdown-container">
-            <button
-              className="up-account-btn"
-              onClick={() => {
-                setAccountDropdownOpen(!accountDropdownOpen);
-                setAllCoursesOpen(false);
-                setRegionDropdownOpen(false);
-              }}
-            >
-              <span className="up-nowrap">{user ? user.name.split(' ')[0] : 'Account'}</span>
-              <span className={`up-text-arrow ${accountDropdownOpen ? 'open' : ''}`}>▼</span>
-            </button>
+          {/* SIGN IN BUTTON (REPLACED ACCOUNT BUTTON) */}
+          {user ? (
+            <div className="up-dropdown-container">
+              <button
+                className="up-signin-btn"
+                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+              >
+                <span className="up-nowrap">{user.name.split(' ')[0]}</span>
+                <span className={`up-text-arrow ${userDropdownOpen ? 'open' : ''}`}>▼</span>
+              </button>
 
-            {accountDropdownOpen && (
-              <div className="up-dropdown-menu up-dropdown-right up-fade-in">
-                {user ? (
-                  <>
-                    <div className="up-user-info">
-                      <strong>{user.name}</strong>
-                      <small>{user.email}</small>
-                    </div>
-                    <div className="up-menu-divider" />
-                    <Link
-                      href={user.role === 'admin' ? '/admin' : '/student'}
-                      className="up-menu-row"
-                      onClick={() => setAccountDropdownOpen(false)}
-                    >
-                      <span>Student Dashboard</span>
-                    </Link>
-                    <button className="up-menu-row danger" onClick={handleLogoutClick}>
-                      <span>Log out</span>
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <div className="up-menu-title">Central IdP SSO</div>
-                    <button className="up-menu-row" onClick={handleLoginClick}>
-                      <span>Login</span>
-                    </button>
-                    <button className="up-menu-row" onClick={handleRegisterClick}>
-                      <span>Sign Up</span>
-                    </button>
-                  </>
-                )}
-              </div>
-            )}
-          </div>
+              {userDropdownOpen && (
+                <div className="up-dropdown-menu up-dropdown-right up-fade-in">
+                  <div className="up-user-info">
+                    <strong>{user.name}</strong>
+                    <small>{user.email}</small>
+                  </div>
+                  <div className="up-menu-divider" />
+                  <Link
+                    href={user.role === 'admin' ? '/admin' : '/student'}
+                    className="up-menu-row"
+                    onClick={() => setUserDropdownOpen(false)}
+                  >
+                    <span>Student Dashboard</span>
+                  </Link>
+                  <button className="up-menu-row danger" onClick={handleLogoutClick}>
+                    <span>Log out</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button className="up-signin-btn" onClick={handleLoginClick}>
+              <span className="up-nowrap">Sign In</span>
+            </button>
+          )}
         </div>
 
-        {/* 5. MOBILE CONTROLS (TEXT BASED) */}
+        {/* 5. MOBILE CONTROLS */}
         <div className="up-mobile-controls">
           <button
             className="up-mobile-text-btn"
             onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
             aria-label="Toggle Search"
           >
-            Search
+            <Search size={14} />
           </button>
           <button
             className="up-mobile-text-btn"
@@ -411,20 +404,17 @@ export function StudyWorldHeader() {
             </div>
           </div>
 
-          {/* AUTHENTICATION */}
+          <div className="up-drawer-divider" />
+
+          {/* AUTHENTICATION / SIGN IN */}
           {user ? (
             <button className="up-drawer-auth-btn logout" onClick={handleLogoutClick}>
               Logout ({user.name.split(' ')[0]})
             </button>
           ) : (
-            <div className="up-drawer-auth-grid">
-              <button className="up-drawer-auth-btn login" onClick={handleLoginClick}>
-                Login
-              </button>
-              <button className="up-drawer-auth-btn signup" onClick={handleRegisterClick}>
-                Sign Up
-              </button>
-            </div>
+            <button className="up-drawer-auth-btn login" onClick={handleLoginClick}>
+              Sign In
+            </button>
           )}
         </div>
       </aside>
@@ -445,8 +435,8 @@ export function StudyWorldHeaderShowcase() {
       <div className="up-showcase-bar">
         <div className="up-showcase-title">
           <div className="up-showcase-badge">Clean Design System</div>
-          <h2>Onevriksh STUDY Minimal Header (Icons & Logo Removed)</h2>
-          <p>Clean typography, All Courses dropdown, 520px search bar, EN | IN region selector, and single line CTAs</p>
+          <h2>Onevriksh STUDY Minimal Header (Very Small Search Icon & Sign In Button)</h2>
+          <p>Black_Transparent.png Logo, All Courses dropdown, 480px search bar with small search icon, EN | IN region selector, and Sign In button</p>
         </div>
 
         <div className="up-showcase-tabs">
@@ -463,7 +453,7 @@ export function StudyWorldHeaderShowcase() {
           <div className="up-artboard">
             <div className="up-artboard-header">
               <span className="up-artboard-tag">🖥️ Desktop Frame (1440px)</span>
-              <span className="up-artboard-meta">Clean Header without Icons & Logo</span>
+              <span className="up-artboard-meta">Clean Header with Small Search Icon & Sign In Button</span>
             </div>
             <div className="up-artboard-viewport up-desktop-frame">
               <StudyWorldHeader />
@@ -475,7 +465,7 @@ export function StudyWorldHeaderShowcase() {
           <div className="up-artboard">
             <div className="up-artboard-header">
               <span className="up-artboard-tag">💻 Laptop Frame (1024px)</span>
-              <span className="up-artboard-meta">Compact Search Bar & Single Line Actions</span>
+              <span className="up-artboard-meta">Compact Search Bar & Sign In Button</span>
             </div>
             <div className="up-artboard-viewport up-laptop-frame">
               <StudyWorldHeader />
@@ -487,7 +477,7 @@ export function StudyWorldHeaderShowcase() {
           <div className="up-artboard">
             <div className="up-artboard-header">
               <span className="up-artboard-tag">📱 Tablet Frame (834px)</span>
-              <span className="up-artboard-meta">Clean Region Selector & Responsive Actions</span>
+              <span className="up-artboard-meta">Clean Region Selector & Sign In Button</span>
             </div>
             <div className="up-artboard-viewport up-tablet-frame">
               <StudyWorldHeader />

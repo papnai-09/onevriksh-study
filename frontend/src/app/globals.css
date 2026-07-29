@@ -1160,28 +1160,39 @@
   font-weight: 400;
 }
 
-/* ACCOUNT BUTTON */
-.up-account-btn {
-  height: 34px;
-  padding: 0 14px;
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 9999px;
+/* ACCOUNT & SIGN IN BUTTONS */
+.up-search-icon-btn-sm {
+  position: absolute;
+  right: 12px;
+  color: #94A3B8;
+  pointer-events: none;
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: #0F172A;
+  justify-content: center;
+}
+
+/* SIGN IN BUTTON */
+.up-signin-btn {
+  height: 32px;
+  padding: 0 16px;
+  background: #0F172A;
+  color: #FFFFFF;
+  border-radius: 9999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  border: 1px solid #0F172A;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
   white-space: nowrap;
   transition: all 0.2s ease;
 }
 
-.up-account-btn:hover {
-  border-color: #14B8A6;
-  color: #14B8A6;
-  box-shadow: 0 4px 10px rgba(20, 184, 166, 0.1);
+.up-signin-btn:hover {
+  background: #1E293B;
+  border-color: #1E293B;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);
 }
 
 /* DROPDOWN MENUS */

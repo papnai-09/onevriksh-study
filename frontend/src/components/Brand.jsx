@@ -11,17 +11,18 @@ export function Brand({ compact = false }) {
         display: 'inline-flex',
         alignItems: 'flex-end',
         gap: '6px',
-        textDecoration: 'none'
+        textDecoration: 'none',
+        lineHeight: 1
       }}
     >
-      <span className="brand-mark-wrap" style={{ display: 'inline-flex', alignItems: 'flex-end' }}>
+      <span className="brand-mark-wrap" style={{ display: 'inline-flex', alignItems: 'flex-end', lineHeight: 1 }}>
         <Image
           src="/Black_Transparent.png"
           alt="Onevriksh Logo"
           width={compact ? 80 : 100}
           height={compact ? 16 : 20}
           priority
-          style={{ objectFit: 'contain', width: 'auto', height: compact ? '16px' : '20px', display: 'block' }}
+          style={{ objectFit: 'contain', width: 'auto', height: compact ? '16px' : '20px', display: 'block', verticalAlign: 'bottom' }}
         />
       </span>
       <span
@@ -36,8 +37,7 @@ export function Brand({ compact = false }) {
           letterSpacing: '0.01em',
           margin: 0,
           padding: 0,
-          alignSelf: 'flex-end',
-          marginBottom: '1px'
+          transform: 'translateY(2px)'
         }}
       >
         Study

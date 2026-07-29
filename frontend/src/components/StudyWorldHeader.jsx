@@ -6,31 +6,43 @@ import { Search, ChevronDown, Check } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from './Brand';
 
-// Course Categories for All Courses Dropdown
+// All 6 Available Courses for All Courses Dropdown
 const courseCategories = [
   {
-    title: 'Digital Marketing Mastery',
-    desc: 'SEO, Ads, Analytics & Content Funnels',
-    href: '/courses/digital-marketing-mastery',
+    title: 'Advanced Digital Marketing',
+    desc: 'SEO, Ads, Analytics & Performance Campaigns',
+    href: '/courses/digital-marketing',
     tag: 'Popular'
   },
   {
-    title: 'Graphic Design Professional',
-    desc: 'Photoshop, Illustrator & Visual Branding',
-    href: '/courses/graphic-design-professional',
+    title: 'Graphic Design Mastery',
+    desc: 'Adobe Photoshop, Illustrator & Visual Branding',
+    href: '/courses/graphic-design',
     tag: 'Top Rated'
   },
   {
-    title: 'French Language Certification',
-    desc: 'A1 to B1 Conversational & Exam Prep',
-    href: '/courses/french-language-certification',
+    title: 'French Language Program',
+    desc: 'Conversational French & DELF Exam Prep',
+    href: '/courses/french-language',
     tag: 'Trending'
   },
   {
-    title: 'Full Stack Web Development',
-    desc: 'React, Node.js, Express & MongoDB',
-    href: '/courses',
+    title: 'German Language Program',
+    desc: 'Goethe Exam Prep & Speaking Practice',
+    href: '/courses/german-language',
+    tag: 'Goethe'
+  },
+  {
+    title: 'Spanish Language Program',
+    desc: 'Lively Conversation & Cultural Immersion',
+    href: '/courses/spanish-language',
     tag: 'New'
+  },
+  {
+    title: 'English Speaking & Personality',
+    desc: 'Fluency, Public Speaking & Interview Prep',
+    href: '/courses/english-speaking',
+    tag: 'High Demand'
   }
 ];
 
@@ -48,7 +60,7 @@ const countries = [
 ];
 
 /**
- * Clean Header Component with Left-Grouped Nav Items, Right-Shifted Search Bar, and Equal Spacing
+ * Clean Header Component with All 6 Courses Loaded in Mega Dropdown
  */
 export function StudyWorldHeader() {
   const { user, login, register, logout } = useAuth();
@@ -139,9 +151,9 @@ export function StudyWorldHeader() {
             {allCoursesOpen && (
               <div className="up-mega-dropdown up-fade-in">
                 <div className="up-mega-header">
-                  <span>Explore Top Programs</span>
+                  <span>Explore All Programs ({courseCategories.length})</span>
                   <Link href="/courses" onClick={() => setAllCoursesOpen(false)}>
-                    View All ({courseCategories.length}+) →
+                    View All Catalog →
                   </Link>
                 </div>
                 <div className="up-mega-grid">
@@ -348,7 +360,7 @@ export function StudyWorldHeader() {
 
           {/* EXPLORE COURSES SECTION */}
           <div className="up-drawer-section">
-            <div className="up-drawer-section-title">Explore Courses</div>
+            <div className="up-drawer-section-title">Explore All Programs</div>
             {courseCategories.map((cat) => (
               <Link
                 key={cat.title}
@@ -438,8 +450,8 @@ export function StudyWorldHeaderShowcase() {
       <div className="up-showcase-bar">
         <div className="up-showcase-title">
           <div className="up-showcase-badge">Clean Design System</div>
-          <h2>Onevriksh STUDY Header (Left Grouped Items, Right Shifted Search Bar & Un-bolded Study Text)</h2>
-          <p>Black_Transparent.png Logo + Normal Weight Study Text, Left-grouped nav items with equal 20px gap, Right-shifted compact search bar, EN | IN region selector, and Sign In button</p>
+          <h2>Onevriksh STUDY Header (All 6 Courses in Mega Dropdown, 2-Column Grid)</h2>
+          <p>Black_Transparent.png Logo, borderless All Courses dropdown featuring all 6 career programs, EN | IN region selector, and Sign In button</p>
         </div>
 
         <div className="up-showcase-tabs">
@@ -456,7 +468,7 @@ export function StudyWorldHeaderShowcase() {
           <div className="up-artboard">
             <div className="up-artboard-header">
               <span className="up-artboard-tag">🖥️ Desktop Frame (1440px)</span>
-              <span className="up-artboard-meta">Left Grouped Nav Items & Right Shifted Search Bar</span>
+              <span className="up-artboard-meta">All 6 Programs Loaded in Mega Dropdown</span>
             </div>
             <div className="up-artboard-viewport up-desktop-frame">
               <StudyWorldHeader />

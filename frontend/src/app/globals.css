@@ -982,17 +982,17 @@
   transform: rotate(180deg);
 }
 
-/* MEGA DROPDOWN (UPGRAD STYLE) */
+/* MEGA DROPDOWN (UPGRAD STYLE - 2 COLUMN GRID FOR 6 COURSES) */
 .up-mega-dropdown {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
-  width: 440px;
+  width: 560px;
   background: #FFFFFF;
   border: 1px solid #E2E8F0;
   border-radius: 14px;
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
-  padding: 14px;
+  padding: 16px;
   z-index: 200;
 }
 
@@ -1000,7 +1000,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   font-size: 0.72rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -1022,9 +1022,9 @@
 }
 
 .up-mega-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
 }
 
 .up-mega-card {

@@ -6,50 +6,15 @@ import { Search, ChevronDown, Check } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from './Brand';
 
-// All 7 Available Courses for All Courses Dropdown
+// Clean standard list of 7 courses
 const courseCategories = [
-  {
-    title: 'Digital Marketing',
-    desc: 'SEO, Ads, Analytics & Performance Campaigns',
-    href: '/courses/digital-marketing',
-    tag: 'Popular'
-  },
-  {
-    title: 'Graphic Design',
-    desc: 'Adobe Photoshop, Illustrator & Visual Branding',
-    href: '/courses/graphic-design',
-    tag: 'Top Rated'
-  },
-  {
-    title: 'French Language',
-    desc: 'Conversational French & DELF Exam Prep',
-    href: '/courses/french-language',
-    tag: 'Trending'
-  },
-  {
-    title: 'German Language',
-    desc: 'Goethe Exam Prep & Speaking Practice',
-    href: '/courses/german-language',
-    tag: 'Goethe'
-  },
-  {
-    title: 'Spanish Language',
-    desc: 'Lively Conversation & Cultural Immersion',
-    href: '/courses/spanish-language',
-    tag: 'New'
-  },
-  {
-    title: 'English Speaking',
-    desc: 'Fluency, Public Speaking & Interview Prep',
-    href: '/courses/english-speaking',
-    tag: 'High Demand'
-  },
-  {
-    title: 'Italian Language',
-    desc: 'Conversational Italian & CILS Exam Prep',
-    href: '/courses/italian-language',
-    tag: 'New'
-  }
+  { title: 'Digital Marketing', href: '/courses/digital-marketing' },
+  { title: 'Graphic Design', href: '/courses/graphic-design' },
+  { title: 'French Language', href: '/courses/french-language' },
+  { title: 'German Language', href: '/courses/german-language' },
+  { title: 'Spanish Language', href: '/courses/spanish-language' },
+  { title: 'English Speaking', href: '/courses/english-speaking' },
+  { title: 'Italian Language', href: '/courses/italian-language' }
 ];
 
 const languages = [
@@ -66,7 +31,7 @@ const countries = [
 ];
 
 /**
- * Clean Header Component with All 6 Courses Loaded in Mega Dropdown
+ * Clean Header Component with Simple Clean All Courses Dropdown
  */
 export function StudyWorldHeader() {
   const { user, login, register, logout } = useAuth();
@@ -116,13 +81,6 @@ export function StudyWorldHeader() {
     login();
   };
 
-  const handleRegisterClick = (e) => {
-    if (e) e.preventDefault();
-    setUserDropdownOpen(false);
-    setMobileDrawerOpen(false);
-    register();
-  };
-
   const handleLogoutClick = (e) => {
     if (e) e.preventDefault();
     setUserDropdownOpen(false);
@@ -140,7 +98,7 @@ export function StudyWorldHeader() {
             <Brand />
           </div>
 
-          {/* ALL COURSES BUTTON (BORDERLESS) */}
+          {/* ALL COURSES BUTTON (BORDERLESS, CLEAN DROPDOWN) */}
           <div className="up-dropdown-container up-desktop-only">
             <button
               className={`up-courses-btn ${allCoursesOpen ? 'active' : ''}`}
@@ -155,36 +113,22 @@ export function StudyWorldHeader() {
             </button>
 
             {allCoursesOpen && (
-              <div className="up-mega-dropdown up-fade-in">
-                <div className="up-mega-header">
-                  <span>Explore All Programs ({courseCategories.length})</span>
-                  <Link href="/courses" onClick={() => setAllCoursesOpen(false)}>
-                    View All Catalog →
+              <div className="up-simple-dropdown up-fade-in">
+                {courseCategories.map((cat) => (
+                  <Link
+                    key={cat.title}
+                    href={cat.href}
+                    className="up-dropdown-item"
+                    onClick={() => setAllCoursesOpen(false)}
+                  >
+                    {cat.title}
                   </Link>
-                </div>
-                <div className="up-mega-grid">
-                  {courseCategories.map((cat) => (
-                    <Link
-                      key={cat.title}
-                      href={cat.href}
-                      className="up-mega-card"
-                      onClick={() => setAllCoursesOpen(false)}
-                    >
-                      <div className="up-mega-info">
-                        <div className="up-mega-title-row">
-                          <strong>{cat.title}</strong>
-                          {cat.tag && <span className="up-tag">{cat.tag}</span>}
-                        </div>
-                        <p>{cat.desc}</p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+                ))}
               </div>
             )}
           </div>
 
-          {/* LEFT NAVIGATION LINKS (CERTIFICATION, STUDY ABROAD, OFFLINE CENTERS) */}
+          {/* LEFT NAVIGATION LINKS */}
           <nav className="up-nav-links up-desktop-only" aria-label="Header Links">
             <Link href="/courses?type=certification" className="up-nav-item">
               <span className="up-nowrap">Certification</span>
@@ -200,7 +144,7 @@ export function StudyWorldHeader() {
 
         {/* RIGHT CONTROLS GROUP: SEARCH BAR, REGION SELECTOR, SIGN IN BUTTON */}
         <div className="up-right-actions up-desktop-tablet-only">
-          {/* COMPACT SEARCH BAR MOVED TO RIGHT SIDE */}
+          {/* COMPACT SEARCH BAR */}
           <div className={`up-search-box ${searchFocused ? 'focused' : ''}`}>
             <input
               type="text"
@@ -336,7 +280,7 @@ export function StudyWorldHeader() {
         <div className="up-mobile-search-bar up-fade-in">
           <input
             type="text"
-            placeholder="Search courses, skills, certifications..."
+            placeholder="Search courses..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             autoFocus
@@ -364,9 +308,9 @@ export function StudyWorldHeader() {
             />
           </div>
 
-          {/* EXPLORE COURSES SECTION */}
+          {/* ALL COURSES SECTION IN DRAWER */}
           <div className="up-drawer-section">
-            <div className="up-drawer-section-title">Explore All Programs</div>
+            <div className="up-drawer-section-title">All Courses</div>
             {courseCategories.map((cat) => (
               <Link
                 key={cat.title}
@@ -375,7 +319,6 @@ export function StudyWorldHeader() {
                 onClick={() => setMobileDrawerOpen(false)}
               >
                 <span>{cat.title}</span>
-                {cat.tag && <span className="up-tag">{cat.tag}</span>}
               </Link>
             ))}
           </div>
@@ -456,8 +399,8 @@ export function StudyWorldHeaderShowcase() {
       <div className="up-showcase-bar">
         <div className="up-showcase-title">
           <div className="up-showcase-badge">Clean Design System</div>
-          <h2>Onevriksh STUDY Header (All 6 Courses in Mega Dropdown, 2-Column Grid)</h2>
-          <p>Black_Transparent.png Logo, borderless All Courses dropdown featuring all 6 career programs, EN | IN region selector, and Sign In button</p>
+          <h2>Onevriksh STUDY Header (Simple Clean Dropdown)</h2>
+          <p>Black_Transparent.png Logo, borderless All Courses simple dropdown, EN | IN region selector, and Sign In button</p>
         </div>
 
         <div className="up-showcase-tabs">
@@ -474,7 +417,7 @@ export function StudyWorldHeaderShowcase() {
           <div className="up-artboard">
             <div className="up-artboard-header">
               <span className="up-artboard-tag">🖥️ Desktop Frame (1440px)</span>
-              <span className="up-artboard-meta">All 6 Programs Loaded in Mega Dropdown</span>
+              <span className="up-artboard-meta">Clean Simple Dropdown</span>
             </div>
             <div className="up-artboard-viewport up-desktop-frame">
               <StudyWorldHeader />

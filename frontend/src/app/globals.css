@@ -982,18 +982,34 @@
   transform: rotate(180deg);
 }
 
-/* MEGA DROPDOWN (UPGRAD STYLE - 2 COLUMN GRID FOR 6 COURSES) */
-.up-mega-dropdown {
+/* SIMPLE CLEAN DROPDOWN FOR ALL COURSES */
+.up-simple-dropdown {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
-  width: 560px;
+  min-width: 210px;
   background: #FFFFFF;
   border: 1px solid #E2E8F0;
-  border-radius: 14px;
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
-  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+  padding: 6px 0;
   z-index: 200;
+}
+
+.up-dropdown-item {
+  display: block;
+  padding: 9px 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #334155;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.up-dropdown-item:hover {
+  background: #F8FAFC;
+  color: #14B8A6;
 }
 
 .up-mega-header {

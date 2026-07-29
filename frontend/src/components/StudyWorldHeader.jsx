@@ -48,7 +48,7 @@ const countries = [
 ];
 
 /**
- * Clean Header Component with Very Small Search Icon and Sign In Button
+ * Clean Header Component with Left-Shifted Nav Links, Search After Links & Borderless All Courses
  */
 export function StudyWorldHeader() {
   const { user, login, register, logout } = useAuth();
@@ -120,7 +120,7 @@ export function StudyWorldHeader() {
           <Brand />
         </div>
 
-        {/* 1. ALL COURSES BUTTON WITH MEGA DROPDOWN */}
+        {/* 1. ALL COURSES BUTTON (BORDERLESS WITH MEGA DROPDOWN) */}
         <div className="up-dropdown-container up-desktop-only">
           <button
             className={`up-courses-btn ${allCoursesOpen ? 'active' : ''}`}
@@ -164,7 +164,20 @@ export function StudyWorldHeader() {
           )}
         </div>
 
-        {/* 2. COMPACT SEARCH BAR WITH VERY SMALL SEARCH ICON */}
+        {/* 2. NAVIGATION LINKS SHIFTED TO THE LEFT (AFTER ALL COURSES) */}
+        <nav className="up-nav-links up-desktop-only" aria-label="Header Links">
+          <Link href="/courses?type=certification" className="up-nav-item">
+            <span className="up-nowrap">Certification</span>
+          </Link>
+          <Link href="/demo" className="up-nav-item">
+            <span className="up-nowrap">Study Abroad</span>
+          </Link>
+          <Link href="/contact" className="up-nav-item">
+            <span className="up-nowrap">Offline Centers</span>
+          </Link>
+        </nav>
+
+        {/* 3. SEARCH BAR PLACED AFTER THE THREE NAV LINKS */}
         <div className={`up-search-box up-desktop-tablet-only ${searchFocused ? 'focused' : ''}`}>
           <input
             type="text"
@@ -185,19 +198,6 @@ export function StudyWorldHeader() {
             </div>
           )}
         </div>
-
-        {/* 3. CENTER NAVIGATION LINKS */}
-        <nav className="up-nav-links up-desktop-only" aria-label="Header Links">
-          <Link href="/courses?type=certification" className="up-nav-item">
-            <span className="up-nowrap">Certification</span>
-          </Link>
-          <Link href="/demo" className="up-nav-item">
-            <span className="up-nowrap">Study Abroad</span>
-          </Link>
-          <Link href="/contact" className="up-nav-item">
-            <span className="up-nowrap">Offline Centers</span>
-          </Link>
-        </nav>
 
         {/* 4. RIGHT CONTROLS GROUP */}
         <div className="up-right-actions up-desktop-tablet-only">
@@ -253,7 +253,7 @@ export function StudyWorldHeader() {
             )}
           </div>
 
-          {/* SIGN IN BUTTON (REPLACED ACCOUNT BUTTON) */}
+          {/* SIGN IN BUTTON */}
           {user ? (
             <div className="up-dropdown-container">
               <button
@@ -435,8 +435,8 @@ export function StudyWorldHeaderShowcase() {
       <div className="up-showcase-bar">
         <div className="up-showcase-title">
           <div className="up-showcase-badge">Clean Design System</div>
-          <h2>Onevriksh STUDY Minimal Header (Very Small Search Icon & Sign In Button)</h2>
-          <p>Black_Transparent.png Logo, All Courses dropdown, 480px search bar with small search icon, EN | IN region selector, and Sign In button</p>
+          <h2>Onevriksh STUDY Minimal Header (Nav Links Left, Search After Links & Borderless All Courses)</h2>
+          <p>Black_Transparent.png Logo, borderless All Courses dropdown, Certification/Study Abroad/Offline Centers nav links, 420px search bar, EN | IN region selector, and Sign In button</p>
         </div>
 
         <div className="up-showcase-tabs">
@@ -453,7 +453,7 @@ export function StudyWorldHeaderShowcase() {
           <div className="up-artboard">
             <div className="up-artboard-header">
               <span className="up-artboard-tag">🖥️ Desktop Frame (1440px)</span>
-              <span className="up-artboard-meta">Clean Header with Small Search Icon & Sign In Button</span>
+              <span className="up-artboard-meta">Clean Header with Left Nav Links & Search After Links</span>
             </div>
             <div className="up-artboard-viewport up-desktop-frame">
               <StudyWorldHeader />

@@ -926,12 +926,12 @@
   cursor: pointer;
 }
 
-/* ALL COURSES BUTTON & MEGA DROPDOWN */
+/* ALL COURSES BUTTON & MEGA DROPDOWN (BORDERLESS) */
 .up-courses-btn {
   height: 34px;
-  padding: 0 14px;
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
+  padding: 0 10px;
+  background: transparent;
+  border: none;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -944,10 +944,10 @@
 }
 
 .up-courses-btn:hover, .up-courses-btn.active {
-  background: #FFFFFF;
-  border-color: #14B8A6;
+  background: rgba(20, 184, 166, 0.06);
   color: #14B8A6;
-  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.1);
+  border: none;
+  box-shadow: none;
 }
 
 .up-grid-icon {

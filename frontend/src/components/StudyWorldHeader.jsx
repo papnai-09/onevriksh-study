@@ -2,75 +2,51 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import {
-  LayoutGrid,
-  Award,
-  Globe,
-  Building2,
-  Search,
-  ChevronDown,
-  User,
-  LogIn,
-  UserPlus,
-  ArrowRight,
-  Check,
-  X,
-  BookOpen,
-  Sparkles,
-  ChevronRight,
-  Menu
-} from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { Brand } from './Brand';
 
-// Course Categories for All Courses Dropdown (upGrad-style)
+// Course Categories for All Courses Dropdown
 const courseCategories = [
   {
     title: 'Digital Marketing Mastery',
     desc: 'SEO, Ads, Analytics & Content Funnels',
     href: '/courses/digital-marketing-mastery',
-    icon: Sparkles,
     tag: 'Popular'
   },
   {
     title: 'Graphic Design Professional',
     desc: 'Photoshop, Illustrator & Visual Branding',
     href: '/courses/graphic-design-professional',
-    icon: Award,
     tag: 'Top Rated'
   },
   {
     title: 'French Language Certification',
     desc: 'A1 to B1 Conversational & Exam Prep',
     href: '/courses/french-language-certification',
-    icon: Globe,
     tag: 'Trending'
   },
   {
     title: 'Full Stack Web Development',
     desc: 'React, Node.js, Express & MongoDB',
     href: '/courses',
-    icon: BookOpen,
     tag: 'New'
   }
 ];
 
 const languages = [
-  { code: 'EN', name: 'English', flag: '🌐' },
-  { code: 'HI', name: 'हिंदी (Hindi)', flag: '🇮🇳' },
-  { code: 'ES', name: 'Español', flag: '🇪🇸' },
+  { code: 'EN', name: 'English' },
+  { code: 'HI', name: 'Hindi' },
+  { code: 'ES', name: 'Spanish' },
 ];
 
 const countries = [
-  { code: 'IN', name: 'India', flag: '🇮🇳' },
-  { code: 'US', name: 'USA', flag: '🇺🇸' },
-  { code: 'UK', name: 'UK', flag: '🇬🇧' },
-  { code: 'AE', name: 'UAE', flag: '🇦🇪' },
+  { code: 'IN', name: 'India' },
+  { code: 'US', name: 'USA' },
+  { code: 'UK', name: 'UK' },
+  { code: 'AE', name: 'UAE' },
 ];
 
 /**
- * Fully Responsive upGrad-Style Onevriksh Navigation Header
- * Works seamlessly across Desktop, Laptop, Tablet, and Mobile
+ * Clean Header Component with All Icons and Logo Removed
  */
 export function StudyWorldHeader() {
   const { user, login, register, logout } = useAuth();
@@ -137,12 +113,9 @@ export function StudyWorldHeader() {
   return (
     <div className="up-header-wrapper" ref={navRef}>
       <header className="up-header">
-        {/* 1. ONEVRIKSH LOGO */}
-        <div className="up-brand-wrap">
-          <Brand />
-        </div>
+        {/* LOGO REMOVED */}
 
-        {/* 2. ALL COURSES BUTTON WITH MEGA DROPDOWN */}
+        {/* 1. ALL COURSES BUTTON WITH MEGA DROPDOWN (NO ICON) */}
         <div className="up-dropdown-container up-desktop-only">
           <button
             className={`up-courses-btn ${allCoursesOpen ? 'active' : ''}`}
@@ -152,9 +125,8 @@ export function StudyWorldHeader() {
               setAccountDropdownOpen(false);
             }}
           >
-            <LayoutGrid size={18} className="up-grid-icon" />
             <span className="up-nowrap">All Courses</span>
-            <ChevronDown size={15} className={`up-arrow ${allCoursesOpen ? 'open' : ''}`} />
+            <span className={`up-text-arrow ${allCoursesOpen ? 'open' : ''}`}>▼</span>
           </button>
 
           {allCoursesOpen && (
@@ -162,38 +134,32 @@ export function StudyWorldHeader() {
               <div className="up-mega-header">
                 <span>Explore Top Programs</span>
                 <Link href="/courses" onClick={() => setAllCoursesOpen(false)}>
-                  View All ({courseCategories.length}+) <ChevronRight size={14} />
+                  View All ({courseCategories.length}+) →
                 </Link>
               </div>
               <div className="up-mega-grid">
-                {courseCategories.map((cat) => {
-                  const IconComp = cat.icon;
-                  return (
-                    <Link
-                      key={cat.title}
-                      href={cat.href}
-                      className="up-mega-card"
-                      onClick={() => setAllCoursesOpen(false)}
-                    >
-                      <div className="up-mega-icon">
-                        <IconComp size={18} />
+                {courseCategories.map((cat) => (
+                  <Link
+                    key={cat.title}
+                    href={cat.href}
+                    className="up-mega-card"
+                    onClick={() => setAllCoursesOpen(false)}
+                  >
+                    <div className="up-mega-info">
+                      <div className="up-mega-title-row">
+                        <strong>{cat.title}</strong>
+                        {cat.tag && <span className="up-tag">{cat.tag}</span>}
                       </div>
-                      <div className="up-mega-info">
-                        <div className="up-mega-title-row">
-                          <strong>{cat.title}</strong>
-                          {cat.tag && <span className="up-tag">{cat.tag}</span>}
-                        </div>
-                        <p>{cat.desc}</p>
-                      </div>
-                    </Link>
-                  );
-                })}
+                      <p>{cat.desc}</p>
+                    </div>
+                  </Link>
+                ))}
               </div>
             </div>
           )}
         </div>
 
-        {/* 3. LARGE 520PX DESKTOP/TABLET SEARCH BAR */}
+        {/* 2. LARGE 520PX DESKTOP/TABLET SEARCH BAR (NO SEARCH ICON) */}
         <div className={`up-search-box up-desktop-tablet-only ${searchFocused ? 'focused' : ''}`}>
           <input
             type="text"
@@ -204,36 +170,29 @@ export function StudyWorldHeader() {
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setSearchFocused(false)}
           />
-          {searchQuery ? (
+          {searchQuery && (
             <button className="up-search-clear" onClick={() => setSearchQuery('')}>
-              <X size={15} />
+              ✕
             </button>
-          ) : (
-            <div className="up-search-btn">
-              <Search size={17} />
-            </div>
           )}
         </div>
 
-        {/* 4. CENTER NAVIGATION LINKS (DESKTOP) */}
+        {/* 3. CENTER NAVIGATION LINKS (NO ICONS) */}
         <nav className="up-nav-links up-desktop-only" aria-label="Header Links">
           <Link href="/courses?type=certification" className="up-nav-item">
-            <Award size={17} className="up-nav-icon" />
             <span className="up-nowrap">Certification</span>
           </Link>
           <Link href="/demo" className="up-nav-item">
-            <Globe size={17} className="up-nav-icon" />
             <span className="up-nowrap">Study Abroad</span>
           </Link>
           <Link href="/contact" className="up-nav-item">
-            <Building2 size={17} className="up-nav-icon" />
             <span className="up-nowrap">Offline Centers</span>
           </Link>
         </nav>
 
-        {/* 5. RIGHT CONTROLS GROUP (DESKTOP / TABLET) */}
+        {/* 4. RIGHT CONTROLS GROUP (NO ICONS) */}
         <div className="up-right-actions up-desktop-tablet-only">
-          {/* COMBINED REGION / LANGUAGE SELECTOR */}
+          {/* COMBINED REGION / LANGUAGE SELECTOR (TEXT ONLY: EN | IN ▼) */}
           <div className="up-dropdown-container">
             <button
               className="up-region-btn"
@@ -244,10 +203,10 @@ export function StudyWorldHeader() {
               }}
               title="Select Language & Country"
             >
-              <span>🌐 {selectedLang.code}</span>
+              <span>{selectedLang.code}</span>
               <span className="up-divider-pipe">|</span>
-              <span>{selectedCountry.flag} {selectedCountry.code}</span>
-              <ChevronDown size={14} className={`up-arrow ${regionDropdownOpen ? 'open' : ''}`} />
+              <span>{selectedCountry.code}</span>
+              <span className={`up-text-arrow ${regionDropdownOpen ? 'open' : ''}`}>▼</span>
             </button>
 
             {regionDropdownOpen && (
@@ -260,8 +219,8 @@ export function StudyWorldHeader() {
                       className={`up-menu-row ${selectedLang.code === l.code ? 'active' : ''}`}
                       onClick={() => setSelectedLang(l)}
                     >
-                      <span>{l.flag} {l.name}</span>
-                      {selectedLang.code === l.code && <Check size={14} />}
+                      <span>{l.name} ({l.code})</span>
+                      {selectedLang.code === l.code && <span>✓</span>}
                     </button>
                   ))}
                 </div>
@@ -276,8 +235,8 @@ export function StudyWorldHeader() {
                       className={`up-menu-row ${selectedCountry.code === c.code ? 'active' : ''}`}
                       onClick={() => setSelectedCountry(c)}
                     >
-                      <span>{c.flag} {c.name}</span>
-                      {selectedCountry.code === c.code && <Check size={14} />}
+                      <span>{c.name} ({c.code})</span>
+                      {selectedCountry.code === c.code && <span>✓</span>}
                     </button>
                   ))}
                 </div>
@@ -285,13 +244,12 @@ export function StudyWorldHeader() {
             )}
           </div>
 
-          {/* ENROLL NOW CTA (SINGLE LINE) */}
+          {/* ENROLL NOW CTA (NO ARROW ICON) */}
           <Link href="/courses" className="up-enroll-cta">
             <span className="up-nowrap">Enroll Now</span>
-            <ArrowRight size={15} />
           </Link>
 
-          {/* ACCOUNT BUTTON WITH DROPDOWN */}
+          {/* ACCOUNT BUTTON WITH DROPDOWN (NO USER ICON) */}
           <div className="up-dropdown-container">
             <button
               className="up-account-btn"
@@ -301,9 +259,8 @@ export function StudyWorldHeader() {
                 setRegionDropdownOpen(false);
               }}
             >
-              <User size={16} />
               <span className="up-nowrap">{user ? user.name.split(' ')[0] : 'Account'}</span>
-              <ChevronDown size={14} className={`up-arrow ${accountDropdownOpen ? 'open' : ''}`} />
+              <span className={`up-text-arrow ${accountDropdownOpen ? 'open' : ''}`}>▼</span>
             </button>
 
             {accountDropdownOpen && (
@@ -320,7 +277,6 @@ export function StudyWorldHeader() {
                       className="up-menu-row"
                       onClick={() => setAccountDropdownOpen(false)}
                     >
-                      <User size={15} />
                       <span>Student Dashboard</span>
                     </Link>
                     <button className="up-menu-row danger" onClick={handleLogoutClick}>
@@ -331,11 +287,9 @@ export function StudyWorldHeader() {
                   <>
                     <div className="up-menu-title">Central IdP SSO</div>
                     <button className="up-menu-row" onClick={handleLoginClick}>
-                      <LogIn size={15} />
                       <span>Login</span>
                     </button>
                     <button className="up-menu-row" onClick={handleRegisterClick}>
-                      <UserPlus size={15} />
                       <span>Sign Up</span>
                     </button>
                   </>
@@ -345,21 +299,21 @@ export function StudyWorldHeader() {
           </div>
         </div>
 
-        {/* 6. MOBILE CONTROLS & HAMBURGER (MOBILE ONLY) */}
+        {/* 5. MOBILE CONTROLS (TEXT BASED) */}
         <div className="up-mobile-controls">
           <button
-            className="up-mobile-icon-btn"
+            className="up-mobile-text-btn"
             onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
             aria-label="Toggle Search"
           >
-            <Search size={19} />
+            Search
           </button>
           <button
-            className="up-mobile-icon-btn"
+            className="up-mobile-text-btn"
             onClick={() => setMobileDrawerOpen(true)}
             aria-label="Open Navigation Menu"
           >
-            <Menu size={20} />
+            Menu
           </button>
         </div>
       </header>
@@ -374,26 +328,21 @@ export function StudyWorldHeader() {
             onChange={(e) => setSearchQuery(e.target.value)}
             autoFocus
           />
-          <button onClick={() => setMobileSearchOpen(false)}>
-            <X size={18} />
-          </button>
+          <button onClick={() => setMobileSearchOpen(false)}>✕</button>
         </div>
       )}
 
-      {/* 7. SLIDE-IN MOBILE RIGHT DRAWER (320px) */}
+      {/* 6. SLIDE-IN MOBILE RIGHT DRAWER */}
       <div className={`up-drawer-backdrop ${mobileDrawerOpen ? 'visible' : ''}`} onClick={() => setMobileDrawerOpen(false)} />
       <aside className={`up-drawer ${mobileDrawerOpen ? 'open' : ''}`}>
         <div className="up-drawer-header">
-          <Brand />
-          <button className="up-drawer-close" onClick={() => setMobileDrawerOpen(false)}>
-            <X size={18} />
-          </button>
+          <span className="up-drawer-title">Navigation</span>
+          <button className="up-drawer-close" onClick={() => setMobileDrawerOpen(false)}>✕</button>
         </div>
 
         <div className="up-drawer-body">
           {/* SEARCH IN DRAWER */}
           <div className="up-drawer-search">
-            <Search size={16} className="up-drawer-search-icon" />
             <input
               type="text"
               placeholder="Search courses..."
@@ -424,13 +373,13 @@ export function StudyWorldHeader() {
           <div className="up-drawer-section">
             <div className="up-drawer-section-title">Navigation</div>
             <Link href="/courses?type=certification" className="up-drawer-nav-row" onClick={() => setMobileDrawerOpen(false)}>
-              <Award size={17} /> <span>Certification</span>
+              <span>Certification</span>
             </Link>
             <Link href="/demo" className="up-drawer-nav-row" onClick={() => setMobileDrawerOpen(false)}>
-              <Globe size={17} /> <span>Study Abroad</span>
+              <span>Study Abroad</span>
             </Link>
             <Link href="/contact" className="up-drawer-nav-row" onClick={() => setMobileDrawerOpen(false)}>
-              <Building2 size={17} /> <span>Offline Centers</span>
+              <span>Offline Centers</span>
             </Link>
           </div>
 
@@ -446,7 +395,7 @@ export function StudyWorldHeader() {
                 onChange={(e) => setSelectedLang(languages.find((l) => l.code === e.target.value))}
               >
                 {languages.map((l) => (
-                  <option key={l.code} value={l.code}>{l.flag} {l.name}</option>
+                  <option key={l.code} value={l.code}>{l.name} ({l.code})</option>
                 ))}
               </select>
             </div>
@@ -457,7 +406,7 @@ export function StudyWorldHeader() {
                 onChange={(e) => setSelectedCountry(countries.find((c) => c.code === e.target.value))}
               >
                 {countries.map((c) => (
-                  <option key={c.code} value={c.code}>{c.flag} {c.name}</option>
+                  <option key={c.code} value={c.code}>{c.name} ({c.code})</option>
                 ))}
               </select>
             </div>
@@ -468,7 +417,6 @@ export function StudyWorldHeader() {
           {/* ENROLL CTA */}
           <Link href="/courses" className="up-drawer-primary-cta" onClick={() => setMobileDrawerOpen(false)}>
             <span>Enroll Now</span>
-            <ArrowRight size={16} />
           </Link>
 
           {/* AUTHENTICATION */}
@@ -479,10 +427,10 @@ export function StudyWorldHeader() {
           ) : (
             <div className="up-drawer-auth-grid">
               <button className="up-drawer-auth-btn login" onClick={handleLoginClick}>
-                <LogIn size={15} /> Login
+                Login
               </button>
               <button className="up-drawer-auth-btn signup" onClick={handleRegisterClick}>
-                <UserPlus size={15} /> Sign Up
+                Sign Up
               </button>
             </div>
           )}
@@ -495,8 +443,7 @@ export function StudyWorldHeader() {
 export const StudyWorldDesktopHeader = StudyWorldHeader;
 
 /**
- * upGrad-Style Multi-Frame Responsive Showcase
- * Displays Desktop (1440px), Laptop (1024px), Tablet (768px), Mobile (390px), and Mobile Drawer Open
+ * Clean Multi-Frame Showcase Presentation
  */
 export function StudyWorldHeaderShowcase() {
   const [activeFrame, setActiveFrame] = useState('all');
@@ -505,9 +452,9 @@ export function StudyWorldHeaderShowcase() {
     <div className="up-showcase-canvas">
       <div className="up-showcase-bar">
         <div className="up-showcase-title">
-          <div className="up-showcase-badge">Fully Responsive upGrad Header System</div>
-          <h2>Onevriksh STUDY Cross-Device Responsive Artboards</h2>
-          <p>Test Desktop (1440px), Laptop (1024px), Tablet (834px), Mobile (390px), and Mobile Drawer Open states</p>
+          <div className="up-showcase-badge">Clean Design System</div>
+          <h2>Onevriksh STUDY Minimal Header (Icons & Logo Removed)</h2>
+          <p>Clean typography, All Courses dropdown, 520px search bar, EN | IN region selector, and single line CTAs</p>
         </div>
 
         <div className="up-showcase-tabs">
@@ -524,7 +471,7 @@ export function StudyWorldHeaderShowcase() {
           <div className="up-artboard">
             <div className="up-artboard-header">
               <span className="up-artboard-tag">🖥️ Desktop Frame (1440px)</span>
-              <span className="up-artboard-meta">Full 100% Stretched Navbar</span>
+              <span className="up-artboard-meta">Clean Header without Icons & Logo</span>
             </div>
             <div className="up-artboard-viewport up-desktop-frame">
               <StudyWorldHeader />
@@ -548,7 +495,7 @@ export function StudyWorldHeaderShowcase() {
           <div className="up-artboard">
             <div className="up-artboard-header">
               <span className="up-artboard-tag">📱 Tablet Frame (834px)</span>
-              <span className="up-artboard-meta">Compact Region Selector & Responsive Actions</span>
+              <span className="up-artboard-meta">Clean Region Selector & Responsive Actions</span>
             </div>
             <div className="up-artboard-viewport up-tablet-frame">
               <StudyWorldHeader />
@@ -560,7 +507,7 @@ export function StudyWorldHeaderShowcase() {
           <div className="up-artboard">
             <div className="up-artboard-header">
               <span className="up-artboard-tag">📱 Mobile Viewport (390px)</span>
-              <span className="up-artboard-meta">Single-row Header with Search Trigger & Hamburger</span>
+              <span className="up-artboard-meta">Clean Minimal Mobile Header</span>
             </div>
             <div className="up-artboard-viewport up-mobile-frame">
               <StudyWorldHeader />

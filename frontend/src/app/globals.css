@@ -902,10 +902,34 @@
   position: relative;
 }
 
+.up-text-arrow {
+  font-size: 0.65rem;
+  color: #64748B;
+  transition: transform 0.2s ease;
+  display: inline-block;
+  margin-left: 4px;
+}
+
+.up-text-arrow.open {
+  transform: rotate(180deg);
+}
+
+.up-mobile-text-btn {
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+  background: #F8FAFC;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0F172A;
+  cursor: pointer;
+}
+
 /* ALL COURSES BUTTON & MEGA DROPDOWN */
 .up-courses-btn {
   height: 42px;
-  padding: 0 16px;
+  padding: 0 18px;
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
   border-radius: 10px;

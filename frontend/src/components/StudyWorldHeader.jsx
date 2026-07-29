@@ -69,6 +69,26 @@ export function StudyWorldHeader() {
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
 
   const navRef = useRef(null);
+  const timeoutRef = useRef(null);
+
+  const openAllCourses = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setAllCoursesOpen(true);
+  };
+
+  const closeAllCourses = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      setAllCoursesOpen(false);
+    }, 150);
+  };
+
+  // Clear timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   // Active category group object
   const activeGroup = courseCategories.find((c) => c.category === activeCategory) || courseCategories[0];
@@ -117,7 +137,7 @@ export function StudyWorldHeader() {
       className="up-header-wrapper"
       ref={navRef}
       style={{ position: 'relative' }}
-      onMouseLeave={() => setAllCoursesOpen(false)}
+      onMouseLeave={closeAllCourses}
     >
       <header className="up-header">
         {/* LEFT NAV GROUP: LOGO, ALL COURSES, CERTIFICATION, STUDY ABROAD, OFFLINE CENTERS */}
@@ -130,7 +150,8 @@ export function StudyWorldHeader() {
           {/* ALL COURSES BUTTON (HOVER OPEN & CLOSE) */}
           <div
             className="up-dropdown-container up-desktop-only"
-            onMouseEnter={() => setAllCoursesOpen(true)}
+            onMouseEnter={openAllCourses}
+            onMouseLeave={closeAllCourses}
           >
             <button
               className={`up-courses-btn ${allCoursesOpen ? 'active' : ''}`}
@@ -292,8 +313,8 @@ export function StudyWorldHeader() {
       {allCoursesOpen && (
         <div
           className="up-fullwidth-hover-mega up-fade-in"
-          onMouseEnter={() => setAllCoursesOpen(true)}
-          onMouseLeave={() => setAllCoursesOpen(false)}
+          onMouseEnter={openAllCourses}
+          onMouseLeave={closeAllCourses}
         >
           <div className="up-fullwidth-side-body">
             {/* LEFT SIDEBAR CATEGORIES */}

@@ -26,10 +26,10 @@ export function Footer() {
         </div>
         <div>
           <h3>Popular courses</h3>
-          <Link href="/courses/digital-marketing">Digital Marketing</Link>
-          <Link href="/courses/graphic-design">Graphic Design</Link>
-          <Link href="/courses/french-language">French Language</Link>
-          <Link href="/courses/english-speaking">English Speaking</Link>
+          <Link href="/digital-marketing">Digital Marketing</Link>
+          <Link href="/graphic-design">Graphic Design</Link>
+          <Link href="/french-language">French Language</Link>
+          <Link href="/english-speaking">English Speaking</Link>
         </div>
         <div className="footer-contact">
           <h3>Reach us</h3>

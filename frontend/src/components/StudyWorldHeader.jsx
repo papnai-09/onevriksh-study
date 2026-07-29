@@ -11,28 +11,28 @@ const courseCategories = [
   {
     category: 'Marketing',
     courses: [
-      { title: 'Digital Marketing', href: '/courses/digital-marketing' }
+      { title: 'Digital Marketing', href: '/digital-marketing' }
     ]
   },
   {
     category: 'Design',
     courses: [
-      { title: 'Graphic Design', href: '/courses/graphic-design' }
+      { title: 'Graphic Design', href: '/graphic-design' }
     ]
   },
   {
     category: 'Languages',
     courses: [
-      { title: 'French Language', href: '/courses/french-language' },
-      { title: 'German Language', href: '/courses/german-language' },
-      { title: 'Spanish Language', href: '/courses/spanish-language' },
-      { title: 'Italian Language', href: '/courses/italian-language' }
+      { title: 'French Language', href: '/french-language' },
+      { title: 'German Language', href: '/german-language' },
+      { title: 'Spanish Language', href: '/spanish-language' },
+      { title: 'Italian Language', href: '/italian-language' }
     ]
   },
   {
     category: 'Communication',
     courses: [
-      { title: 'English Speaking', href: '/courses/english-speaking' }
+      { title: 'English Speaking', href: '/english-speaking' }
     ]
   }
 ];

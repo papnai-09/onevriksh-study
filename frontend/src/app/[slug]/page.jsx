@@ -27,7 +27,6 @@ export default async function CourseDetailPage({ params }) {
           <div className="detail-image"><Image src={course.image} alt={course.title} fill priority /></div>
         </div>
       </section>
-      <nav className="detail-nav"><div className="container"><a href="#overview">Overview</a><a href="#curriculum">Curriculum</a><a href="#trainer">Trainer</a><a href="#reviews">Reviews</a></div></nav>
       <section id="overview" className="section detail-section">
         <div className="container detail-layout">
           <div className="detail-content">

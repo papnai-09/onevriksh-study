@@ -15,7 +15,6 @@ export default function HomePage() {
         <div className="hero-overlay" />
         <div className="container hero-content">
           <div className="hero-copy">
-            <span className="hero-kicker"><Sparkles size={16} /> Admissions open for 2026</span>
             <h1>Skills that take your career <em>forward.</em></h1>
             <p>Learn with expert trainers, live projects and personal guidance at Delhi&apos;s practical career institute.</p>
             <div className="hero-actions">

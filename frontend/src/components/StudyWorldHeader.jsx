@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Search, ChevronDown, Check } from 'lucide-react';
+import { Search, ChevronDown, ChevronRight, Check } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from './Brand';
 
-// 4 Categorized Groups for Full-Width Mega Dropdown
+// Categorized Courses for Side-by-Side Left Sidebar Mega Dropdown
 const courseCategories = [
   {
     category: 'Marketing',
@@ -51,12 +51,13 @@ const countries = [
 ];
 
 /**
- * Clean Header Component with Full-Width Stretched Mega Dropdown
+ * Clean Header Component with Left-Sidebar Side-Divided Category Dropdown
  */
 export function StudyWorldHeader() {
   const { user, login, register, logout } = useAuth();
 
   const [allCoursesOpen, setAllCoursesOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState(courseCategories[0].category);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
   const [regionDropdownOpen, setRegionDropdownOpen] = useState(false);
@@ -68,6 +69,9 @@ export function StudyWorldHeader() {
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
 
   const navRef = useRef(null);
+
+  // Active category group object
+  const activeGroup = courseCategories.find((c) => c.category === activeCategory) || courseCategories[0];
 
   // Close dropdowns on click outside
   useEffect(() => {
@@ -109,7 +113,7 @@ export function StudyWorldHeader() {
   };
 
   return (
-    <div className="up-header-wrapper" ref={navRef} style={{ position: 'relative' }}>
+    <div className="up-header-wrapper" ref={navRef}>
       <header className="up-header">
         {/* LEFT NAV GROUP: LOGO, ALL COURSES, CERTIFICATION, STUDY ABROAD, OFFLINE CENTERS */}
         <div className="up-left-nav-group">
@@ -131,6 +135,43 @@ export function StudyWorldHeader() {
               <span className="up-nowrap">All Courses</span>
               <ChevronDown size={13} className={`up-chevron ${allCoursesOpen ? 'open' : ''}`} />
             </button>
+
+            {/* SIDE-DIVIDED CATEGORY DROPDOWN (LEFT SIDEBAR TABS) */}
+            {allCoursesOpen && (
+              <div className="up-side-mega-menu up-fade-in">
+                {/* LEFT SIDEBAR CATEGORIES */}
+                <div className="up-side-sidebar">
+                  {courseCategories.map((group) => (
+                    <button
+                      key={group.category}
+                      className={`up-side-cat-btn ${activeCategory === group.category ? 'active' : ''}`}
+                      onMouseEnter={() => setActiveCategory(group.category)}
+                      onClick={() => setActiveCategory(group.category)}
+                    >
+                      <span>{group.category}</span>
+                      <ChevronRight size={13} className="up-side-cat-arrow" />
+                    </button>
+                  ))}
+                </div>
+
+                {/* RIGHT CONTENT PANEL (COURSES) */}
+                <div className="up-side-content">
+                  <div className="up-side-title">{activeGroup.category}</div>
+                  <div className="up-side-courses-list">
+                    {activeGroup.courses.map((item) => (
+                      <Link
+                        key={item.title}
+                        href={item.href}
+                        className="up-side-course-link"
+                        onClick={() => setAllCoursesOpen(false)}
+                      >
+                        {item.title}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* LEFT NAVIGATION LINKS */}
@@ -279,31 +320,6 @@ export function StudyWorldHeader() {
           </button>
         </div>
       </header>
-
-      {/* FULL-WIDTH STRETCHED MEGA DROPDOWN (SPANNING 100% CONTAINER / VIEWPORT) */}
-      {allCoursesOpen && (
-        <div className="up-fullwidth-mega-menu up-fade-in">
-          <div className="up-fullwidth-mega-container">
-            {courseCategories.map((group) => (
-              <div key={group.category} className="up-fullwidth-category-column">
-                <div className="up-category-title">{group.category}</div>
-                <div className="up-category-links">
-                  {group.courses.map((item) => (
-                    <Link
-                      key={item.title}
-                      href={item.href}
-                      className="up-fullwidth-link"
-                      onClick={() => setAllCoursesOpen(false)}
-                    >
-                      {item.title}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* MOBILE SEARCH BAR OVERLAY */}
       {mobileSearchOpen && (

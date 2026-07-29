@@ -982,64 +982,101 @@
   transform: rotate(180deg);
 }
 
-/* FULL-WIDTH STRETCHED MEGA MENU FOR ALL COURSES */
-.up-fullwidth-mega-menu {
+/* SIDE-BY-SIDE CATEGORY TAB DROPDOWN FOR ALL COURSES */
+.up-side-mega-menu {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 6px);
   left: 0;
-  right: 0;
-  width: 100%;
+  min-width: 440px;
   background: #FFFFFF;
-  border-bottom: 1px solid #E2E8F0;
-  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.1);
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+  display: flex;
+  overflow: hidden;
   z-index: 200;
 }
 
-.up-fullwidth-mega-container {
-  width: 100%;
-  padding: 24px 48px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 32px;
-  box-sizing: border-box;
-}
-
-.up-fullwidth-category-column {
+.up-side-sidebar {
+  width: 170px;
+  background: #F8FAFC;
+  border-right: 1px solid #E2E8F0;
+  padding: 8px 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
 
-.up-category-title {
+.up-side-cat-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #475569;
+  background: transparent;
+  border: 0;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.up-side-cat-btn:hover,
+.up-side-cat-btn.active {
+  background: #FFFFFF;
+  color: #14B8A6;
+}
+
+.up-side-cat-arrow {
+  color: #94A3B8;
+  transition: transform 0.15s ease;
+}
+
+.up-side-cat-btn.active .up-side-cat-arrow {
+  color: #14B8A6;
+  transform: translateX(2px);
+}
+
+.up-side-content {
+  flex: 1;
+  padding: 16px 20px;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+}
+
+.up-side-title {
   font-size: 0.72rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #64748B;
+  color: #94A3B8;
+  margin-bottom: 12px;
   padding-bottom: 6px;
   border-bottom: 1px solid #F1F5F9;
-  margin-bottom: 4px;
 }
 
-.up-category-links {
+.up-side-courses-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
-.up-fullwidth-link {
-  display: inline-block;
-  padding: 6px 0;
+.up-side-course-link {
+  display: block;
   font-size: 0.88rem;
   font-weight: 500;
   color: #334155;
   text-decoration: none;
-  transition: color 0.15s ease, transform 0.15s ease;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
-.up-fullwidth-link:hover {
+.up-side-course-link:hover {
+  background: #F8FAFC;
   color: #14B8A6;
-  transform: translateX(3px);
 }
 
 .up-dropdown-item {

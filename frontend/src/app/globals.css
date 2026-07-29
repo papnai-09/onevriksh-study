@@ -993,13 +993,15 @@
   border-bottom: 1px solid #E2E8F0;
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   z-index: 200;
 }
 
 .up-fullwidth-side-body {
+  width: min(calc(100% - 96px), 1180px);
+  margin: 0 auto;
   display: flex;
-  min-height: 200px;
+  min-height: 220px;
 }
 
 .up-side-sidebar {

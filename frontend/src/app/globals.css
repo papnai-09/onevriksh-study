@@ -897,6 +897,14 @@
   flex-shrink: 0;
 }
 
+/* LEFT NAV GROUP (LOGO, ALL COURSES, NAV LINKS WITH EQUAL 20PX GAP) */
+.up-left-nav-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
 /* DROPDOWN CONTAINERS */
 .up-dropdown-container {
   position: relative;
@@ -1066,11 +1074,11 @@
   line-height: 1.25;
 }
 
-/* COMPACT SEARCH BAR */
+/* COMPACT SEARCH BAR (SHIFTED RIGHT, 240PX WIDTH) */
 .up-search-box {
-  flex: 1;
-  max-width: 480px;
-  height: 36px;
+  width: 240px;
+  max-width: 240px;
+  height: 34px;
   position: relative;
   display: flex;
   align-items: center;
@@ -1079,11 +1087,11 @@
 .up-search-input {
   width: 100%;
   height: 100%;
-  padding: 0 36px 0 16px;
+  padding: 0 32px 0 14px;
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
   border-radius: 9999px;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: #0F172A;
   outline: none;
   box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.03);
@@ -1107,11 +1115,11 @@
   font-size: 0.75rem;
 }
 
-/* CENTER NAVIGATION LINKS */
+/* NAVIGATION LINKS WITH EQUAL 20PX GAP */
 .up-nav-links {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
   flex-shrink: 0;
 }
 

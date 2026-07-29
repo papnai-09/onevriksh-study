@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export function Brand({ compact = false }) {
   return (
-    <Link href="/" className="brand" aria-label="Onevriksh Study home" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+    <Link href="/" className="brand" aria-label="Onevriksh Study home" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', textDecoration: 'none' }}>
       <span className="brand-mark-wrap" style={{ display: 'inline-flex', alignItems: 'center' }}>
         <Image
           src="/Black_Transparent.png"
@@ -17,11 +17,11 @@ export function Brand({ compact = false }) {
       <span
         className="brand-study-text"
         style={{
-          fontSize: compact ? '0.95rem' : '1.12rem',
-          fontWeight: 800,
-          color: '#334155',
-          letterSpacing: '-0.02em',
-          lineHeight: 1
+          fontSize: compact ? '0.92rem' : '1.15rem',
+          fontWeight: 400,
+          color: '#475569',
+          lineHeight: 1,
+          display: 'inline-block'
         }}
       >
         Study

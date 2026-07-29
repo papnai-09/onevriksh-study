@@ -48,7 +48,7 @@ const countries = [
 ];
 
 /**
- * Clean Header Component with ChevronDown Dropdown Icon and Text-Only Hover Accent
+ * Clean Header Component with Left-Grouped Nav Items, Right-Shifted Search Bar, and Equal Spacing
  */
 export function StudyWorldHeader() {
   const { user, login, register, logout } = useAuth();
@@ -115,92 +115,95 @@ export function StudyWorldHeader() {
   return (
     <div className="up-header-wrapper" ref={navRef}>
       <header className="up-header">
-        {/* BRAND LOGO (Black_Transparent.png + Study Text) */}
-        <div className="up-brand-wrap">
-          <Brand />
-        </div>
+        {/* LEFT NAV GROUP: LOGO, ALL COURSES, CERTIFICATION, STUDY ABROAD, OFFLINE CENTERS */}
+        <div className="up-left-nav-group">
+          {/* BRAND LOGO */}
+          <div className="up-brand-wrap">
+            <Brand />
+          </div>
 
-        {/* 1. ALL COURSES BUTTON (BORDERLESS WITH CHEVRON DOWN) */}
-        <div className="up-dropdown-container up-desktop-only">
-          <button
-            className={`up-courses-btn ${allCoursesOpen ? 'active' : ''}`}
-            onClick={() => {
-              setAllCoursesOpen(!allCoursesOpen);
-              setRegionDropdownOpen(false);
-              setUserDropdownOpen(false);
-            }}
-          >
-            <span className="up-nowrap">All Courses</span>
-            <ChevronDown size={13} className={`up-chevron ${allCoursesOpen ? 'open' : ''}`} />
-          </button>
-
-          {allCoursesOpen && (
-            <div className="up-mega-dropdown up-fade-in">
-              <div className="up-mega-header">
-                <span>Explore Top Programs</span>
-                <Link href="/courses" onClick={() => setAllCoursesOpen(false)}>
-                  View All ({courseCategories.length}+) →
-                </Link>
-              </div>
-              <div className="up-mega-grid">
-                {courseCategories.map((cat) => (
-                  <Link
-                    key={cat.title}
-                    href={cat.href}
-                    className="up-mega-card"
-                    onClick={() => setAllCoursesOpen(false)}
-                  >
-                    <div className="up-mega-info">
-                      <div className="up-mega-title-row">
-                        <strong>{cat.title}</strong>
-                        {cat.tag && <span className="up-tag">{cat.tag}</span>}
-                      </div>
-                      <p>{cat.desc}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* 2. NAVIGATION LINKS SHIFTED TO THE LEFT */}
-        <nav className="up-nav-links up-desktop-only" aria-label="Header Links">
-          <Link href="/courses?type=certification" className="up-nav-item">
-            <span className="up-nowrap">Certification</span>
-          </Link>
-          <Link href="/demo" className="up-nav-item">
-            <span className="up-nowrap">Study Abroad</span>
-          </Link>
-          <Link href="/contact" className="up-nav-item">
-            <span className="up-nowrap">Offline Centers</span>
-          </Link>
-        </nav>
-
-        {/* 3. SEARCH BAR PLACED AFTER NAV LINKS WITH SMALL SEARCH ICON */}
-        <div className={`up-search-box up-desktop-tablet-only ${searchFocused ? 'focused' : ''}`}>
-          <input
-            type="text"
-            className="up-search-input"
-            placeholder="Search for courses, skills, certifications..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onFocus={() => setSearchFocused(true)}
-            onBlur={() => setSearchFocused(false)}
-          />
-          {searchQuery ? (
-            <button className="up-search-clear" onClick={() => setSearchQuery('')}>
-              ✕
+          {/* ALL COURSES BUTTON (BORDERLESS) */}
+          <div className="up-dropdown-container up-desktop-only">
+            <button
+              className={`up-courses-btn ${allCoursesOpen ? 'active' : ''}`}
+              onClick={() => {
+                setAllCoursesOpen(!allCoursesOpen);
+                setRegionDropdownOpen(false);
+                setUserDropdownOpen(false);
+              }}
+            >
+              <span className="up-nowrap">All Courses</span>
+              <ChevronDown size={13} className={`up-chevron ${allCoursesOpen ? 'open' : ''}`} />
             </button>
-          ) : (
-            <div className="up-search-icon-btn-sm" title="Search">
-              <Search size={14} />
-            </div>
-          )}
+
+            {allCoursesOpen && (
+              <div className="up-mega-dropdown up-fade-in">
+                <div className="up-mega-header">
+                  <span>Explore Top Programs</span>
+                  <Link href="/courses" onClick={() => setAllCoursesOpen(false)}>
+                    View All ({courseCategories.length}+) →
+                  </Link>
+                </div>
+                <div className="up-mega-grid">
+                  {courseCategories.map((cat) => (
+                    <Link
+                      key={cat.title}
+                      href={cat.href}
+                      className="up-mega-card"
+                      onClick={() => setAllCoursesOpen(false)}
+                    >
+                      <div className="up-mega-info">
+                        <div className="up-mega-title-row">
+                          <strong>{cat.title}</strong>
+                          {cat.tag && <span className="up-tag">{cat.tag}</span>}
+                        </div>
+                        <p>{cat.desc}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* LEFT NAVIGATION LINKS (CERTIFICATION, STUDY ABROAD, OFFLINE CENTERS) */}
+          <nav className="up-nav-links up-desktop-only" aria-label="Header Links">
+            <Link href="/courses?type=certification" className="up-nav-item">
+              <span className="up-nowrap">Certification</span>
+            </Link>
+            <Link href="/demo" className="up-nav-item">
+              <span className="up-nowrap">Study Abroad</span>
+            </Link>
+            <Link href="/contact" className="up-nav-item">
+              <span className="up-nowrap">Offline Centers</span>
+            </Link>
+          </nav>
         </div>
 
-        {/* 4. RIGHT CONTROLS GROUP */}
+        {/* RIGHT CONTROLS GROUP: SEARCH BAR, REGION SELECTOR, SIGN IN BUTTON */}
         <div className="up-right-actions up-desktop-tablet-only">
+          {/* COMPACT SEARCH BAR MOVED TO RIGHT SIDE */}
+          <div className={`up-search-box ${searchFocused ? 'focused' : ''}`}>
+            <input
+              type="text"
+              className="up-search-input"
+              placeholder="Search courses..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => setSearchFocused(true)}
+              onBlur={() => setSearchFocused(false)}
+            />
+            {searchQuery ? (
+              <button className="up-search-clear" onClick={() => setSearchQuery('')}>
+                ✕
+              </button>
+            ) : (
+              <div className="up-search-icon-btn-sm" title="Search">
+                <Search size={14} />
+              </div>
+            )}
+          </div>
+
           {/* COMBINED REGION / LANGUAGE SELECTOR */}
           <div className="up-dropdown-container">
             <button
@@ -291,7 +294,7 @@ export function StudyWorldHeader() {
           )}
         </div>
 
-        {/* 5. MOBILE CONTROLS */}
+        {/* MOBILE CONTROLS */}
         <div className="up-mobile-controls">
           <button
             className="up-mobile-text-btn"
@@ -324,7 +327,7 @@ export function StudyWorldHeader() {
         </div>
       )}
 
-      {/* 6. SLIDE-IN MOBILE RIGHT DRAWER */}
+      {/* SLIDE-IN MOBILE RIGHT DRAWER */}
       <div className={`up-drawer-backdrop ${mobileDrawerOpen ? 'visible' : ''}`} onClick={() => setMobileDrawerOpen(false)} />
       <aside className={`up-drawer ${mobileDrawerOpen ? 'open' : ''}`}>
         <div className="up-drawer-header">
@@ -435,8 +438,8 @@ export function StudyWorldHeaderShowcase() {
       <div className="up-showcase-bar">
         <div className="up-showcase-title">
           <div className="up-showcase-badge">Clean Design System</div>
-          <h2>Onevriksh STUDY Minimal Header (Chevron Dropdowns, Text-Only Hover Accent & Bold Study Text)</h2>
-          <p>Black_Transparent.png Logo + Bold Light Black Study Text, ChevronDown icons, Text color hover only (no background change), EN | IN region selector, and Sign In button</p>
+          <h2>Onevriksh STUDY Header (Left Grouped Items, Right Shifted Search Bar & Un-bolded Study Text)</h2>
+          <p>Black_Transparent.png Logo + Normal Weight Study Text, Left-grouped nav items with equal 20px gap, Right-shifted compact search bar, EN | IN region selector, and Sign In button</p>
         </div>
 
         <div className="up-showcase-tabs">
@@ -453,7 +456,7 @@ export function StudyWorldHeaderShowcase() {
           <div className="up-artboard">
             <div className="up-artboard-header">
               <span className="up-artboard-tag">🖥️ Desktop Frame (1440px)</span>
-              <span className="up-artboard-meta">Text Color Hover Only & Bold Study Text Logo</span>
+              <span className="up-artboard-meta">Left Grouped Nav Items & Right Shifted Search Bar</span>
             </div>
             <div className="up-artboard-viewport up-desktop-frame">
               <StudyWorldHeader />
@@ -465,7 +468,7 @@ export function StudyWorldHeaderShowcase() {
           <div className="up-artboard">
             <div className="up-artboard-header">
               <span className="up-artboard-tag">💻 Laptop Frame (1024px)</span>
-              <span className="up-artboard-meta">Compact Search Bar & Sign In Button</span>
+              <span className="up-artboard-meta">Compact Right Search Bar & Sign In Button</span>
             </div>
             <div className="up-artboard-viewport up-laptop-frame">
               <StudyWorldHeader />

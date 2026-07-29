@@ -982,23 +982,43 @@
   transform: rotate(180deg);
 }
 
-/* SIMPLE CLEAN DROPDOWN FOR ALL COURSES */
-.up-simple-dropdown {
+/* CATEGORIZED CLEAN DROPDOWN FOR ALL COURSES */
+.up-categorized-dropdown {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
-  min-width: 210px;
+  min-width: 220px;
   background: #FFFFFF;
   border: 1px solid #E2E8F0;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
-  padding: 6px 0;
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
+  padding: 8px 0;
   z-index: 200;
+}
+
+.up-category-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.up-category-title {
+  padding: 6px 16px 2px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94A3B8;
+}
+
+.up-group-divider {
+  height: 1px;
+  background: #F1F5F9;
+  margin: 6px 0;
 }
 
 .up-dropdown-item {
   display: block;
-  padding: 9px 16px;
+  padding: 8px 16px;
   font-size: 0.85rem;
   font-weight: 500;
   color: #334155;

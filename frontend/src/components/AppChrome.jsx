@@ -11,5 +11,5 @@ export function AppChrome({ children }) {
   const authRoute = ['/login', '/register', '/forgot-password', '/reset-password'].some((path) => pathname.startsWith(path));
 
   if (appRoute || authRoute) return children;
-  return <><Header /><main>{children}</main><Footer /><WhatsappButton /></>;
+  return <><Header /><main className="up-main-content">{children}</main><Footer /><WhatsappButton /></>;
 }

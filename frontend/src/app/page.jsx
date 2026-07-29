@@ -21,23 +21,7 @@ export default function HomePage() {
               <Link href="/demo" className="button button-primary button-large">Reserve Your Seat <ArrowRight size={18} /></Link>
               <Link href="/courses" className="button button-light button-large"><CirclePlay size={19} /> Explore Learning</Link>
             </div>
-            <div className="hero-proof">
-              <div className="avatar-stack"><span>S</span><span>A</span><span>R</span><span>+</span></div>
-              <div><strong>4.9/5 student rating</strong><small>from 2,500+ learners</small></div>
-            </div>
           </div>
-        </div>
-        <div className="hero-float">
-          <BadgeCheck size={22} />
-          <div><strong>Industry-ready learning</strong><span>Projects, practice and placement support</span></div>
-        </div>
-      </section>
-
-      <section className="trust-strip">
-        <div className="container trust-grid">
-          <span><BookOpenCheck /> Live Interactive Classes</span>
-          <span><UsersRound /> Real Industry Case Studies</span>
-          <span><BriefcaseBusiness /> Placement & Resume Support</span>
         </div>
       </section>
 

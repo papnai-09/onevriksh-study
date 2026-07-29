@@ -6,7 +6,7 @@ import { Search, ChevronDown, Check } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from './Brand';
 
-// 4 Categorized Groups for All Courses Dropdown
+// 4 Categorized Groups for Full-Width Mega Dropdown
 const courseCategories = [
   {
     category: 'Marketing',
@@ -51,7 +51,7 @@ const countries = [
 ];
 
 /**
- * Clean Header Component with Categorized All Courses Dropdown
+ * Clean Header Component with Full-Width Stretched Mega Dropdown
  */
 export function StudyWorldHeader() {
   const { user, login, register, logout } = useAuth();
@@ -109,7 +109,7 @@ export function StudyWorldHeader() {
   };
 
   return (
-    <div className="up-header-wrapper" ref={navRef}>
+    <div className="up-header-wrapper" ref={navRef} style={{ position: 'relative' }}>
       <header className="up-header">
         {/* LEFT NAV GROUP: LOGO, ALL COURSES, CERTIFICATION, STUDY ABROAD, OFFLINE CENTERS */}
         <div className="up-left-nav-group">
@@ -118,7 +118,7 @@ export function StudyWorldHeader() {
             <Brand />
           </div>
 
-          {/* ALL COURSES BUTTON (BORDERLESS, CATEGORIZED DROPDOWN) */}
+          {/* ALL COURSES BUTTON (BORDERLESS) */}
           <div className="up-dropdown-container up-desktop-only">
             <button
               className={`up-courses-btn ${allCoursesOpen ? 'active' : ''}`}
@@ -131,27 +131,6 @@ export function StudyWorldHeader() {
               <span className="up-nowrap">All Courses</span>
               <ChevronDown size={13} className={`up-chevron ${allCoursesOpen ? 'open' : ''}`} />
             </button>
-
-            {allCoursesOpen && (
-              <div className="up-categorized-dropdown up-fade-in">
-                {courseCategories.map((group, idx) => (
-                  <div key={group.category} className="up-category-group">
-                    <div className="up-category-title">{group.category}</div>
-                    {group.courses.map((item) => (
-                      <Link
-                        key={item.title}
-                        href={item.href}
-                        className="up-dropdown-item"
-                        onClick={() => setAllCoursesOpen(false)}
-                      >
-                        {item.title}
-                      </Link>
-                    ))}
-                    {idx < courseCategories.length - 1 && <div className="up-group-divider" />}
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* LEFT NAVIGATION LINKS */}
@@ -300,6 +279,31 @@ export function StudyWorldHeader() {
           </button>
         </div>
       </header>
+
+      {/* FULL-WIDTH STRETCHED MEGA DROPDOWN (SPANNING 100% CONTAINER / VIEWPORT) */}
+      {allCoursesOpen && (
+        <div className="up-fullwidth-mega-menu up-fade-in">
+          <div className="up-fullwidth-mega-container">
+            {courseCategories.map((group) => (
+              <div key={group.category} className="up-fullwidth-category-column">
+                <div className="up-category-title">{group.category}</div>
+                <div className="up-category-links">
+                  {group.courses.map((item) => (
+                    <Link
+                      key={item.title}
+                      href={item.href}
+                      className="up-fullwidth-link"
+                      onClick={() => setAllCoursesOpen(false)}
+                    >
+                      {item.title}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* MOBILE SEARCH BAR OVERLAY */}
       {mobileSearchOpen && (

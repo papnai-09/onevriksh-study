@@ -15,11 +15,11 @@ export default function HomePage() {
         <div className="hero-overlay" />
         <div className="container hero-content">
           <div className="hero-copy">
-            <h1>Skills that take your career <em>forward.</em></h1>
-            <p>Learn with expert trainers, live projects and personal guidance at Delhi&apos;s practical career institute.</p>
+            <h1>Launch Your Dream Career with <em>Confidence.</em></h1>
+            <p>Learn the skills companies actually hire for through immersive training, live projects, mock interviews, and career guidance.</p>
             <div className="hero-actions">
-              <Link href="/demo" className="button button-primary button-large">Book a free demo <ArrowRight size={18} /></Link>
-              <Link href="/courses" className="button button-light button-large"><CirclePlay size={19} /> Explore courses</Link>
+              <Link href="/demo" className="button button-primary button-large">Reserve Your Seat <ArrowRight size={18} /></Link>
+              <Link href="/courses" className="button button-light button-large"><CirclePlay size={19} /> Explore Learning</Link>
             </div>
             <div className="hero-proof">
               <div className="avatar-stack"><span>S</span><span>A</span><span>R</span><span>+</span></div>
@@ -35,10 +35,9 @@ export default function HomePage() {
 
       <section className="trust-strip">
         <div className="container trust-grid">
-          <span><BookOpenCheck /> Practical curriculum</span>
-          <span><UsersRound /> Small batch sizes</span>
-          <span><BriefcaseBusiness /> Placement support</span>
-          <span><Award /> Recognized certificates</span>
+          <span><BookOpenCheck /> Live Interactive Classes</span>
+          <span><UsersRound /> Real Industry Case Studies</span>
+          <span><BriefcaseBusiness /> Placement & Resume Support</span>
         </div>
       </section>
 

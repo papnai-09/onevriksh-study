@@ -877,12 +877,12 @@
 .up-header {
   width: 100%;
   max-width: 100%;
-  height: 72px;
-  padding: 0 32px;
+  height: 56px;
+  padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 16px;
   position: relative;
   box-sizing: border-box;
 }
@@ -903,11 +903,11 @@
 }
 
 .up-text-arrow {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   color: #64748B;
   transition: transform 0.2s ease;
   display: inline-block;
-  margin-left: 4px;
+  margin-left: 3px;
 }
 
 .up-text-arrow.open {
@@ -915,12 +915,12 @@
 }
 
 .up-mobile-text-btn {
-  height: 36px;
-  padding: 0 12px;
-  border-radius: 8px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 6px;
   border: 1px solid #E2E8F0;
   background: #F8FAFC;
-  font-size: 0.82rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: #0F172A;
   cursor: pointer;
@@ -928,16 +928,16 @@
 
 /* ALL COURSES BUTTON & MEGA DROPDOWN */
 .up-courses-btn {
-  height: 42px;
-  padding: 0 18px;
+  height: 34px;
+  padding: 0 14px;
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
-  border-radius: 10px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-weight: 700;
-  font-size: 0.88rem;
+  font-size: 0.78rem;
   color: #0F172A;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -947,7 +947,7 @@
   background: #FFFFFF;
   border-color: #14B8A6;
   color: #14B8A6;
-  box-shadow: 0 4px 14px rgba(20, 184, 166, 0.12);
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.1);
 }
 
 .up-grid-icon {
@@ -966,14 +966,14 @@
 /* MEGA DROPDOWN (UPGRAD STYLE) */
 .up-mega-dropdown {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 6px);
   left: 0;
-  width: 460px;
+  width: 440px;
   background: #FFFFFF;
   border: 1px solid #E2E8F0;
-  border-radius: 16px;
-  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.14);
-  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+  padding: 14px;
   z-index: 200;
 }
 
@@ -981,8 +981,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
-  font-size: 0.78rem;
+  margin-bottom: 10px;
+  font-size: 0.72rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -1005,15 +1005,15 @@
 .up-mega-grid {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .up-mega-card {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  padding: 12px;
-  border-radius: 12px;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
   text-decoration: none;
   color: #0F172A;
   transition: background 0.15s ease;
@@ -1021,18 +1021,6 @@
 
 .up-mega-card:hover {
   background: #F8FAFC;
-}
-
-.up-mega-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: rgba(20, 184, 166, 0.1);
-  color: #14B8A6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
 }
 
 .up-mega-info {
@@ -1044,18 +1032,18 @@
 .up-mega-title-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .up-mega-title-row strong {
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   color: #0F172A;
 }
 
 .up-tag {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 800;
-  padding: 2px 6px;
+  padding: 1px 5px;
   border-radius: 9999px;
   background: #CCFBF1;
   color: #0F766E;
@@ -1063,17 +1051,17 @@
 }
 
 .up-mega-info p {
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   color: #64748B;
   margin: 0;
-  line-height: 1.3;
+  line-height: 1.25;
 }
 
-/* LARGE 520PX SEARCH BAR */
+/* COMPACT SEARCH BAR */
 .up-search-box {
   flex: 1;
-  max-width: 520px;
-  height: 44px;
+  max-width: 480px;
+  height: 36px;
   position: relative;
   display: flex;
   align-items: center;
@@ -1082,11 +1070,11 @@
 .up-search-input {
   width: 100%;
   height: 100%;
-  padding: 0 46px 0 20px;
+  padding: 0 36px 0 16px;
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
   border-radius: 9999px;
-  font-size: 0.86rem;
+  font-size: 0.78rem;
   color: #0F172A;
   outline: none;
   box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.03);
@@ -1096,58 +1084,39 @@
 .up-search-input:focus {
   background: #FFFFFF;
   border-color: #14B8A6;
-  box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.12);
-}
-
-.up-search-btn {
-  position: absolute;
-  right: 6px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #14B8A6;
-  color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  transition: transform 0.2s ease;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12);
 }
 
 .up-search-clear {
   position: absolute;
-  right: 12px;
+  right: 10px;
   background: none;
   border: none;
   color: #64748B;
   cursor: pointer;
-  padding: 4px;
+  padding: 2px;
+  font-size: 0.75rem;
 }
 
 /* CENTER NAVIGATION LINKS */
 .up-nav-links {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
   flex-shrink: 0;
 }
 
 .up-nav-item {
   display: flex;
   align-items: center;
-  gap: 7px;
-  font-size: 0.875rem;
+  gap: 6px;
+  font-size: 0.78rem;
   font-weight: 600;
   color: #334155;
   text-decoration: none;
-  padding: 8px 10px;
-  border-radius: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
   transition: all 0.18s ease;
-}
-
-.up-nav-icon {
-  color: #64748B;
-  transition: color 0.18s ease;
 }
 
 .up-nav-item:hover {
@@ -1155,31 +1124,27 @@
   background: rgba(20, 184, 166, 0.06);
 }
 
-.up-nav-item:hover .up-nav-icon {
-  color: #14B8A6;
-}
-
 /* RIGHT ACTIONS GROUP */
 .up-right-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-shrink: 0;
 }
 
 /* COMBINED REGION / LANGUAGE SELECTOR (COMPACT EN | IN ▼) */
 .up-region-btn {
-  height: 32px;
-  padding: 0 10px;
+  height: 28px;
+  padding: 0 8px;
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
   border-radius: 9999px;
-  font-size: 0.74rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: #0F172A;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -1195,41 +1160,17 @@
   font-weight: 400;
 }
 
-/* ENROLL NOW CTA (SINGLE LINE) */
-.up-enroll-cta {
-  height: 42px;
-  padding: 0 20px;
-  background: linear-gradient(135deg, #14B8A6 0%, #0F766E 100%);
-  color: #FFFFFF !important;
-  border-radius: 9999px;
-  font-weight: 700;
-  font-size: 0.88rem;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 6px 18px rgba(20, 184, 166, 0.28);
-  white-space: nowrap;
-  transition: all 0.2s ease;
-  border: none;
-}
-
-.up-enroll-cta:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(20, 184, 166, 0.38);
-}
-
 /* ACCOUNT BUTTON */
 .up-account-btn {
-  height: 42px;
-  padding: 0 16px;
+  height: 34px;
+  padding: 0 14px;
   background: #FFFFFF;
   border: 1px solid #E2E8F0;
   border-radius: 9999px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.86rem;
+  gap: 6px;
+  font-size: 0.78rem;
   font-weight: 600;
   color: #0F172A;
   cursor: pointer;
@@ -1240,20 +1181,20 @@
 .up-account-btn:hover {
   border-color: #14B8A6;
   color: #14B8A6;
-  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.1);
+  box-shadow: 0 4px 10px rgba(20, 184, 166, 0.1);
 }
 
 /* DROPDOWN MENUS */
 .up-dropdown-menu {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 6px);
   left: 0;
-  min-width: 220px;
+  min-width: 200px;
   background: #FFFFFF;
   border: 1px solid #E2E8F0;
-  border-radius: 14px;
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
-  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.1);
+  padding: 8px;
   z-index: 200;
 }
 
@@ -1283,10 +1224,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 9px 10px;
+  padding: 7px 10px;
   border: none;
   background: none;
-  font-size: 0.86rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: #0F172A;
   border-radius: 8px;
@@ -1309,22 +1250,22 @@
 .up-menu-divider {
   height: 1px;
   background: #E2E8F0;
-  margin: 8px 0;
+  margin: 6px 0;
 }
 
 .up-user-info {
-  padding: 8px 10px;
+  padding: 6px 10px;
   display: flex;
   flex-direction: column;
 }
 
 .up-user-info strong {
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   color: #0F172A;
 }
 
 .up-user-info small {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: #64748B;
 }
 

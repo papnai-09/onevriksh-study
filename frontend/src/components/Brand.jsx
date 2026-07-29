@@ -8,10 +8,10 @@ export function Brand({ compact = false }) {
         <Image
           src="/Black_Transparent.png"
           alt="Onevriksh Logo"
-          width={compact ? 120 : 160}
-          height={compact ? 32 : 42}
+          width={compact ? 100 : 130}
+          height={compact ? 24 : 30}
           priority
-          style={{ objectFit: 'contain', width: 'auto', height: compact ? '32px' : '40px' }}
+          style={{ objectFit: 'contain', width: 'auto', height: compact ? '24px' : '28px' }}
         />
       </span>
     </Link>

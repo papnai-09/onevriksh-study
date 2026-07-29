@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Search, ChevronDown, ChevronRight, ArrowRight, Check } from 'lucide-react';
+import { Search, ChevronDown, ChevronRight, Check } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from './Brand';
 
@@ -51,7 +51,7 @@ const countries = [
 ];
 
 /**
- * Clean Header Component with Full-Width Hover Mega Dropdown & Explore All Courses Button
+ * Clean Header Component with Full-Width Hover Mega Dropdown (Auto Close on Mouse Leave)
  */
 export function StudyWorldHeader() {
   const { user, login, register, logout } = useAuth();
@@ -113,7 +113,12 @@ export function StudyWorldHeader() {
   };
 
   return (
-    <div className="up-header-wrapper" ref={navRef} style={{ position: 'relative' }}>
+    <div
+      className="up-header-wrapper"
+      ref={navRef}
+      style={{ position: 'relative' }}
+      onMouseLeave={() => setAllCoursesOpen(false)}
+    >
       <header className="up-header">
         {/* LEFT NAV GROUP: LOGO, ALL COURSES, CERTIFICATION, STUDY ABROAD, OFFLINE CENTERS */}
         <div className="up-left-nav-group">
@@ -122,7 +127,7 @@ export function StudyWorldHeader() {
             <Brand />
           </div>
 
-          {/* ALL COURSES BUTTON (HOVER OPEN) */}
+          {/* ALL COURSES BUTTON (HOVER OPEN & CLOSE) */}
           <div
             className="up-dropdown-container up-desktop-only"
             onMouseEnter={() => setAllCoursesOpen(true)}
@@ -283,7 +288,7 @@ export function StudyWorldHeader() {
         </div>
       </header>
 
-      {/* FULL-WIDTH HOVER STRETCHED MEGA DROPDOWN WITH SIDE CATEGORIES & EXPLORE ALL COURSES BUTTON */}
+      {/* FULL-WIDTH STRETCHED MEGA DROPDOWN (AUTO CLOSES WHEN CURSOR LEAVES) */}
       {allCoursesOpen && (
         <div
           className="up-fullwidth-hover-mega up-fade-in"
@@ -322,18 +327,6 @@ export function StudyWorldHeader() {
                 ))}
               </div>
             </div>
-          </div>
-
-          {/* BOTTOM ACTION BAR WITH EXPLORE ALL COURSES BUTTON */}
-          <div className="up-mega-bottom-bar">
-            <Link
-              href="/courses"
-              className="up-explore-all-btn"
-              onClick={() => setAllCoursesOpen(false)}
-            >
-              <span>Explore All Courses</span>
-              <ArrowRight size={15} />
-            </Link>
           </div>
         </div>
       )}
@@ -387,17 +380,6 @@ export function StudyWorldHeader() {
               ))}
             </div>
           ))}
-
-          {/* EXPLORE ALL COURSES LINK IN DRAWER */}
-          <div className="up-drawer-section">
-            <Link
-              href="/courses"
-              className="up-drawer-explore-all"
-              onClick={() => setMobileDrawerOpen(false)}
-            >
-              Explore All Courses →
-            </Link>
-          </div>
 
           <div className="up-drawer-divider" />
 

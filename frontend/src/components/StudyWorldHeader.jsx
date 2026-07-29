@@ -6,43 +6,49 @@ import { Search, ChevronDown, Check } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from './Brand';
 
-// All 6 Available Courses for All Courses Dropdown
+// All 7 Available Courses for All Courses Dropdown
 const courseCategories = [
   {
-    title: 'Advanced Digital Marketing',
+    title: 'Digital Marketing',
     desc: 'SEO, Ads, Analytics & Performance Campaigns',
     href: '/courses/digital-marketing',
     tag: 'Popular'
   },
   {
-    title: 'Graphic Design Mastery',
+    title: 'Graphic Design',
     desc: 'Adobe Photoshop, Illustrator & Visual Branding',
     href: '/courses/graphic-design',
     tag: 'Top Rated'
   },
   {
-    title: 'French Language Program',
+    title: 'French Language',
     desc: 'Conversational French & DELF Exam Prep',
     href: '/courses/french-language',
     tag: 'Trending'
   },
   {
-    title: 'German Language Program',
+    title: 'German Language',
     desc: 'Goethe Exam Prep & Speaking Practice',
     href: '/courses/german-language',
     tag: 'Goethe'
   },
   {
-    title: 'Spanish Language Program',
+    title: 'Spanish Language',
     desc: 'Lively Conversation & Cultural Immersion',
     href: '/courses/spanish-language',
     tag: 'New'
   },
   {
-    title: 'English Speaking & Personality',
+    title: 'English Speaking',
     desc: 'Fluency, Public Speaking & Interview Prep',
     href: '/courses/english-speaking',
     tag: 'High Demand'
+  },
+  {
+    title: 'Italian Language',
+    desc: 'Conversational Italian & CILS Exam Prep',
+    href: '/courses/italian-language',
+    tag: 'New'
   }
 ];
 

@@ -62,6 +62,15 @@ export const courses = [
     trainer: 'Priya Malhotra', trainerRole: 'Communication and Soft Skills Coach',
     benefits: ['Daily speaking practice', 'Interview simulations', 'Personal feedback'],
     curriculum: ['Fluency foundations', 'Vocabulary and pronunciation', 'Public speaking', 'Group discussions', 'Interview mastery']
+  },
+  {
+    slug: 'italian-language', title: 'Italian Language Program', category: 'Languages',
+    duration: '4 months', fee: 17999, rating: 4.8, students: 120, level: 'Beginner',
+    image: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1200&q=80',
+    description: 'Master conversational Italian, grammar foundations and CILS exam preparation with native-certified trainers.',
+    trainer: 'Elena Rossi', trainerRole: 'CILS Certified Italian Educator',
+    benefits: ['CILS exam preparation', 'Interactive audio-visual labs', 'Small batch mentoring'],
+    curriculum: ['A1 vocabulary & grammar', 'Everyday conversation', 'Italian culture & travel', 'Pronunciation & listening', 'CILS mock evaluation']
   }
 ];
 

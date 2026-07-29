@@ -4,19 +4,15 @@ import Image from 'next/image';
 export function Brand({ compact = false }) {
   return (
     <Link href="/" className="brand" aria-label="Onevriksh Study home">
-      <span className="brand-mark">
+      <span className="brand-mark-wrap" style={{ display: 'inline-flex', alignItems: 'center' }}>
         <Image
-          src="/logo.png"
-          alt="Onevriksh logo"
-          width={compact ? 22 : 28}
-          height={compact ? 22 : 28}
+          src="/Black_Transparent.png"
+          alt="Onevriksh Logo"
+          width={compact ? 120 : 160}
+          height={compact ? 32 : 42}
           priority
-          style={{ objectFit: 'contain', display: 'block' }}
+          style={{ objectFit: 'contain', width: 'auto', height: compact ? '32px' : '40px' }}
         />
-      </span>
-      <span className="brand-copy">
-        <strong>Onevriksh</strong>
-        {!compact && <small>STUDY</small>}
       </span>
     </Link>
   );

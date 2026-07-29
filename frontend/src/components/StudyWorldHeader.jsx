@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import { Brand } from './Brand';
 
 // Course Categories for All Courses Dropdown
 const courseCategories = [
@@ -46,7 +47,7 @@ const countries = [
 ];
 
 /**
- * Clean Header Component with All Icons and Logo Removed
+ * Clean Header Component with Black_Transparent.png Logo
  */
 export function StudyWorldHeader() {
   const { user, login, register, logout } = useAuth();
@@ -113,7 +114,10 @@ export function StudyWorldHeader() {
   return (
     <div className="up-header-wrapper" ref={navRef}>
       <header className="up-header">
-        {/* LOGO REMOVED */}
+        {/* BRAND LOGO (Black_Transparent.png) */}
+        <div className="up-brand-wrap">
+          <Brand />
+        </div>
 
         {/* 1. ALL COURSES BUTTON WITH MEGA DROPDOWN (NO ICON) */}
         <div className="up-dropdown-container up-desktop-only">
@@ -331,7 +335,7 @@ export function StudyWorldHeader() {
       <div className={`up-drawer-backdrop ${mobileDrawerOpen ? 'visible' : ''}`} onClick={() => setMobileDrawerOpen(false)} />
       <aside className={`up-drawer ${mobileDrawerOpen ? 'open' : ''}`}>
         <div className="up-drawer-header">
-          <span className="up-drawer-title">Navigation</span>
+          <Brand compact />
           <button className="up-drawer-close" onClick={() => setMobileDrawerOpen(false)}>✕</button>
         </div>
 

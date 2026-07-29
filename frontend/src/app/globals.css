@@ -1747,14 +1747,24 @@
 /* MOBILE (320px – 767px) */
 @media (max-width: 767px) {
   .up-header {
-    height: 64px;
-    padding: 0 16px;
+    height: 54px !important;
+    padding: 0 14px !important;
   }
   .up-desktop-only, .up-desktop-tablet-only {
     display: none !important;
   }
   .up-mobile-controls {
     display: flex !important;
+    align-items: center;
+    gap: 8px;
+  }
+  .up-drawer {
+    width: 290px;
+    max-width: 85vw;
+  }
+  .up-drawer-header {
+    height: 54px;
+    padding: 0 16px;
   }
 }
 

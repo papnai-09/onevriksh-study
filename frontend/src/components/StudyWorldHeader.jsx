@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Search, ChevronDown, ChevronRight, Check, Sparkles } from 'lucide-react';
+import { Search, ChevronDown, ChevronRight, Check, Globe, MapPin } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from './Brand';
 import { courses } from '@/data/site';
@@ -42,21 +42,25 @@ const courseCategories = [
 ];
 
 const languages = [
-  { code: 'EN', name: 'English' },
-  { code: 'HI', name: 'Hindi' },
-  { code: 'ES', name: 'Spanish' },
+  { code: 'EN', name: 'English', native: 'English', flag: '🇬🇧' },
+  { code: 'HI', name: 'Hindi', native: 'हिन्दी', flag: '🇮🇳' },
+  { code: 'ES', name: 'Spanish', native: 'Español', flag: '🇪🇸' },
+  { code: 'FR', name: 'French', native: 'Français', flag: '🇫🇷' },
+  { code: 'DE', name: 'German', native: 'Deutsch', flag: '🇩🇪' },
 ];
 
 const countries = [
-  { code: 'IN', name: 'India' },
-  { code: 'US', name: 'USA' },
-  { code: 'UK', name: 'UK' },
-  { code: 'AE', name: 'UAE' },
+  { code: 'IN', name: 'India', currency: '₹ INR', flag: '🇮🇳' },
+  { code: 'US', name: 'United States', currency: '$ USD', flag: '🇺🇸' },
+  { code: 'UK', name: 'United Kingdom', currency: '£ GBP', flag: '🇬🇧' },
+  { code: 'AE', name: 'UAE', currency: 'AED', flag: '🇦🇪' },
+  { code: 'CA', name: 'Canada', currency: '$ CAD', flag: '🇨🇦' },
+  { code: 'DE', name: 'Germany', currency: '€ EUR', flag: '🇩🇪' },
 ];
 
 /**
  * Clean Header Component with 3-Line Ascending Hamburger Before Logo,
- * Full-Width Mega Dropdown, and Live Real-time Course Search
+ * Live Real-time Course Search, and Functional Language & Region Selector
  */
 export function StudyWorldHeader() {
   const router = useRouter();
@@ -67,6 +71,7 @@ export function StudyWorldHeader() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
   const [regionDropdownOpen, setRegionDropdownOpen] = useState(false);
+  const [regionTab, setRegionTab] = useState('lang'); // 'lang' | 'country'
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
@@ -76,7 +81,44 @@ export function StudyWorldHeader() {
 
   const navRef = useRef(null);
   const searchContainerRef = useRef(null);
+  const regionContainerRef = useRef(null);
   const timeoutRef = useRef(null);
+
+  // Load saved language and country from localStorage
+  useEffect(() => {
+    try {
+      const savedLang = localStorage.getItem('ovs_lang');
+      if (savedLang) {
+        const found = languages.find((l) => l.code === savedLang);
+        if (found) setSelectedLang(found);
+      }
+      const savedCountry = localStorage.getItem('ovs_country');
+      if (savedCountry) {
+        const found = countries.find((c) => c.code === savedCountry);
+        if (found) setSelectedCountry(found);
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const handleSelectLanguage = (lang) => {
+    setSelectedLang(lang);
+    try {
+      localStorage.setItem('ovs_lang', lang.code);
+    } catch {
+      // ignore
+    }
+  };
+
+  const handleSelectCountry = (country) => {
+    setSelectedCountry(country);
+    try {
+      localStorage.setItem('ovs_country', country.code);
+    } catch {
+      // ignore
+    }
+  };
 
   // Live filter courses based on search query
   const searchResults = useMemo(() => {
@@ -117,11 +159,13 @@ export function StudyWorldHeader() {
     function handleClickOutside(event) {
       if (navRef.current && !navRef.current.contains(event.target)) {
         setAllCoursesOpen(false);
-        setRegionDropdownOpen(false);
         setUserDropdownOpen(false);
       }
       if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
         setSearchFocused(false);
+      }
+      if (regionContainerRef.current && !regionContainerRef.current.contains(event.target)) {
+        setRegionDropdownOpen(false);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
@@ -302,9 +346,10 @@ export function StudyWorldHeader() {
           </div>
 
           {/* COMBINED REGION / LANGUAGE SELECTOR */}
-          <div className="up-dropdown-container">
+          <div className="up-dropdown-container" ref={regionContainerRef} style={{ position: 'relative' }}>
             <button
-              className="up-region-btn"
+              type="button"
+              className={`up-region-btn ${regionDropdownOpen ? 'active' : ''}`}
               onClick={() => {
                 setRegionDropdownOpen(!regionDropdownOpen);
                 setAllCoursesOpen(false);
@@ -312,6 +357,7 @@ export function StudyWorldHeader() {
               }}
               title="Select Language & Country"
             >
+              <span className="up-region-flag">{selectedCountry.flag}</span>
               <span>{selectedLang.code}</span>
               <span className="up-divider-pipe">|</span>
               <span>{selectedCountry.code}</span>
@@ -319,36 +365,80 @@ export function StudyWorldHeader() {
             </button>
 
             {regionDropdownOpen && (
-              <div className="up-dropdown-menu up-fade-in">
-                <div className="up-menu-section">
-                  <div className="up-menu-title">Language</div>
-                  {languages.map((l) => (
-                    <button
-                      key={l.code}
-                      className={`up-menu-row ${selectedLang.code === l.code ? 'active' : ''}`}
-                      onClick={() => setSelectedLang(l)}
-                    >
-                      <span>{l.name} ({l.code})</span>
-                      {selectedLang.code === l.code && <Check size={13} />}
-                    </button>
-                  ))}
+              <div className="up-dropdown-menu up-region-dropdown up-fade-in">
+                {/* SELECTOR TABS */}
+                <div className="up-region-tabs">
+                  <button
+                    type="button"
+                    className={`up-region-tab ${regionTab === 'lang' ? 'active' : ''}`}
+                    onClick={() => setRegionTab('lang')}
+                  >
+                    <Globe size={13} />
+                    <span>Language</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`up-region-tab ${regionTab === 'country' ? 'active' : ''}`}
+                    onClick={() => setRegionTab('country')}
+                  >
+                    <MapPin size={13} />
+                    <span>Country ({selectedCountry.currency})</span>
+                  </button>
                 </div>
 
-                <div className="up-menu-divider" />
+                {/* TAB 1: LANGUAGES */}
+                {regionTab === 'lang' && (
+                  <div className="up-menu-section">
+                    <div className="up-menu-title">Select Preferred Language</div>
+                    <div className="up-region-list">
+                      {languages.map((l) => (
+                        <button
+                          key={l.code}
+                          type="button"
+                          className={`up-menu-row ${selectedLang.code === l.code ? 'active' : ''}`}
+                          onClick={() => {
+                            handleSelectLanguage(l);
+                            setRegionTab('country'); // seamlessly advance to country selection
+                          }}
+                        >
+                          <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontSize: '1.05rem' }}>{l.flag}</span>
+                            <strong>{l.native}</strong>
+                            <small style={{ color: '#64748B', fontWeight: 500 }}>({l.name})</small>
+                          </span>
+                          {selectedLang.code === l.code && <Check size={14} style={{ color: '#0F766E' }} />}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-                <div className="up-menu-section">
-                  <div className="up-menu-title">Country</div>
-                  {countries.map((c) => (
-                    <button
-                      key={c.code}
-                      className={`up-menu-row ${selectedCountry.code === c.code ? 'active' : ''}`}
-                      onClick={() => setSelectedCountry(c)}
-                    >
-                      <span>{c.name} ({c.code})</span>
-                      {selectedCountry.code === c.code && <Check size={13} />}
-                    </button>
-                  ))}
-                </div>
+                {/* TAB 2: COUNTRIES */}
+                {regionTab === 'country' && (
+                  <div className="up-menu-section">
+                    <div className="up-menu-title">Select Region &amp; Currency</div>
+                    <div className="up-region-list">
+                      {countries.map((c) => (
+                        <button
+                          key={c.code}
+                          type="button"
+                          className={`up-menu-row ${selectedCountry.code === c.code ? 'active' : ''}`}
+                          onClick={() => {
+                            handleSelectCountry(c);
+                            setRegionDropdownOpen(false); // close dropdown on final selection
+                          }}
+                        >
+                          <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontSize: '1.05rem' }}>{c.flag}</span>
+                            <strong>{c.name}</strong>
+                            <span className="up-currency-badge">{c.currency}</span>
+                          </span>
+                          {selectedCountry.code === c.code && <Check size={14} style={{ color: '#0F766E' }} />}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -577,17 +667,22 @@ export function StudyWorldHeader() {
 
           <div className="up-drawer-divider" />
 
-          {/* REGION SELECTION */}
+          {/* REGION & LANGUAGE SELECTION IN DRAWER */}
           <div className="up-drawer-section">
-            <div className="up-drawer-section-title">Region & Language</div>
+            <div className="up-drawer-section-title">Language &amp; Region</div>
             <div className="up-drawer-select-row">
               <label>Language:</label>
               <select
                 value={selectedLang.code}
-                onChange={(e) => setSelectedLang(languages.find((l) => l.code === e.target.value))}
+                onChange={(e) => {
+                  const l = languages.find((lang) => lang.code === e.target.value);
+                  if (l) handleSelectLanguage(l);
+                }}
               >
                 {languages.map((l) => (
-                  <option key={l.code} value={l.code}>{l.name} ({l.code})</option>
+                  <option key={l.code} value={l.code}>
+                    {l.flag} {l.native} ({l.name})
+                  </option>
                 ))}
               </select>
             </div>
@@ -595,10 +690,15 @@ export function StudyWorldHeader() {
               <label>Country:</label>
               <select
                 value={selectedCountry.code}
-                onChange={(e) => setSelectedCountry(countries.find((c) => c.code === e.target.value))}
+                onChange={(e) => {
+                  const c = countries.find((cntry) => cntry.code === e.target.value);
+                  if (c) handleSelectCountry(c);
+                }}
               >
                 {countries.map((c) => (
-                  <option key={c.code} value={c.code}>{c.name} ({c.code})</option>
+                  <option key={c.code} value={c.code}>
+                    {c.flag} {c.name} ({c.currency})
+                  </option>
                 ))}
               </select>
             </div>

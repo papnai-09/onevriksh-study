@@ -1565,6 +1565,71 @@
   right: 0;
 }
 
+/* REGION & LANGUAGE SELECTOR DROPDOWN */
+.up-region-dropdown {
+  min-width: 270px;
+  max-width: 320px;
+  padding: 8px;
+  border-radius: 12px;
+  right: 0;
+  left: auto;
+}
+
+.up-region-flag {
+  font-size: 0.85rem;
+  margin-right: 2px;
+}
+
+.up-region-tabs {
+  display: flex;
+  gap: 4px;
+  background: #F1F5F9;
+  padding: 3px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.up-region-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748B;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.up-region-tab.active {
+  background: #FFFFFF;
+  color: #0F172A;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+.up-region-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.up-currency-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: #E2E8F0;
+  color: #334155;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+}
+
 .up-menu-section {
   display: flex;
   flex-direction: column;

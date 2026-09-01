@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Search, ChevronDown, ChevronRight, Check, Globe, MapPin } from 'lucide-react';
+import { Search, ChevronDown, ChevronRight, Check, Globe, MapPin, Award, Globe2, Building2 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from './Brand';
 import { courses } from '@/data/site';
@@ -60,6 +60,7 @@ const countries = [
 
 /**
  * Clean Header Component with 3-Line Ascending Hamburger Before Logo,
+ * Standalone Individual Identity Pages (Certification, Study Abroad, Offline Centers),
  * Live Real-time Course Search, and Functional Language & Region Selector
  */
 export function StudyWorldHeader() {
@@ -263,7 +264,7 @@ export function StudyWorldHeader() {
             </button>
           </div>
 
-          {/* LEFT NAVIGATION LINKS (DESKTOP ONLY) */}
+          {/* LEFT INDIVIDUAL IDENTITY LINKS (DESKTOP ONLY) */}
           <nav className="up-nav-links up-desktop-only" aria-label="Header Links">
             <Link href="/certification" className="up-nav-item">
               <span className="up-nowrap">Certification</span>
@@ -588,7 +589,7 @@ export function StudyWorldHeader() {
         </div>
       )}
 
-      {/* SLIDE-IN MOBILE RIGHT DRAWER (CLEAN NAVIGATION - NO REDUNDANT SEARCH INSIDE) */}
+      {/* SLIDE-IN MOBILE RIGHT DRAWER (CLEAN NAVIGATION - STANDALONE INDIVIDUAL IDENTITIES) */}
       <div className={`up-drawer-backdrop ${mobileDrawerOpen ? 'visible' : ''}`} onClick={() => setMobileDrawerOpen(false)} />
       <aside className={`up-drawer ${mobileDrawerOpen ? 'open' : ''}`}>
         <div className="up-drawer-header">
@@ -597,7 +598,58 @@ export function StudyWorldHeader() {
         </div>
 
         <div className="up-drawer-body">
+          {/* STANDALONE INDIVIDUAL IDENTITIES: CERTIFICATION, STUDY ABROAD, OFFLINE CENTERS */}
+          <div className="up-drawer-primary-cards">
+            <Link
+              href="/certification"
+              className="up-drawer-primary-card"
+              onClick={() => setMobileDrawerOpen(false)}
+            >
+              <div className="up-drawer-card-icon gold">
+                <Award size={18} />
+              </div>
+              <div className="up-drawer-card-content">
+                <strong>Certification</strong>
+                <span>Recognized certificate upon completion</span>
+              </div>
+              <ChevronRight size={15} className="up-drawer-card-arrow" />
+            </Link>
+
+            <Link
+              href="/study-abroad"
+              className="up-drawer-primary-card"
+              onClick={() => setMobileDrawerOpen(false)}
+            >
+              <div className="up-drawer-card-icon blue">
+                <Globe2 size={18} />
+              </div>
+              <div className="up-drawer-card-content">
+                <strong>Study Abroad</strong>
+                <span>Global university admissions &amp; test prep</span>
+              </div>
+              <ChevronRight size={15} className="up-drawer-card-arrow" />
+            </Link>
+
+            <Link
+              href="/offline-center"
+              className="up-drawer-primary-card"
+              onClick={() => setMobileDrawerOpen(false)}
+            >
+              <div className="up-drawer-card-icon teal">
+                <Building2 size={18} />
+              </div>
+              <div className="up-drawer-card-content">
+                <strong>Offline Centers</strong>
+                <span>In-person classroom training hubs</span>
+              </div>
+              <ChevronRight size={15} className="up-drawer-card-arrow" />
+            </Link>
+          </div>
+
+          <div className="up-drawer-divider" />
+
           {/* CATEGORIZED COURSES IN DRAWER */}
+          <div className="up-drawer-section-heading">Browse Courses</div>
           {courseCategories.map((group) => (
             <div key={group.category} className="up-drawer-section">
               <div className="up-drawer-section-title">{group.category}</div>
@@ -613,22 +665,6 @@ export function StudyWorldHeader() {
               ))}
             </div>
           ))}
-
-          <div className="up-drawer-divider" />
-
-          {/* MAIN NAVIGATION LINKS */}
-          <div className="up-drawer-section">
-            <div className="up-drawer-section-title">Navigation</div>
-            <Link href="/certification" className="up-drawer-nav-row" onClick={() => setMobileDrawerOpen(false)}>
-              <span>Certification</span>
-            </Link>
-            <Link href="/study-abroad" className="up-drawer-nav-row" onClick={() => setMobileDrawerOpen(false)}>
-              <span>Study Abroad</span>
-            </Link>
-            <Link href="/offline-center" className="up-drawer-nav-row" onClick={() => setMobileDrawerOpen(false)}>
-              <span>Offline Centers</span>
-            </Link>
-          </div>
 
           <div className="up-drawer-divider" />
 
@@ -668,19 +704,6 @@ export function StudyWorldHeader() {
               </select>
             </div>
           </div>
-
-          <div className="up-drawer-divider" />
-
-          {/* AUTHENTICATION / SIGN IN */}
-          {user ? (
-            <button className="up-drawer-auth-btn logout" onClick={handleLogoutClick}>
-              Logout ({user.name?.split(' ')[0] || user.phone?.slice(-5) || 'User'})
-            </button>
-          ) : (
-            <button className="up-drawer-auth-btn login" onClick={handleLoginClick}>
-              Sign In with Mobile
-            </button>
-          )}
         </div>
       </aside>
     </div>

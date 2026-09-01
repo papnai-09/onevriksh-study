@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, BookOpenCheck, BriefcaseBusiness, Check, CirclePlay, UsersRound } from 'lucide-react';
+import { ArrowRight, CirclePlay, Check } from 'lucide-react';
 import { CourseCard } from '@/components/CourseCard';
 import { SectionHeading } from '@/components/SectionHeading';
 import { courses, stats } from '@/data/site';
@@ -73,18 +73,21 @@ export default function HomePage() {
         <div className="container">
           <SectionHeading align="center" eyebrow="Built around your outcome" title="More than classroom learning" text="Every part of the experience is designed to turn understanding into capability." />
           <div className="feature-grid">
-            {[
-              [BookOpenCheck, 'Learn by doing', 'Practice on live briefs, assignments and projects that become proof of your skills.'],
-              [UsersRound, 'Mentors who know you', 'Small batches create room for questions, feedback and individual attention.'],
-              [BriefcaseBusiness, 'Become career ready', 'Get portfolio reviews, interview practice and placement guidance that stays practical.']
-            ].map(([Icon, title, text], index) => (
-              <article className="feature-item" key={title}>
-                <span className="feature-number">0{index + 1}</span>
-                <div className="feature-icon"><Icon /></div>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </article>
-            ))}
+            <article className="feature-item">
+              <span className="feature-number">01</span>
+              <h3>Learn by doing</h3>
+              <p>Practice on live briefs, assignments and projects that become proof of your skills.</p>
+            </article>
+            <article className="feature-item">
+              <span className="feature-number">02</span>
+              <h3>Mentors who know you</h3>
+              <p>Small batches create room for questions, feedback and individual attention.</p>
+            </article>
+            <article className="feature-item">
+              <span className="feature-number">03</span>
+              <h3>Become career ready</h3>
+              <p>Get portfolio reviews, interview practice and placement guidance that stays practical.</p>
+            </article>
           </div>
         </div>
       </section>

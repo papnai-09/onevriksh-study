@@ -1,39 +1,49 @@
 import { courses, notices, studentData, adminStats } from '@/data/site';
 
-// Local storage key for client-side authentication
 const AUTH_KEY = 'onevriksh_auth_user';
 
 export const api = {
   // ==========================================
-  // Self-Contained Client Authentication
+  // Mobile Number + OTP Authentication
   // ==========================================
 
-  async login(credentials) {
-    const { email, password } = credentials || {};
-    const lowerEmail = (email || '').toLowerCase().trim();
-
-    if (!lowerEmail || !password) {
-      throw new Error('Please provide both email and password.');
+  async sendOtp(phone) {
+    const cleanPhone = (phone || '').replace(/\D/g, '');
+    if (cleanPhone.length < 10) {
+      throw new Error('Please enter a valid 10-digit mobile number.');
     }
+    // Instant OTP generation (simulated for live/production readiness)
+    return {
+      success: true,
+      message: `OTP sent successfully to +91 ${cleanPhone.slice(-10)}`,
+      otp: '123456'
+    };
+  },
 
+  async login(credentials) {
+    const { phone, otp, email, role } = credentials || {};
+    const cleanPhone = (phone || '').replace(/\D/g, '');
+
+    // Allow quick role login or phone OTP login
     let user;
-    if (lowerEmail.includes('admin') || lowerEmail === 'admin@onevriksh.com') {
+    if (cleanPhone.includes('9876543210') || (email && email.includes('admin')) || role === 'admin') {
       user = {
         id: 'u-admin',
         name: 'Platform Administrator',
-        email: lowerEmail,
-        role: 'admin',
         phone: '+91 98765 43210',
+        email: 'admin@onevriksh.com',
+        role: 'admin',
         active: true
       };
     } else {
+      const studentPhone = cleanPhone ? `+91 ${cleanPhone.slice(-10)}` : '+91 98123 45678';
       user = {
         id: 'u-student',
-        name: lowerEmail.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Aarav Sharma',
-        email: lowerEmail,
+        name: credentials.name || 'Rahul Sharma',
+        phone: studentPhone,
+        email: 'student@onevriksh.com',
         role: 'student',
         studentId: 'OVS202601',
-        phone: '+91 98123 45678',
         active: true
       };
     }
@@ -46,14 +56,21 @@ export const api = {
   },
 
   async register(userData) {
-    const { name, email, phone } = userData || {};
+    const { name, phone, course } = userData || {};
+    const cleanPhone = (phone || '').replace(/\D/g, '');
+
+    if (!name || cleanPhone.length < 10) {
+      throw new Error('Please enter your full name and a valid 10-digit mobile number.');
+    }
+
     const user = {
       id: `u-${Date.now()}`,
-      name: name || 'Student',
-      email: (email || '').toLowerCase().trim(),
+      name: name.trim(),
+      phone: `+91 ${cleanPhone.slice(-10)}`,
+      email: `${name.toLowerCase().replace(/\s+/g, '')}@student.onevriksh.com`,
       role: 'student',
       studentId: `OVS${Date.now().toString().slice(-6)}`,
-      phone: phone || '',
+      course: course || 'Digital Marketing',
       active: true
     };
 
@@ -61,7 +78,7 @@ export const api = {
       localStorage.setItem(AUTH_KEY, JSON.stringify(user));
     }
 
-    return { success: true, message: 'Registration successful', user };
+    return { success: true, message: 'Account created successfully', user };
   },
 
   async logout() {
@@ -85,27 +102,6 @@ export const api = {
     return null;
   },
 
-  async forgotPassword(email) {
-    return {
-      success: true,
-      message: `Password reset instructions have been sent to ${email || 'your email'}.`
-    };
-  },
-
-  async resetPassword(token, password) {
-    return {
-      success: true,
-      message: 'Your password has been reset successfully. You can now log in.'
-    };
-  },
-
-  async changePassword(passwords) {
-    return {
-      success: true,
-      message: 'Password updated successfully.'
-    };
-  },
-
   async updateProfile(profileData) {
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem(AUTH_KEY);
@@ -120,7 +116,7 @@ export const api = {
   },
 
   // ==========================================
-  // Public Educational Data & Leads
+  // Courses, Notices, Leads, Certificates
   // ==========================================
 
   async getCourses(params = {}) {
@@ -167,16 +163,9 @@ export const api = {
     };
   },
 
-  // ==========================================
-  // Certificate Verification
-  // ==========================================
-
   async verifyCertificate(certificateNumber) {
     const num = (certificateNumber || '').trim().toUpperCase();
-
-    if (!num) {
-      throw new Error('Please enter a certificate ID.');
-    }
+    if (!num) throw new Error('Please enter a certificate ID.');
 
     if (num === 'OVS-CERT-2026-001' || num.includes('2026-001')) {
       return {
@@ -210,7 +199,6 @@ export const api = {
       };
     }
 
-    // Dynamic verification for any valid OVS-CERT pattern
     if (num.startsWith('OVS-')) {
       return {
         success: true,
@@ -227,12 +215,8 @@ export const api = {
       };
     }
 
-    throw new Error('No verified certificate found for this certificate ID. Please verify the ID format (e.g. OVS-CERT-2026-001).');
+    throw new Error('No verified certificate found for this certificate ID.');
   },
-
-  // ==========================================
-  // Student & Admin Portals
-  // ==========================================
 
   async getStudentOverview() {
     return { success: true, ...studentData };

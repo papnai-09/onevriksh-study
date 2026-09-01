@@ -1,41 +1,81 @@
 'use client';
 
-import { useState, Suspense } from 'react';
+import { useState, Suspense, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from '@/components/Brand';
 import { AuthLayout } from '@/components/AuthLayout';
-import { Lock, Mail, Eye, EyeOff, LoaderCircle, AlertCircle, ArrowRight } from 'lucide-react';
+import { Phone, ShieldCheck, LoaderCircle, AlertCircle, ArrowRight, RefreshCw, KeyRound, Sparkles } from 'lucide-react';
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { login, user } = useAuth();
+  const { login, sendOtp, user } = useAuth();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const [phone, setPhone] = useState('');
+  const [otp, setOtp] = useState('');
+  const [step, setStep] = useState(1); // 1: Enter Phone, 2: Enter OTP
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [timer, setTimer] = useState(30);
+  const [canResend, setCanResend] = useState(false);
 
-  if (user) {
-    const destination = user.role === 'admin' ? '/admin' : '/student';
-    router.replace(destination);
-  }
+  useEffect(() => {
+    if (user) {
+      const destination = user.role === 'admin' ? '/admin' : '/student';
+      router.replace(destination);
+    }
+  }, [user, router]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    let interval;
+    if (step === 2 && timer > 0) {
+      interval = setInterval(() => {
+        setTimer((t) => t - 1);
+      }, 1000);
+    } else if (timer === 0) {
+      setCanResend(true);
+    }
+    return () => clearInterval(interval);
+  }, [step, timer]);
+
+  const handleSendOtp = async (e) => {
+    if (e) e.preventDefault();
     setError('');
 
-    if (!email.trim() || !password) {
-      setError('Please enter both your email address and password.');
+    const cleanPhone = phone.replace(/\D/g, '');
+    if (cleanPhone.length < 10) {
+      setError('Please enter a valid 10-digit mobile number.');
       return;
     }
 
     setLoading(true);
     try {
-      const loggedInUser = await login({ email: email.trim(), password });
+      await sendOtp(cleanPhone);
+      setStep(2);
+      setTimer(30);
+      setCanResend(false);
+      setOtp('123456'); // Pre-fill test OTP for instantaneous seamless testing
+    } catch (err) {
+      setError(err.message || 'Failed to send OTP. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async (e) => {
+    if (e) e.preventDefault();
+    setError('');
+
+    if (!otp.trim()) {
+      setError('Please enter the 6-digit verification code.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const loggedInUser = await login({ phone, otp });
       const returnUrl = searchParams.get('returnUrl');
       if (returnUrl && returnUrl.startsWith('/')) {
         router.push(returnUrl);
@@ -44,7 +84,22 @@ function LoginForm() {
         router.push(dest);
       }
     } catch (err) {
-      setError(err.message || 'Invalid email or password. Please try again.');
+      setError(err.message || 'Invalid verification code. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleQuickDemo = async (role) => {
+    setError('');
+    setLoading(true);
+    try {
+      const demoPhone = role === 'admin' ? '9876543210' : '9812345678';
+      const loggedInUser = await login({ phone: demoPhone, otp: '123456', role });
+      const dest = loggedInUser.role === 'admin' ? '/admin' : '/student';
+      router.push(dest);
+    } catch (err) {
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -57,9 +112,9 @@ function LoginForm() {
       </div>
 
       <div className="auth-title" style={{ marginBottom: '20px' }}>
-        <span>Student & Staff Portal</span>
-        <h1>Sign In to Onevriksh</h1>
-        <p>Access your enrolled courses, live class schedules, and student progress.</p>
+        <span>Student & Staff Access</span>
+        <h1>Sign In with Mobile</h1>
+        <p>Enter your mobile number to receive an instant verification code.</p>
       </div>
 
       {error && (
@@ -83,81 +138,203 @@ function LoginForm() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '16px' }}>
-        <label>
-          <span>Email address</span>
-          <div className="input-icon">
-            <Mail size={18} />
-            <input
-              id="login-email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              required
-              autoComplete="email"
-              disabled={loading}
-            />
-          </div>
-        </label>
+      {step === 1 ? (
+        <form onSubmit={handleSendOtp} style={{ display: 'grid', gap: '16px' }}>
+          <label>
+            <span>Mobile Number</span>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '0 12px',
+                  background: 'var(--surface-2)',
+                  border: '1px solid var(--line)',
+                  borderRadius: '6px',
+                  fontWeight: 600,
+                  fontSize: '0.85rem',
+                  color: 'var(--ink)'
+                }}
+              >
+                +91
+              </div>
+              <div className="input-icon" style={{ flex: 1 }}>
+                <Phone size={18} />
+                <input
+                  id="login-phone"
+                  type="tel"
+                  maxLength={10}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                  placeholder="98765 43210"
+                  required
+                  autoFocus
+                  disabled={loading}
+                />
+              </div>
+            </div>
+            <small style={{ color: 'var(--muted)', fontSize: '0.75rem', marginTop: '4px', display: 'block' }}>
+              We will send a 6-digit OTP for instant login.
+            </small>
+          </label>
 
-        <label>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span>Password</span>
-            <Link href="/forgot-password" style={{ fontSize: '0.72rem', color: 'var(--blue)', fontWeight: 700 }}>
-              Forgot password?
-            </Link>
-          </div>
-          <div className="input-icon">
-            <Lock size={18} />
-            <input
-              id="login-password"
-              type={showPassword ? 'text' : 'password'}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              required
-              autoComplete="current-password"
-              disabled={loading}
-            />
+          <button
+            type="submit"
+            className="button button-primary button-full"
+            disabled={loading || phone.length < 10}
+            style={{ marginTop: '4px' }}
+          >
+            {loading ? (
+              <>
+                <LoaderCircle size={18} className="animate-spin" /> Sending OTP...
+              </>
+            ) : (
+              <>
+                Get Verification Code <ArrowRight size={18} />
+              </>
+            )}
+          </button>
+        </form>
+      ) : (
+        <form onSubmit={handleVerifyOtp} style={{ display: 'grid', gap: '16px' }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '10px 14px',
+              background: 'var(--surface-2)',
+              borderRadius: '6px',
+              border: '1px solid var(--line)',
+              fontSize: '0.85rem'
+            }}
+          >
+            <span>
+              Code sent to <strong>+91 {phone}</strong>
+            </span>
             <button
               type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              aria-label={showPassword ? 'Hide password' : 'Show password'}
-              style={{ border: 0, background: 'transparent', cursor: 'pointer', color: 'var(--muted)', padding: '2px', display: 'grid', placeItems: 'center' }}
+              onClick={() => {
+                setStep(1);
+                setError('');
+              }}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#0F766E',
+                fontWeight: 600,
+                fontSize: '0.8rem',
+                cursor: 'pointer'
+              }}
             >
-              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              Change
             </button>
           </div>
-        </label>
 
-        <button type="submit" className="button button-primary button-large button-wide" disabled={loading} style={{ marginTop: '8px' }}>
-          {loading ? <LoaderCircle size={18} className="spin" /> : <ArrowRight size={18} />}
-          <span>{loading ? 'Signing in...' : 'Sign In to Portal'}</span>
-        </button>
-      </form>
+          <label>
+            <span>6-Digit Verification Code</span>
+            <div className="input-icon">
+              <KeyRound size={18} />
+              <input
+                id="login-otp"
+                type="text"
+                maxLength={6}
+                value={otp}
+                onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
+                placeholder="123456"
+                required
+                autoFocus
+                disabled={loading}
+                style={{ letterSpacing: '0.2em', fontWeight: 700, fontSize: '1.1rem' }}
+              />
+            </div>
+            <small style={{ color: 'var(--muted)', fontSize: '0.75rem', marginTop: '4px', display: 'block' }}>
+              Default Test OTP: <strong>123456</strong>
+            </small>
+          </label>
 
-      <div className="auth-switch" style={{ marginTop: '22px', textAlign: 'center', fontSize: '0.82rem' }}>
-        <span>Don&apos;t have an account yet? </span>
-        <Link href="/register" style={{ color: 'var(--blue)', fontWeight: 800 }}>
-          Create student account
-        </Link>
-      </div>
+          <button
+            type="submit"
+            className="button button-primary button-full"
+            disabled={loading || otp.length < 6}
+          >
+            {loading ? (
+              <>
+                <LoaderCircle size={18} className="animate-spin" /> Verifying...
+              </>
+            ) : (
+              <>
+                <ShieldCheck size={18} /> Verify &amp; Sign In
+              </>
+            )}
+          </button>
 
+          <div style={{ textAlign: 'center', fontSize: '0.8rem', color: 'var(--muted)' }}>
+            {canResend ? (
+              <button
+                type="button"
+                onClick={handleSendOtp}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#0F766E',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
+              >
+                <RefreshCw size={13} /> Resend OTP
+              </button>
+            ) : (
+              <span>Resend OTP in {timer}s</span>
+            )}
+          </div>
+        </form>
+      )}
+
+      {/* QUICK DEMO ACCESS PANEL */}
       <div
         style={{
           marginTop: '24px',
-          padding: '14px',
-          background: 'var(--surface-2)',
-          border: '1px solid var(--line)',
-          borderRadius: '6px',
-          fontSize: '0.75rem',
-          color: 'var(--muted)'
+          paddingTop: '20px',
+          borderTop: '1px solid var(--line)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '8px'
         }}
       >
-        <strong style={{ color: 'var(--ink)' }}>Default Test Credentials:</strong>
-        <div style={{ marginTop: '4px' }}>Admin: <code>admin@onevriksh.com</code> / <code>Admin@123456</code></div>
-        <div>Student: <code>student@onevriksh.com</code> / <code>Student@123456</code></div>
+        <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--muted)', letterSpacing: '0.05em' }}>
+          Quick 1-Click Access
+        </span>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+          <button
+            type="button"
+            className="button button-ghost"
+            style={{ fontSize: '0.78rem', padding: '8px 10px', justifyContent: 'center' }}
+            onClick={() => handleQuickDemo('student')}
+            disabled={loading}
+          >
+            <Sparkles size={14} /> Student Demo
+          </button>
+          <button
+            type="button"
+            className="button button-ghost"
+            style={{ fontSize: '0.78rem', padding: '8px 10px', justifyContent: 'center' }}
+            onClick={() => handleQuickDemo('admin')}
+            disabled={loading}
+          >
+            <Sparkles size={14} /> Admin Demo
+          </button>
+        </div>
+      </div>
+
+      <div className="auth-footer" style={{ marginTop: '20px', textAlign: 'center', fontSize: '0.85rem' }}>
+        <span>New to Onevriksh?</span>{' '}
+        <Link href="/register" className="text-link" style={{ fontWeight: 600 }}>
+          Create student account
+        </Link>
       </div>
     </div>
   );
@@ -166,7 +343,13 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <AuthLayout>
-      <Suspense fallback={<div style={{ textAlign: 'center', padding: '40px' }}><LoaderCircle className="spin" size={32} /></div>}>
+      <Suspense
+        fallback={
+          <div className="auth-card" style={{ display: 'grid', placeItems: 'center', minHeight: '300px' }}>
+            <LoaderCircle size={28} className="animate-spin" />
+          </div>
+        }
+      >
         <LoginForm />
       </Suspense>
     </AuthLayout>

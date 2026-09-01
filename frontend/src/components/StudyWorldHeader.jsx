@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Search, ChevronDown, ChevronRight, Check } from 'lucide-react';
+import { Search, ChevronDown, ChevronRight, Check, Sparkles } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from './Brand';
 import { courses } from '@/data/site';
@@ -55,7 +55,8 @@ const countries = [
 ];
 
 /**
- * Clean Header Component with Full-Width Hover Mega Dropdown and Live Real-time Course Search
+ * Clean Header Component with 3-Line Ascending Hamburger Before Logo,
+ * Full-Width Mega Dropdown, and Live Real-time Course Search
  */
 export function StudyWorldHeader() {
   const router = useRouter();
@@ -104,17 +105,14 @@ export function StudyWorldHeader() {
     }, 150);
   };
 
-  // Clear timeout on unmount
   useEffect(() => {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);
 
-  // Active category group object
   const activeGroup = courseCategories.find((c) => c.category === activeCategory) || courseCategories[0];
 
-  // Close dropdowns on click outside
   useEffect(() => {
     function handleClickOutside(event) {
       if (navRef.current && !navRef.current.contains(event.target)) {
@@ -130,7 +128,6 @@ export function StudyWorldHeader() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Prevent background scrolling when mobile drawer is open
   useEffect(() => {
     if (mobileDrawerOpen) {
       document.body.style.overflow = 'hidden';
@@ -188,14 +185,26 @@ export function StudyWorldHeader() {
       onMouseLeave={closeAllCourses}
     >
       <header className="up-header">
-        {/* LEFT NAV GROUP: LOGO, ALL COURSES, CERTIFICATION, STUDY ABROAD, OFFLINE CENTERS */}
+        {/* LEFT NAV GROUP: (MOBILE: 3 ASCENDING LINES HAMBURGER BEFORE LOGO) + LOGO + ALL COURSES + LINKS */}
         <div className="up-left-nav-group">
+          {/* 3 ASCENDING LINES HAMBURGER BUTTON (MOBILE ONLY — PLACED BEFORE LOGO) */}
+          <button
+            type="button"
+            className="up-mobile-menu-btn up-mobile-only"
+            onClick={() => setMobileDrawerOpen(true)}
+            aria-label="Open Navigation Menu"
+          >
+            <span className="up-menu-bar up-bar-1" />
+            <span className="up-menu-bar up-bar-2" />
+            <span className="up-menu-bar up-bar-3" />
+          </button>
+
           {/* BRAND LOGO */}
           <div className="up-brand-wrap">
             <Brand />
           </div>
 
-          {/* ALL COURSES BUTTON (HOVER OPEN & CLOSE) */}
+          {/* ALL COURSES BUTTON (DESKTOP ONLY) */}
           <div
             className="up-dropdown-container up-desktop-only"
             onMouseEnter={openAllCourses}
@@ -210,7 +219,7 @@ export function StudyWorldHeader() {
             </button>
           </div>
 
-          {/* LEFT NAVIGATION LINKS */}
+          {/* LEFT NAVIGATION LINKS (DESKTOP ONLY) */}
           <nav className="up-nav-links up-desktop-only" aria-label="Header Links">
             <Link href="/certification" className="up-nav-item">
               <span className="up-nowrap">Certification</span>
@@ -259,7 +268,7 @@ export function StudyWorldHeader() {
               )}
             </div>
 
-            {/* LIVE SEARCH RESULTS DROPDOWN */}
+            {/* LIVE SEARCH RESULTS DROPDOWN (RIGHT-ANCHORED TO SEARCH BAR) */}
             {showSearchResults && (
               <div className="up-search-dropdown up-fade-in">
                 <div className="up-search-dropdown-header">
@@ -351,7 +360,7 @@ export function StudyWorldHeader() {
                 className="up-signin-btn"
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
               >
-                <span className="up-nowrap">{user.name?.split(' ')[0] || 'User'}</span>
+                <span className="up-nowrap">{user.name?.split(' ')[0] || user.phone?.slice(-5) || 'User'}</span>
                 <ChevronDown size={12} className={`up-chevron ${userDropdownOpen ? 'open' : ''}`} />
               </button>
 
@@ -359,7 +368,7 @@ export function StudyWorldHeader() {
                 <div className="up-dropdown-menu up-dropdown-right up-fade-in">
                   <div className="up-user-info">
                     <strong>{user.name}</strong>
-                    <small>{user.email}</small>
+                    <small>{user.phone || user.email}</small>
                   </div>
                   <div className="up-menu-divider" />
                   <Link
@@ -382,26 +391,31 @@ export function StudyWorldHeader() {
           )}
         </div>
 
-        {/* MOBILE CONTROLS */}
-        <div className="up-mobile-controls">
+        {/* MOBILE RIGHT CONTROLS (SEARCH & SIGN IN) */}
+        <div className="up-mobile-controls up-mobile-only">
           <button
             className="up-mobile-text-btn"
             onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
             aria-label="Toggle Search"
           >
-            <Search size={14} />
+            <Search size={16} />
           </button>
-          <button
-            className="up-mobile-text-btn"
-            onClick={() => setMobileDrawerOpen(true)}
-            aria-label="Open Navigation Menu"
-          >
-            Menu
-          </button>
+          {user ? (
+            <button
+              className="up-mobile-text-btn"
+              onClick={() => router.push(user.role === 'admin' ? '/admin' : '/student')}
+            >
+              {user.name?.split(' ')[0] || 'Portal'}
+            </button>
+          ) : (
+            <button className="up-mobile-text-btn" onClick={handleLoginClick}>
+              Sign In
+            </button>
+          )}
         </div>
       </header>
 
-      {/* FULL-WIDTH STRETCHED MEGA DROPDOWN (AUTO CLOSES WHEN CURSOR LEAVES) */}
+      {/* FULL-WIDTH STRETCHED MEGA DROPDOWN */}
       {allCoursesOpen && (
         <div
           className="up-fullwidth-hover-mega up-fade-in"
@@ -595,11 +609,11 @@ export function StudyWorldHeader() {
           {/* AUTHENTICATION / SIGN IN */}
           {user ? (
             <button className="up-drawer-auth-btn logout" onClick={handleLogoutClick}>
-              Logout ({user.name?.split(' ')[0] || 'User'})
+              Logout ({user.name?.split(' ')[0] || user.phone?.slice(-5) || 'User'})
             </button>
           ) : (
             <button className="up-drawer-auth-btn login" onClick={handleLoginClick}>
-              Sign In
+              Sign In with Mobile
             </button>
           )}
         </div>

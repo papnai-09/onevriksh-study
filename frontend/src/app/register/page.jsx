@@ -6,18 +6,18 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from '@/components/Brand';
 import { AuthLayout } from '@/components/AuthLayout';
-import { Lock, Mail, User, Phone, Eye, EyeOff, LoaderCircle, AlertCircle, ArrowRight } from 'lucide-react';
+import { User, Phone, BookOpen, ShieldCheck, KeyRound, LoaderCircle, AlertCircle, ArrowRight } from 'lucide-react';
+import { courses } from '@/data/site';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const { register, user } = useAuth();
+  const { register, sendOtp, user } = useAuth();
 
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const [course, setCourse] = useState(courses[0].title);
+  const [otp, setOtp] = useState('');
+  const [step, setStep] = useState(1); // 1: Details, 2: OTP Verification
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -25,17 +25,38 @@ export default function RegisterPage() {
     router.replace('/student');
   }
 
-  const handleSubmit = async (e) => {
+  const handleProceedToOtp = async (e) => {
     e.preventDefault();
     setError('');
 
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters long.');
+    const cleanPhone = phone.replace(/\D/g, '');
+    if (!name.trim()) {
+      setError('Please enter your full name.');
+      return;
+    }
+    if (cleanPhone.length < 10) {
+      setError('Please enter a valid 10-digit mobile number.');
       return;
     }
 
-    if (password !== confirmPassword) {
-      setError('Passwords do not match. Please re-enter.');
+    setLoading(true);
+    try {
+      await sendOtp(cleanPhone);
+      setStep(2);
+      setOtp('123456'); // Pre-fill test OTP
+    } catch (err) {
+      setError(err.message || 'Failed to send OTP.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    if (!otp.trim()) {
+      setError('Please enter the 6-digit verification code.');
       return;
     }
 
@@ -43,13 +64,13 @@ export default function RegisterPage() {
     try {
       await register({
         name: name.trim(),
-        email: email.trim(),
         phone: phone.trim(),
-        password
+        course,
+        otp
       });
       router.push('/student');
     } catch (err) {
-      setError(err.message || 'Registration failed. Please check your information.');
+      setError(err.message || 'Registration failed.');
     } finally {
       setLoading(false);
     }
@@ -64,7 +85,7 @@ export default function RegisterPage() {
 
         <div className="auth-title" style={{ marginBottom: '20px' }}>
           <span>Student Registration</span>
-          <h1>Create Your Student Account</h1>
+          <h1>Create Student Account</h1>
           <p>Join Onevriksh Study to access classroom materials, track attendance, and build skills.</p>
         </div>
 
@@ -89,105 +110,181 @@ export default function RegisterPage() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '15px' }}>
-          <label>
-            <span>Full name</span>
-            <div className="input-icon">
-              <User size={18} />
-              <input
-                id="reg-name"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Aarav Sharma"
-                required
-                disabled={loading}
-              />
-            </div>
-          </label>
+        {step === 1 ? (
+          <form onSubmit={handleProceedToOtp} style={{ display: 'grid', gap: '15px' }}>
+            <label>
+              <span>Full name</span>
+              <div className="input-icon">
+                <User size={18} />
+                <input
+                  id="reg-name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="e.g. Rahul Sharma"
+                  required
+                  autoFocus
+                  disabled={loading}
+                />
+              </div>
+            </label>
 
-          <label>
-            <span>Email address</span>
-            <div className="input-icon">
-              <Mail size={18} />
-              <input
-                id="reg-email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                required
-                autoComplete="email"
-                disabled={loading}
-              />
-            </div>
-          </label>
+            <label>
+              <span>Mobile Number</span>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0 12px',
+                    background: 'var(--surface-2)',
+                    border: '1px solid var(--line)',
+                    borderRadius: '6px',
+                    fontWeight: 600,
+                    fontSize: '0.85rem',
+                    color: 'var(--ink)'
+                  }}
+                >
+                  +91
+                </div>
+                <div className="input-icon" style={{ flex: 1 }}>
+                  <Phone size={18} />
+                  <input
+                    id="reg-phone"
+                    type="tel"
+                    maxLength={10}
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                    placeholder="98765 43210"
+                    required
+                    disabled={loading}
+                  />
+                </div>
+              </div>
+            </label>
 
-          <label>
-            <span>Mobile number</span>
-            <div className="input-icon">
-              <Phone size={18} />
-              <input
-                id="reg-phone"
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="+91 98765 43210"
-                disabled={loading}
-              />
-            </div>
-          </label>
+            <label>
+              <span>Interested Program</span>
+              <div className="input-icon">
+                <BookOpen size={18} />
+                <select
+                  id="reg-course"
+                  value={course}
+                  onChange={(e) => setCourse(e.target.value)}
+                  disabled={loading}
+                  style={{
+                    width: '100%',
+                    padding: '12px 14px 12px 42px',
+                    background: 'var(--surface-2)',
+                    border: '1px solid var(--line)',
+                    borderRadius: '6px',
+                    fontSize: '0.9rem',
+                    color: 'var(--ink)'
+                  }}
+                >
+                  {courses.map((c) => (
+                    <option key={c.slug} value={c.title}>
+                      {c.title} ({c.category})
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </label>
 
-          <label>
-            <span>Create password</span>
-            <div className="input-icon">
-              <Lock size={18} />
-              <input
-                id="reg-password"
-                type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="At least 6 characters"
-                required
-                disabled={loading}
-              />
+            <button
+              type="submit"
+              className="button button-primary button-full"
+              disabled={loading || !name.trim() || phone.length < 10}
+              style={{ marginTop: '8px' }}
+            >
+              {loading ? (
+                <>
+                  <LoaderCircle size={18} className="animate-spin" /> Sending OTP...
+                </>
+              ) : (
+                <>
+                  Verify Mobile &amp; Continue <ArrowRight size={18} />
+                </>
+              )}
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleRegisterSubmit} style={{ display: 'grid', gap: '16px' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '10px 14px',
+                background: 'var(--surface-2)',
+                borderRadius: '6px',
+                border: '1px solid var(--line)',
+                fontSize: '0.85rem'
+              }}
+            >
+              <span>
+                Code sent to <strong>+91 {phone}</strong>
+              </span>
               <button
                 type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
-                style={{ border: 0, background: 'transparent', cursor: 'pointer', color: 'var(--muted)', padding: '2px', display: 'grid', placeItems: 'center' }}
+                onClick={() => setStep(1)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#0F766E',
+                  fontWeight: 600,
+                  fontSize: '0.8rem',
+                  cursor: 'pointer'
+                }}
               >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                Change
               </button>
             </div>
-          </label>
 
-          <label>
-            <span>Confirm password</span>
-            <div className="input-icon">
-              <Lock size={18} />
-              <input
-                id="reg-confirm"
-                type={showPassword ? 'text' : 'password'}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Re-enter password"
-                required
-                disabled={loading}
-              />
-            </div>
-          </label>
+            <label>
+              <span>6-Digit Verification Code</span>
+              <div className="input-icon">
+                <KeyRound size={18} />
+                <input
+                  id="reg-otp"
+                  type="text"
+                  maxLength={6}
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
+                  placeholder="123456"
+                  required
+                  autoFocus
+                  disabled={loading}
+                  style={{ letterSpacing: '0.2em', fontWeight: 700, fontSize: '1.1rem' }}
+                />
+              </div>
+              <small style={{ color: 'var(--muted)', fontSize: '0.75rem', marginTop: '4px', display: 'block' }}>
+                Default Test OTP: <strong>123456</strong>
+              </small>
+            </label>
 
-          <button type="submit" className="button button-primary button-large button-wide" disabled={loading} style={{ marginTop: '8px' }}>
-            {loading ? <LoaderCircle size={18} className="spin" /> : <ArrowRight size={18} />}
-            <span>{loading ? 'Creating account...' : 'Create Account & Access Portal'}</span>
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="button button-primary button-full"
+              disabled={loading || otp.length < 6}
+            >
+              {loading ? (
+                <>
+                  <LoaderCircle size={18} className="animate-spin" /> Creating Account...
+                </>
+              ) : (
+                <>
+                  <ShieldCheck size={18} /> Complete Registration
+                </>
+              )}
+            </button>
+          </form>
+        )}
 
-        <div className="auth-switch" style={{ marginTop: '22px', textAlign: 'center', fontSize: '0.82rem' }}>
-          <span>Already have an account? </span>
-          <Link href="/login" style={{ color: 'var(--blue)', fontWeight: 800 }}>
-            Sign in here
+        <div className="auth-footer" style={{ marginTop: '20px', textAlign: 'center', fontSize: '0.85rem' }}>
+          <span>Already registered?</span>{' '}
+          <Link href="/login" className="text-link" style={{ fontWeight: 600 }}>
+            Sign in with mobile
           </Link>
         </div>
       </div>

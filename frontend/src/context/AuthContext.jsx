@@ -29,7 +29,14 @@ export function AuthProvider({ children }) {
   }, [fetchUser]);
 
   /**
-   * Local Login
+   * Send OTP to Mobile Number
+   */
+  const sendOtp = useCallback(async (phone) => {
+    return await api.sendOtp(phone);
+  }, []);
+
+  /**
+   * Mobile OTP Login
    */
   const login = useCallback(async (credentials) => {
     const data = await api.login(credentials);
@@ -41,7 +48,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   /**
-   * Local Registration
+   * Mobile Registration
    */
   const register = useCallback(async (userData) => {
     const data = await api.register(userData);
@@ -53,13 +60,13 @@ export function AuthProvider({ children }) {
   }, []);
 
   /**
-   * Local Logout
+   * Logout
    */
   const logout = useCallback(async () => {
     try {
       await api.logout();
     } catch (err) {
-      console.warn('Logout request completed with warning:', err.message);
+      console.warn('Logout:', err.message);
     } finally {
       setUser(null);
     }
@@ -74,6 +81,7 @@ export function AuthProvider({ children }) {
         isAuthenticated: !!user,
         isAdmin: user?.role === 'admin',
         isStudent: user?.role === 'student',
+        sendOtp,
         login,
         register,
         logout,

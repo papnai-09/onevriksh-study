@@ -2240,6 +2240,91 @@
   }
 }
 
+/* HIGH-VISIBILITY HERO SECTION ON MOBILE SCREENS */
+@media (max-width: 768px) {
+  .hero {
+    height: auto !important;
+    min-height: 520px !important;
+    padding: 40px 0 50px !important;
+    display: flex !important;
+    align-items: center !important;
+    position: relative !important;
+  }
+  .hero-media img {
+    object-position: center 35% !important;
+    filter: brightness(0.75) contrast(1.05);
+  }
+  .hero-overlay {
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.88) 0%, rgba(15, 23, 42, 0.80) 55%, rgba(15, 23, 42, 0.94) 100%) !important;
+  }
+  .hero-copy {
+    padding-bottom: 0 !important;
+    max-width: 100% !important;
+  }
+  .hero-kicker {
+    background: rgba(45, 212, 191, 0.16) !important;
+    border: 1px solid rgba(45, 212, 191, 0.45) !important;
+    color: #2DD4BF !important;
+    font-size: 0.72rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.08em !important;
+  }
+  .hero h1 {
+    color: #FFFFFF !important;
+    font-size: clamp(2rem, 7.5vw, 2.7rem) !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.02em !important;
+    margin: 16px 0 14px !important;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6) !important;
+  }
+  .hero h1 em {
+    color: #2DD4BF !important;
+    font-style: normal !important;
+    text-shadow: 0 0 20px rgba(45, 212, 191, 0.4) !important;
+  }
+  .hero-copy > p {
+    color: #F8FAFC !important;
+    font-size: 1.02rem !important;
+    line-height: 1.65 !important;
+    font-weight: 500 !important;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7) !important;
+  }
+  .hero-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin: 24px 0 0 !important;
+  }
+  .hero-actions .button {
+    width: 100% !important;
+    justify-content: center !important;
+    height: 48px !important;
+    font-size: 0.95rem !important;
+  }
+  .hero-actions .button-primary {
+    background: #0F766E !important;
+    color: #FFFFFF !important;
+    border: 1px solid #0F766E !important;
+    box-shadow: 0 4px 16px rgba(15, 118, 110, 0.4) !important;
+  }
+  .hero-actions .button-light {
+    background: rgba(255, 255, 255, 0.14) !important;
+    color: #FFFFFF !important;
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
+    backdrop-filter: blur(8px) !important;
+  }
+  .hero-proof {
+    color: #FFFFFF !important;
+  }
+  .hero-proof strong {
+    color: #FFFFFF !important;
+  }
+  .hero-proof small {
+    color: #CBD5E1 !important;
+  }
+}
+
 
 
 .sw-desktop-header-wrapper {

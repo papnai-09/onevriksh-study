@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Award, BadgeCheck, BookOpenCheck, BriefcaseBusiness, Check, ChevronRight, CirclePlay, Quote, Sparkles, UsersRound } from 'lucide-react';
+import { ArrowRight, BookOpenCheck, BriefcaseBusiness, Check, CirclePlay, UsersRound } from 'lucide-react';
 import { CourseCard } from '@/components/CourseCard';
 import { SectionHeading } from '@/components/SectionHeading';
-import { courses, stats, testimonials } from '@/data/site';
+import { courses, stats } from '@/data/site';
 
 export default function HomePage() {
   return (
@@ -50,13 +50,22 @@ export default function HomePage() {
             <SectionHeading eyebrow="Career-focused programs" title="Popular courses" text="Choose a practical program designed around the skills employers and global opportunities demand." />
             <Link className="button button-ghost desktop-only" href="/courses">View all courses <ArrowRight size={17} /></Link>
           </div>
-          <div className="course-grid">{courses.slice(0, 3).map((course) => <CourseCard key={course.slug} course={course} />)}</div>
+          <div className="course-grid">
+            {courses.slice(0, 3).map((course) => (
+              <CourseCard key={course.slug} course={course} />
+            ))}
+          </div>
         </div>
       </section>
 
       <section className="stats-band">
         <div className="container stats-grid">
-          {stats.map((stat) => <div key={stat.label}><strong>{stat.value}</strong><span>{stat.label}</span></div>)}
+          {stats.map((stat) => (
+            <div key={stat.label}>
+              <strong>{stat.value}</strong>
+              <span>{stat.label}</span>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -72,32 +81,11 @@ export default function HomePage() {
               <article className="feature-item" key={title}>
                 <span className="feature-number">0{index + 1}</span>
                 <div className="feature-icon"><Icon /></div>
-                <h3>{title}</h3><p>{text}</p>
+                <h3>{title}</h3>
+                <p>{text}</p>
               </article>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="section stories-section">
-        <div className="container">
-          <SectionHeading eyebrow="Student voices" title="Real progress, in their words" text="Stories from learners who used their classroom experience to take the next step." />
-          <div className="testimonial-grid">
-            {testimonials.map((item) => (
-              <article className="testimonial" key={item.name}>
-                <Quote size={28} />
-                <p>“{item.quote}”</p>
-                <div><span className="person-avatar">{item.initials}</span><span><strong>{item.name}</strong><small>{item.course}</small></span></div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="cta-band">
-        <div className="container cta-inner">
-          <div><span className="eyebrow light">Your next step</span><h2>Not sure which course fits?</h2><p>Talk to a career counsellor and attend a free live demo class.</p></div>
-          <Link href="/demo" className="button button-light button-large">Book free counselling <ChevronRight size={19} /></Link>
         </div>
       </section>
     </>

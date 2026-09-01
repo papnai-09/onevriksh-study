@@ -29,43 +29,39 @@ export function AuthProvider({ children }) {
   }, [fetchUser]);
 
   /**
-   * Initiate OAuth 2.1 authentication flow with accounts.onevriksh.in
+   * Local Login
    */
-  const login = useCallback(async (options = {}) => {
-    setLoading(true);
-    try {
-      const authUrl = await api.initiateLogin(options);
-      if (typeof window !== 'undefined') {
-        window.location.href = authUrl;
-      }
-    } catch (error) {
-      console.error('Failed to initiate authentication with accounts.onevriksh.in:', error);
-      setLoading(false);
+  const login = useCallback(async (credentials) => {
+    const data = await api.login(credentials);
+    if (data && data.user) {
+      setUser(data.user);
+      return data.user;
     }
+    throw new Error(data?.message || 'Login failed');
   }, []);
 
   /**
-   * Initiate OAuth 2.1 registration flow with accounts.onevriksh.in
+   * Local Registration
    */
-  const register = useCallback(async () => {
-    return login({ prompt: 'signup' });
-  }, [login]);
+  const register = useCallback(async (userData) => {
+    const data = await api.register(userData);
+    if (data && data.user) {
+      setUser(data.user);
+      return data.user;
+    }
+    throw new Error(data?.message || 'Registration failed');
+  }, []);
 
   /**
-   * Single Logout - Invalidates local session and IdP session
+   * Local Logout
    */
   const logout = useCallback(async () => {
-    setLoading(true);
     try {
-      const res = await api.logout();
+      await api.logout();
+    } catch (err) {
+      console.warn('Logout request completed with warning:', err.message);
+    } finally {
       setUser(null);
-      if (typeof window !== 'undefined' && res && res.idpLogoutUrl) {
-        window.location.href = res.idpLogoutUrl;
-      }
-    } catch (error) {
-      console.error('Error during logout:', error);
-      setUser(null);
-      setLoading(false);
     }
   }, []);
 
@@ -76,6 +72,8 @@ export function AuthProvider({ children }) {
         setUser,
         loading,
         isAuthenticated: !!user,
+        isAdmin: user?.role === 'admin',
+        isStudent: user?.role === 'student',
         login,
         register,
         logout,

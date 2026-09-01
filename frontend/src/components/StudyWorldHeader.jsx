@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Search, ChevronDown, ChevronRight, Check } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from './Brand';
@@ -11,7 +12,9 @@ const courseCategories = [
   {
     category: 'Marketing',
     courses: [
-      { title: 'Digital Marketing', href: '/digital-marketing' }
+      { title: 'Digital Marketing Foundation', href: '/digital-marketing-foundation' },
+      { title: 'Digital Marketing Advanced', href: '/digital-marketing-advanced' },
+      { title: 'Digital Marketing Mastery', href: '/digital-marketing-mastery' }
     ]
   },
   {
@@ -23,9 +26,9 @@ const courseCategories = [
   {
     category: 'Languages',
     courses: [
-      { title: 'French Language', href: '/french-language' },
-      { title: 'German Language', href: '/german-language' },
       { title: 'Spanish Language', href: '/spanish-language' },
+      { title: 'German Language', href: '/german-language' },
+      { title: 'French Language', href: '/french-language' },
       { title: 'Italian Language', href: '/italian-language' }
     ]
   },
@@ -54,7 +57,8 @@ const countries = [
  * Clean Header Component with Full-Width Hover Mega Dropdown (Auto Close on Mouse Leave)
  */
 export function StudyWorldHeader() {
-  const { user, login, register, logout } = useAuth();
+  const router = useRouter();
+  const { user, logout } = useAuth();
 
   const [allCoursesOpen, setAllCoursesOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState(courseCategories[0].category);
@@ -122,14 +126,15 @@ export function StudyWorldHeader() {
     if (e) e.preventDefault();
     setUserDropdownOpen(false);
     setMobileDrawerOpen(false);
-    login();
+    router.push('/login');
   };
 
-  const handleLogoutClick = (e) => {
+  const handleLogoutClick = async (e) => {
     if (e) e.preventDefault();
     setUserDropdownOpen(false);
     setMobileDrawerOpen(false);
-    logout();
+    await logout();
+    router.push('/login');
   };
 
   return (
@@ -164,13 +169,13 @@ export function StudyWorldHeader() {
 
           {/* LEFT NAVIGATION LINKS */}
           <nav className="up-nav-links up-desktop-only" aria-label="Header Links">
-            <Link href="/courses?type=certification" className="up-nav-item">
+            <Link href="/certification" className="up-nav-item">
               <span className="up-nowrap">Certification</span>
             </Link>
-            <Link href="/demo" className="up-nav-item">
+            <Link href="/study-abroad" className="up-nav-item">
               <span className="up-nowrap">Study Abroad</span>
             </Link>
-            <Link href="/contact" className="up-nav-item">
+            <Link href="/offline-center" className="up-nav-item">
               <span className="up-nowrap">Offline Centers</span>
             </Link>
           </nav>
@@ -259,7 +264,7 @@ export function StudyWorldHeader() {
                 className="up-signin-btn"
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
               >
-                <span className="up-nowrap">{user.name.split(' ')[0]}</span>
+                <span className="up-nowrap">{user.name?.split(' ')[0] || 'User'}</span>
                 <ChevronDown size={12} className={`up-chevron ${userDropdownOpen ? 'open' : ''}`} />
               </button>
 
@@ -275,7 +280,7 @@ export function StudyWorldHeader() {
                     className="up-menu-row"
                     onClick={() => setUserDropdownOpen(false)}
                   >
-                    <span>Student Dashboard</span>
+                    <span>{user.role === 'admin' ? 'Admin Dashboard' : 'Student Dashboard'}</span>
                   </Link>
                   <button className="up-menu-row danger" onClick={handleLogoutClick}>
                     <span>Log out</span>
@@ -407,13 +412,13 @@ export function StudyWorldHeader() {
           {/* MAIN NAVIGATION LINKS */}
           <div className="up-drawer-section">
             <div className="up-drawer-section-title">Navigation</div>
-            <Link href="/courses?type=certification" className="up-drawer-nav-row" onClick={() => setMobileDrawerOpen(false)}>
+            <Link href="/certification" className="up-drawer-nav-row" onClick={() => setMobileDrawerOpen(false)}>
               <span>Certification</span>
             </Link>
-            <Link href="/demo" className="up-drawer-nav-row" onClick={() => setMobileDrawerOpen(false)}>
+            <Link href="/study-abroad" className="up-drawer-nav-row" onClick={() => setMobileDrawerOpen(false)}>
               <span>Study Abroad</span>
             </Link>
-            <Link href="/contact" className="up-drawer-nav-row" onClick={() => setMobileDrawerOpen(false)}>
+            <Link href="/offline-center" className="up-drawer-nav-row" onClick={() => setMobileDrawerOpen(false)}>
               <span>Offline Centers</span>
             </Link>
           </div>
@@ -452,7 +457,7 @@ export function StudyWorldHeader() {
           {/* AUTHENTICATION / SIGN IN */}
           {user ? (
             <button className="up-drawer-auth-btn logout" onClick={handleLogoutClick}>
-              Logout ({user.name.split(' ')[0]})
+              Logout ({user.name?.split(' ')[0] || 'User'})
             </button>
           ) : (
             <button className="up-drawer-auth-btn login" onClick={handleLoginClick}>

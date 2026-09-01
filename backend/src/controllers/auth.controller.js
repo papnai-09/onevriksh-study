@@ -1,64 +1,147 @@
+import crypto from 'crypto';
 import { User } from '../models/index.js';
-import { exchangeCodeForTokens, fetchUserInfo } from '../services/tokenExchange.service.js';
-import { generateCodeChallenge, generateCodeVerifier, generateNonce, generateState, parseIdToken } from '../utils/oauth.js';
 import { sendSession } from '../utils/token.js';
 
-const getIdpBaseUrl = () => process.env.ACCOUNTS_IDP_URL || 'https://accounts.onevriksh.in';
-const getClientId = () => process.env.OAUTH_CLIENT_ID || 'client_study_123';
-const getRedirectUri = () => process.env.OAUTH_REDIRECT_URI || 'http://localhost:3000/api/auth/callback';
-const getClientUrl = () => process.env.CLIENT_URL || 'http://localhost:3000';
-
-const cookieOptions = {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'lax',
-  maxAge: 15 * 60 * 1000 // 15 minutes
-};
-
 /**
- * Initiate OAuth 2.1 Authorization Code Flow with PKCE
+ * Register a new student account locally
  */
-export async function initiateLogin(req, res, next) {
+export async function register(req, res, next) {
   try {
-    const state = req.query.state || generateState();
-    const nonce = generateNonce();
-    const codeVerifier = generateCodeVerifier();
-    const codeChallenge = generateCodeChallenge(codeVerifier);
+    const { name, email, password, phone, studentId } = req.body;
 
-    const redirectUri = req.query.redirect_uri || getRedirectUri();
+    const existingUser = await User.findOne({ email: email.toLowerCase() });
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: 'An account with this email address already exists. Please log in.'
+      });
+    }
 
-    // Store state, nonce, verifier in secure HTTP-only cookies
-    res.cookie('oauth_state', state, cookieOptions);
-    res.cookie('oauth_nonce', nonce, cookieOptions);
-    res.cookie('pkce_verifier', codeVerifier, cookieOptions);
+    const generatedStudentId = studentId || `OVS${Date.now().toString().slice(-6)}`;
 
-    const idpUrl = getIdpBaseUrl();
-    const authParams = new URLSearchParams({
-      response_type: 'code',
-      client_id: getClientId(),
-      redirect_uri: redirectUri,
-      scope: 'openid profile email offline_access',
-      state,
-      nonce,
-      code_challenge: codeChallenge,
-      code_challenge_method: 'S256'
+    const user = await User.create({
+      name,
+      email: email.toLowerCase(),
+      password,
+      phone: phone || '',
+      role: 'student',
+      studentId: generatedStudentId,
+      active: true,
+      lastLoginAt: new Date()
     });
 
-    if (req.query.prompt) {
-      authParams.set('prompt', req.query.prompt.toString());
+    return sendSession(res, user, 201, 'Account created successfully');
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Log in with email and password
+ */
+export async function login(req, res, next) {
+  try {
+    const { email, password } = req.body;
+
+    // Find user with password field included
+    const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid email or password.'
+      });
     }
 
-    const authUrl = `${idpUrl}/oauth/authorize?${authParams.toString()}`;
-
-    // If request comes as direct GET from browser link, redirect immediately
-    if (req.accepts('html') && !req.xhr) {
-      return res.redirect(authUrl);
+    if (!user.active) {
+      return res.status(403).json({
+        success: false,
+        message: 'Your account has been deactivated. Please contact institute support.'
+      });
     }
+
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid email or password.'
+      });
+    }
+
+    user.lastLoginAt = new Date();
+    await user.save();
+
+    return sendSession(res, user, 200, 'Logged in successfully');
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Get current session profile
+ */
+export async function getSession(req, res) {
+  if (!req.user) {
+    return res.status(401).json({ success: false, message: 'Unauthenticated' });
+  }
+  return res.json({
+    success: true,
+    authenticated: true,
+    user: {
+      id: req.user._id,
+      name: req.user.name,
+      email: req.user.email,
+      phone: req.user.phone,
+      role: req.user.role,
+      studentId: req.user.studentId,
+      profileImage: req.user.profileImage,
+      address: req.user.address,
+      dateOfBirth: req.user.dateOfBirth,
+      active: req.user.active,
+      createdAt: req.user.createdAt
+    }
+  });
+}
+
+/**
+ * Log out and clear session cookie
+ */
+export async function logout(req, res) {
+  const isProd = process.env.NODE_ENV === 'production';
+  res.clearCookie('access_token', {
+    httpOnly: true,
+    sameSite: isProd ? 'none' : 'lax',
+    secure: isProd
+  });
+  return res.json({
+    success: true,
+    message: 'Logged out successfully'
+  });
+}
+
+/**
+ * Change password for authenticated user
+ */
+export async function changePassword(req, res, next) {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    const user = await User.findById(req.user._id).select('+password');
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    const isMatch = await user.comparePassword(currentPassword);
+    if (!isMatch) {
+      return res.status(400).json({ success: false, message: 'Current password is incorrect' });
+    }
+
+    user.password = newPassword;
+    await user.save();
 
     return res.json({
-      authUrl,
-      state,
-      idpUrl
+      success: true,
+      message: 'Password updated successfully'
     });
   } catch (error) {
     next(error);
@@ -66,179 +149,98 @@ export async function initiateLogin(req, res, next) {
 }
 
 /**
- * Handle OAuth 2.1 Callback, Token Exchange & User Sync
- * Supports GET (direct browser redirect from accounts.onevriksh.in) and POST (API call)
+ * Request password reset token
  */
-export async function handleCallback(req, res, next) {
+export async function forgotPassword(req, res, next) {
   try {
-    const code = req.query.code || req.body?.code;
-    const state = req.query.state || req.body?.state;
-    const redirectUri = req.query.redirect_uri || req.body?.redirectUri || getRedirectUri();
+    const { email } = req.body;
+    const user = await User.findOne({ email: email.toLowerCase() });
 
-    const storedState = req.cookies?.oauth_state;
-    const codeVerifier = req.cookies?.pkce_verifier;
-
-    if (!code) {
-      if (req.method === 'GET') {
-        return res.redirect(`${getClientUrl()}/login?error=missing_code`);
-      }
-      return res.status(400).json({ message: 'Authorization code is missing' });
-    }
-
-    let tokens = null;
-    let userProfile = null;
-
-    try {
-      // Exchange code for tokens at accounts.onevriksh.in/api/oauth/token
-      tokens = await exchangeCodeForTokens({
-        code,
-        codeVerifier: codeVerifier || '',
-        redirectUri
+    if (!user) {
+      // Do not reveal email existence
+      return res.json({
+        success: true,
+        message: 'If an account exists with that email, password reset instructions have been generated.'
       });
-
-      if (tokens && tokens.access_token) {
-        try {
-          userProfile = await fetchUserInfo(tokens.access_token);
-        } catch (uErr) {
-          console.warn('UserInfo fetch failed, attempting ID Token fallback:', uErr.message);
-          userProfile = parseIdToken(tokens.id_token);
-        }
-      }
-    } catch (exchangeError) {
-      console.warn('IdP token exchange warning:', exchangeError.message);
-      if (req.body?.mockUser) {
-        userProfile = req.body.mockUser;
-      }
     }
 
-    if (!userProfile) {
-      if (req.method === 'GET') {
-        return res.redirect(`${getClientUrl()}/login?error=auth_failed`);
-      }
-      return res.status(401).json({ message: 'Failed to retrieve authenticated user profile from accounts.onevriksh.in' });
-    }
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
 
-    // Extract normalized fields
-    const accountId = userProfile.sub || userProfile.id || userProfile._id || `ACC_${Date.now()}`;
-    const email = userProfile.email || `${accountId}@user.onevriksh.in`;
-    const name = userProfile.name || userProfile.fullName || 'Learner';
-    const role = (userProfile.role === 'admin' || userProfile.isAdmin) ? 'admin' : 'student';
-    const phone = userProfile.phone || userProfile.phoneNumber || '';
-    const profileImage = userProfile.profileImage || userProfile.picture || '';
-
-    // Synchronize user in local MongoDB
-    let user = null;
-    if (process.env.MONGODB_URI) {
-      user = await User.findOne({ accountId });
-      
-      if (!user) {
-        user = await User.findOne({ email });
-        if (user) {
-          user.accountId = accountId;
-        }
-      }
-
-      if (!user) {
-        user = new User({
-          accountId,
-          email,
-          name,
-          phone,
-          role,
-          studentId: role === 'admin' ? undefined : `OVS${Date.now().toString().slice(-6)}`,
-          profileImage,
-          active: true
-        });
-      } else {
-        user.name = name;
-        user.email = email;
-        if (phone) user.phone = phone;
-        if (profileImage) user.profileImage = profileImage;
-        user.role = role;
-        user.lastLoginAt = new Date();
-      }
-
-      await user.save();
-    } else {
-      user = {
-        _id: accountId,
-        id: accountId,
-        accountId,
-        email,
-        name,
-        phone,
-        role,
-        studentId: role === 'admin' ? undefined : 'OVS999999',
-        profileImage
-      };
-    }
-
-    // Clear temporary OAuth flow cookies
-    res.clearCookie('oauth_state');
-    res.clearCookie('oauth_nonce');
-    res.clearCookie('pkce_verifier');
-
-    // If request is GET (direct browser redirect from accounts.onevriksh.in)
-    if (req.method === 'GET') {
-      const jwtToken = sendSession(res, user, 200);
-      const destination = user.role === 'admin' ? '/admin' : '/student';
-      return res.redirect(`${getClientUrl()}${destination}`);
-    }
-
-    // For POST requests, return standard JSON
-    return sendSession(res, user);
-  } catch (error) {
-    return next(error);
-  }
-}
-
-/**
- * Get current session user
- */
-export async function getSession(req, res) {
-  if (!req.user) {
-    return res.status(401).json({ message: 'Unauthenticated' });
-  }
-  return res.json({
-    authenticated: true,
-    user: req.user
-  });
-}
-
-/**
- * Handle Single Logout (SLO)
- */
-export async function handleLogout(req, res) {
-  try {
-    const idpUrl = getIdpBaseUrl();
-    const clientUrl = getClientUrl();
-
-    res.clearCookie('access_token');
-    res.clearCookie('oauth_state');
-    res.clearCookie('oauth_nonce');
-    res.clearCookie('pkce_verifier');
-
-    const idpLogoutUrl = `${idpUrl}/logout?post_logout_redirect_uri=${encodeURIComponent(clientUrl)}`;
+    user.passwordResetToken = hashedToken;
+    user.passwordResetExpires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+    await user.save();
 
     return res.json({
-      message: 'Logged out successfully',
-      idpLogoutUrl
+      success: true,
+      message: 'Password reset link generated.',
+      // In production, token is sent via email; for dev/demo we return token or test URL
+      resetToken: process.env.NODE_ENV === 'production' ? undefined : resetToken
     });
   } catch (error) {
-    res.clearCookie('access_token');
-    return res.json({ message: 'Logged out locally' });
+    next(error);
   }
 }
 
 /**
- * Silent Refresh / Token Rotation
+ * Reset password with token
  */
-export async function refreshToken(req, res, next) {
+export async function resetPassword(req, res, next) {
   try {
-    if (!req.user) {
-      return res.status(401).json({ message: 'No active session to refresh' });
+    const { token, password } = req.body;
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+    const user = await User.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Password reset token is invalid or has expired.'
+      });
     }
-    return sendSession(res, req.user);
+
+    user.password = password;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    user.lastLoginAt = new Date();
+    await user.save();
+
+    return sendSession(res, user, 200, 'Password has been reset successfully');
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Update user profile
+ */
+export async function updateProfile(req, res, next) {
+  try {
+    const allowed = ['name', 'phone', 'address', 'dateOfBirth', 'profileImage'];
+    allowed.forEach((field) => {
+      if (req.body[field] !== undefined) req.user[field] = req.body[field];
+    });
+
+    await req.user.save();
+
+    return res.json({
+      success: true,
+      message: 'Profile updated successfully',
+      user: {
+        id: req.user._id,
+        name: req.user.name,
+        email: req.user.email,
+        phone: req.user.phone,
+        role: req.user.role,
+        studentId: req.user.studentId,
+        profileImage: req.user.profileImage,
+        address: req.user.address,
+        dateOfBirth: req.user.dateOfBirth
+      }
+    });
   } catch (error) {
     next(error);
   }

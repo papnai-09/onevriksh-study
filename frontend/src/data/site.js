@@ -2,80 +2,177 @@ export const institute = {
   name: 'Onevriksh Study',
   tagline: 'Root Your Skills. Rise Your Future.',
   phone: '+91 87005 36553',
-  secondaryPhone: '+91 85958 40141',
   email: 'study@onevriksh.com',
-  address: 'Shop No. 28, NDMC Market, Connaught Place, New Delhi 110001',
-  whatsapp: 'https://wa.me/918700536553?text=Hi%20Onevriksh%20Study%2C%20I%20want%20details%20about%20your%20courses.'
+  address: 'B-14, Connaught Place, New Delhi, 110001'
 };
 
 export const courses = [
   {
-    slug: 'digital-marketing', title: 'Advanced Digital Marketing', category: 'Marketing',
-    duration: '6 months', fee: 29999, rating: 4.9, students: 420, level: 'Beginner',
+    slug: 'digital-marketing-foundation',
+    title: 'Digital Marketing Foundation',
+    category: 'Marketing',
+    duration: '4 Months',
+    fee: 18999,
+    rating: 4.9,
+    students: 340,
+    level: 'Beginner',
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
-    description: 'Build campaigns that perform with hands-on SEO, social media, paid advertising, analytics and portfolio projects.',
-    trainer: 'Rohit Sharma', trainerRole: 'Performance Marketing Lead',
-    benefits: ['15+ live projects', 'Google and Meta certification prep', 'Interview and placement support'],
-    curriculum: ['Marketing foundations and customer journeys', 'SEO and content strategy', 'Meta and Google Ads', 'Email automation', 'Analytics and capstone campaign']
+    description: 'Master digital marketing fundamentals, search engine optimization basics, Google and social media marketing essentials, and keyword research.',
+    trainer: 'Rohit Sharma',
+    trainerRole: 'Digital Marketing Specialist',
+    benefits: ['Live practical briefs', 'Hands-on SEO & SEM tools', 'Foundation Skill Certificate'],
+    curriculum: [
+      'Digital Marketing Fundamentals & Digital Landscape',
+      'Search Engine Optimization (SEO) Core Basics',
+      'Search Engine Marketing (Google Ads) Introduction',
+      'Social Media Marketing & Content Creation Basics',
+      'Keyword Research & Analytics Foundations'
+    ]
   },
   {
-    slug: 'graphic-design', title: 'Graphic Design Mastery', category: 'Design',
-    duration: '5 months', fee: 24999, rating: 4.8, students: 286, level: 'Beginner',
+    slug: 'digital-marketing-advanced',
+    title: 'Digital Marketing Advanced',
+    category: 'Marketing',
+    duration: '8 Months',
+    fee: 28999,
+    rating: 4.9,
+    students: 420,
+    level: 'Intermediate',
+    image: 'https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&w=800&q=80',
+    description: 'Deep-dive into technical SEO audits, Google Ads bidding, Meta Ads Manager, GA4 analytics setup, and multi-channel campaign management.',
+    trainer: 'Rohit Sharma',
+    trainerRole: 'Performance Marketing Lead',
+    benefits: ['Google & Meta Ads Manager mastery', 'GA4 & Search Console implementation', 'Placement assistance & mock interviews'],
+    curriculum: [
+      'Technical SEO, Site Audits & Backlink Architecture',
+      'Google Ads Campaign Architecture & Bidding Strategy',
+      'Meta Advertising (Facebook & Instagram Ads Manager)',
+      'Web Analytics & GA4 Measurement Setup',
+      'Email Marketing Automation & Lead Funnels'
+    ]
+  },
+  {
+    slug: 'digital-marketing-mastery',
+    title: 'Digital Marketing Mastery',
+    category: 'Marketing',
+    duration: '12 Months',
+    fee: 38999,
+    rating: 4.9,
+    students: 510,
+    level: 'Advanced',
+    image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80',
+    description: 'Full-stack performance marketing, conversion rate optimization (CRO), marketing automation, freelancing & agency workflows, and capstone project defense.',
+    trainer: 'Rohit Sharma',
+    trainerRole: 'Chief Marketing Consultant',
+    benefits: ['Full-stack marketing leadership', 'Portfolio capstone defense', 'Dedicated 100% placement support*'],
+    curriculum: [
+      'Full-Stack Digital Marketing Strategy & Execution',
+      'Performance Marketing & CRO (Conversion Rate Optimization)',
+      'Marketing Automation, Omnichannel & Lifecycle Funnels',
+      'Freelancing, Client Acquisition & Consulting Workflows',
+      'Comprehensive Capstone Portfolio Defense'
+    ]
+  },
+  {
+    slug: 'graphic-design',
+    title: 'Graphic Design Mastery',
+    category: 'Design',
+    duration: '5 Months',
+    fee: 24999,
+    rating: 4.8,
+    students: 286,
+    level: 'Beginner',
     image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
     description: 'Master visual thinking, branding and industry tools through a portfolio-first studio curriculum.',
-    trainer: 'Meera Kapoor', trainerRole: 'Brand and Visual Designer',
+    trainer: 'Meera Kapoor',
+    trainerRole: 'Brand and Visual Designer',
     benefits: ['Adobe tool mastery', 'Professional portfolio', 'Agency workflow practice'],
     curriculum: ['Design principles', 'Photoshop and image making', 'Illustrator and identity', 'Layouts and typography', 'Portfolio presentation']
   },
   {
-    slug: 'french-language', title: 'French Language Program', category: 'Languages',
-    duration: '4 months', fee: 18999, rating: 4.9, students: 198, level: 'Beginner',
+    slug: 'french-language',
+    title: 'French Language Program',
+    category: 'Languages',
+    duration: '4 Months',
+    fee: 18999,
+    rating: 4.9,
+    students: 198,
+    level: 'Beginner',
     image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80',
     description: 'Speak French with confidence through interactive classes, practical conversation and DELF-focused preparation.',
-    trainer: 'Ananya Verma', trainerRole: 'DELF Certified French Trainer',
+    trainer: 'Ananya Verma',
+    trainerRole: 'DELF Certified French Trainer',
     benefits: ['DELF exam preparation', 'Conversation labs', 'Small batch mentoring'],
     curriculum: ['A1 foundations', 'Everyday conversation', 'Grammar in context', 'Listening and pronunciation', 'DELF mock assessment']
   },
   {
-    slug: 'german-language', title: 'German Language Program', category: 'Languages',
-    duration: '4 months', fee: 18999, rating: 4.8, students: 174, level: 'Beginner',
+    slug: 'german-language',
+    title: 'German Language Program',
+    category: 'Languages',
+    duration: '4 Months',
+    fee: 18999,
+    rating: 4.8,
+    students: 174,
+    level: 'Beginner',
     image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=800&q=80',
     description: 'Learn practical German and prepare for Goethe certification with guided speaking and exam practice.',
-    trainer: 'Nikhil Arora', trainerRole: 'Goethe Certified German Trainer',
+    trainer: 'Nikhil Arora',
+    trainerRole: 'Goethe Certified German Trainer',
     benefits: ['Goethe-aligned curriculum', 'Weekly speaking club', 'Study abroad guidance'],
     curriculum: ['A1 vocabulary and grammar', 'Listening essentials', 'Speaking situations', 'Reading and writing', 'Goethe mock tests']
   },
   {
-    slug: 'spanish-language', title: 'Spanish Language Program', category: 'Languages',
-    duration: '4 months', fee: 16999, rating: 4.7, students: 152, level: 'Beginner',
+    slug: 'spanish-language',
+    title: 'Spanish Language Program',
+    category: 'Languages',
+    duration: '4 Months',
+    fee: 16999,
+    rating: 4.7,
+    students: 152,
+    level: 'Beginner',
     image: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=1200&q=80',
     description: 'A lively, conversation-led Spanish program for travel, work and global opportunities.',
-    trainer: 'Aarav Mehta', trainerRole: 'Spanish Language Educator',
+    trainer: 'Aarav Mehta',
+    trainerRole: 'Spanish Language Educator',
     benefits: ['Conversation-first classes', 'Cultural immersion', 'Flexible batches'],
     curriculum: ['Sounds and introductions', 'Daily communication', 'Grammar patterns', 'Workplace Spanish', 'Final speaking project']
   },
   {
-    slug: 'english-speaking', title: 'English Speaking & Personality', category: 'Communication',
-    duration: '3 months', fee: 14999, rating: 4.9, students: 510, level: 'Intermediate',
+    slug: 'english-speaking',
+    title: 'English Speaking & Personality',
+    category: 'Communication',
+    duration: '3 Months',
+    fee: 14999,
+    rating: 4.9,
+    students: 510,
+    level: 'Intermediate',
     image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80',
     description: 'Strengthen spoken English, confidence, presentation and interview skills in a supportive small batch.',
-    trainer: 'Priya Malhotra', trainerRole: 'Communication and Soft Skills Coach',
+    trainer: 'Priya Malhotra',
+    trainerRole: 'Communication and Soft Skills Coach',
     benefits: ['Daily speaking practice', 'Interview simulations', 'Personal feedback'],
     curriculum: ['Fluency foundations', 'Vocabulary and pronunciation', 'Public speaking', 'Group discussions', 'Interview mastery']
   },
   {
-    slug: 'italian-language', title: 'Italian Language Program', category: 'Languages',
-    duration: '4 months', fee: 17999, rating: 4.8, students: 120, level: 'Beginner',
+    slug: 'italian-language',
+    title: 'Italian Language Program',
+    category: 'Languages',
+    duration: '4 Months',
+    fee: 17999,
+    rating: 4.8,
+    students: 120,
+    level: 'Beginner',
     image: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1200&q=80',
     description: 'Master conversational Italian, grammar foundations and CILS exam preparation with native-certified trainers.',
-    trainer: 'Elena Rossi', trainerRole: 'CILS Certified Italian Educator',
+    trainer: 'Elena Rossi',
+    trainerRole: 'CILS Certified Italian Educator',
     benefits: ['CILS exam preparation', 'Interactive audio-visual labs', 'Small batch mentoring'],
     curriculum: ['A1 vocabulary & grammar', 'Everyday conversation', 'Italian culture & travel', 'Pronunciation & listening', 'CILS mock evaluation']
   }
 ];
 
 export const testimonials = [
-  { name: 'Sakshi Jain', course: 'Digital Marketing', quote: 'The live projects made all the difference. I walked into interviews with real campaign results, not just a certificate.', initials: 'SJ' },
+  { name: 'Sakshi Jain', course: 'Digital Marketing Mastery', quote: 'The live projects made all the difference. I walked into interviews with real campaign results, not just a certificate.', initials: 'SJ' },
   { name: 'Aditya Singh', course: 'German Language', quote: 'Small batches meant I could actually speak in every class. The Goethe preparation was structured and practical.', initials: 'AS' },
   { name: 'Riya Mehta', course: 'Graphic Design', quote: 'My portfolio finally looked professional. The trainer feedback was direct, personal and genuinely useful.', initials: 'RM' }
 ];
@@ -96,10 +193,10 @@ export const notices = [
 export const studentData = {
   name: 'Aarav Sharma',
   initials: 'AS',
-  course: 'Advanced Digital Marketing',
+  course: 'Digital Marketing Advanced',
   attendance: 88,
   progress: 64,
-  totalFees: 29999,
+  totalFees: 28999,
   paidFees: 20000,
   nextClass: { title: 'Google Ads: Search Campaigns', time: 'Today, 4:00 PM', room: 'Lab 2' },
   courses: [
@@ -128,7 +225,7 @@ export const adminStats = [
 
 export const recentStudents = [
   { name: 'Neha Gupta', course: 'French Language', joined: '22 Jun 2026', status: 'Active', fees: 'Paid' },
-  { name: 'Kabir Joshi', course: 'Digital Marketing', joined: '21 Jun 2026', status: 'Active', fees: 'Partial' },
+  { name: 'Kabir Joshi', course: 'Digital Marketing Advanced', joined: '21 Jun 2026', status: 'Active', fees: 'Partial' },
   { name: 'Simran Kaur', course: 'Graphic Design', joined: '20 Jun 2026', status: 'Active', fees: 'Paid' },
   { name: 'Dev Verma', course: 'English Speaking', joined: '18 Jun 2026', status: 'Paused', fees: 'Due' }
 ];

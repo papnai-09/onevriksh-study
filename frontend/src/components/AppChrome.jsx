@@ -3,7 +3,6 @@
 import { usePathname } from 'next/navigation';
 import { Footer } from './Footer';
 import { Header } from './Header';
-import { WhatsappButton } from './WhatsappButton';
 import { Scroll3D } from './Scroll3D';
 
 export function AppChrome({ children }) {
@@ -18,7 +17,6 @@ export function AppChrome({ children }) {
       <Header />
       <main className="up-main-content">{children}</main>
       <Footer />
-      <WhatsappButton />
     </>
   );
 }

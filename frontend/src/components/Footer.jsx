@@ -21,26 +21,37 @@ export function Footer() {
           <h3>Explore</h3>
           <Link href="/about">About us</Link>
           <Link href="/courses">All courses</Link>
+          <Link href="/certification">Certification</Link>
+          <Link href="/study-abroad">Study abroad</Link>
+          <Link href="/offline-center">Offline centers</Link>
           <Link href="/demo">Free demo</Link>
           <Link href="/contact">Contact</Link>
         </div>
         <div>
           <h3>Popular courses</h3>
-          <Link href="/digital-marketing">Digital Marketing</Link>
+          <Link href="/digital-marketing-foundation">Digital Marketing</Link>
           <Link href="/graphic-design">Graphic Design</Link>
+          <Link href="/spanish-language">Spanish Language</Link>
+          <Link href="/german-language">German Language</Link>
           <Link href="/french-language">French Language</Link>
           <Link href="/english-speaking">English Speaking</Link>
         </div>
         <div className="footer-contact">
           <h3>Reach us</h3>
-          <a href="tel:+918700536553"><Phone size={17} /> {institute.phone}</a>
-          <a href={'mailto:' + institute.email}><Mail size={17} /> {institute.email}</a>
-          <span><MapPin size={18} /> {institute.address}</span>
+          <Link href="/contact">
+            <Mail size={17} /> {institute.email || 'study@onevriksh.com'}
+          </Link>
+          <span>
+            <MapPin size={18} /> New Delhi Training Centre
+          </span>
         </div>
       </div>
       <div className="container footer-bottom">
         <span>© 2026 Onevriksh Study. All rights reserved.</span>
-        <div><Link href="#">Privacy</Link><Link href="#">Terms</Link></div>
+        <div>
+          <Link href="/privacy">Privacy</Link>
+          <Link href="/terms">Terms</Link>
+        </div>
       </div>
     </footer>
   );

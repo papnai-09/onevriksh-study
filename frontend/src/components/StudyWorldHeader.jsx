@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Search, ChevronDown, ChevronRight, Check } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from './Brand';
+import { courses } from '@/data/site';
 
 // Categorized Courses for Full-Width Side-Divided Hover Mega Dropdown
 const courseCategories = [
@@ -54,7 +55,7 @@ const countries = [
 ];
 
 /**
- * Clean Header Component with Full-Width Hover Mega Dropdown (Auto Close on Mouse Leave)
+ * Clean Header Component with Full-Width Hover Mega Dropdown and Live Real-time Course Search
  */
 export function StudyWorldHeader() {
   const router = useRouter();
@@ -73,7 +74,23 @@ export function StudyWorldHeader() {
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
 
   const navRef = useRef(null);
+  const searchContainerRef = useRef(null);
   const timeoutRef = useRef(null);
+
+  // Live filter courses based on search query
+  const searchResults = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return [];
+    return courses.filter(
+      (c) =>
+        c.title.toLowerCase().includes(q) ||
+        c.category.toLowerCase().includes(q) ||
+        c.description.toLowerCase().includes(q) ||
+        c.slug.toLowerCase().includes(q)
+    );
+  }, [searchQuery]);
+
+  const showSearchResults = searchQuery.trim().length > 0 && searchFocused;
 
   const openAllCourses = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -105,6 +122,9 @@ export function StudyWorldHeader() {
         setRegionDropdownOpen(false);
         setUserDropdownOpen(false);
       }
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
+        setSearchFocused(false);
+      }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
@@ -121,6 +141,29 @@ export function StudyWorldHeader() {
       document.body.style.overflow = '';
     };
   }, [mobileDrawerOpen]);
+
+  const handleSelectCourse = (slug) => {
+    setSearchQuery('');
+    setSearchFocused(false);
+    setMobileSearchOpen(false);
+    setMobileDrawerOpen(false);
+    router.push(`/${slug}`);
+  };
+
+  const handleSearchKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (searchResults.length === 1) {
+        handleSelectCourse(searchResults[0].slug);
+      } else if (searchQuery.trim()) {
+        router.push(`/courses?search=${encodeURIComponent(searchQuery.trim())}`);
+        setSearchFocused(false);
+        setMobileSearchOpen(false);
+      }
+    } else if (e.key === 'Escape') {
+      setSearchFocused(false);
+    }
+  };
 
   const handleLoginClick = (e) => {
     if (e) e.preventDefault();
@@ -183,24 +226,68 @@ export function StudyWorldHeader() {
 
         {/* RIGHT CONTROLS GROUP: SEARCH BAR, REGION SELECTOR, SIGN IN BUTTON */}
         <div className="up-right-actions up-desktop-tablet-only">
-          {/* COMPACT SEARCH BAR */}
-          <div className={`up-search-box ${searchFocused ? 'focused' : ''}`}>
-            <input
-              type="text"
-              className="up-search-input"
-              placeholder="Search courses..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onFocus={() => setSearchFocused(true)}
-              onBlur={() => setSearchFocused(false)}
-            />
-            {searchQuery ? (
-              <button className="up-search-clear" onClick={() => setSearchQuery('')}>
-                ✕
-              </button>
-            ) : (
-              <div className="up-search-icon-btn-sm" title="Search">
-                <Search size={14} />
+          {/* COMPACT LIVE SEARCH BAR */}
+          <div className="up-search-wrapper" ref={searchContainerRef} style={{ position: 'relative' }}>
+            <div className={`up-search-box ${searchFocused ? 'focused' : ''}`}>
+              <input
+                type="text"
+                className="up-search-input"
+                placeholder="Search courses..."
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setSearchFocused(true);
+                }}
+                onFocus={() => setSearchFocused(true)}
+                onKeyDown={handleSearchKeyDown}
+              />
+              {searchQuery ? (
+                <button
+                  className="up-search-clear"
+                  onClick={() => {
+                    setSearchQuery('');
+                    setSearchFocused(false);
+                  }}
+                  type="button"
+                >
+                  ✕
+                </button>
+              ) : (
+                <div className="up-search-icon-btn-sm" title="Search">
+                  <Search size={14} />
+                </div>
+              )}
+            </div>
+
+            {/* LIVE SEARCH RESULTS DROPDOWN */}
+            {showSearchResults && (
+              <div className="up-search-dropdown up-fade-in">
+                <div className="up-search-dropdown-header">
+                  <span>Courses ({searchResults.length})</span>
+                </div>
+                {searchResults.length > 0 ? (
+                  <div className="up-search-dropdown-list">
+                    {searchResults.map((course) => (
+                      <div
+                        key={course.slug}
+                        className="up-search-result-item"
+                        onMouseDown={() => handleSelectCourse(course.slug)}
+                      >
+                        <div className="up-search-result-info">
+                          <span className="up-search-result-title">{course.title}</span>
+                          <span className="up-search-result-meta">
+                            {course.duration} • {course.level || 'All Levels'}
+                          </span>
+                        </div>
+                        <span className="up-search-result-badge">{course.category}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="up-search-empty">
+                    <span>No courses found matching &ldquo;{searchQuery}&rdquo;</span>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -360,14 +447,40 @@ export function StudyWorldHeader() {
       {/* MOBILE SEARCH BAR OVERLAY */}
       {mobileSearchOpen && (
         <div className="up-mobile-search-bar up-fade-in">
-          <input
-            type="text"
-            placeholder="Search courses..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            autoFocus
-          />
-          <button onClick={() => setMobileSearchOpen(false)}>✕</button>
+          <div className="up-mobile-search-inner">
+            <input
+              type="text"
+              placeholder="Search courses..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleSearchKeyDown}
+              autoFocus
+            />
+            <button onClick={() => setMobileSearchOpen(false)}>✕</button>
+          </div>
+          {searchQuery.trim().length > 0 && (
+            <div className="up-mobile-search-results">
+              {searchResults.length > 0 ? (
+                searchResults.map((course) => (
+                  <div
+                    key={course.slug}
+                    className="up-search-result-item"
+                    onClick={() => handleSelectCourse(course.slug)}
+                  >
+                    <div className="up-search-result-info">
+                      <span className="up-search-result-title">{course.title}</span>
+                      <span className="up-search-result-meta">{course.duration}</span>
+                    </div>
+                    <span className="up-search-result-badge">{course.category}</span>
+                  </div>
+                ))
+              ) : (
+                <div className="up-search-empty">
+                  <span>No courses found matching &ldquo;{searchQuery}&rdquo;</span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 
@@ -387,8 +500,33 @@ export function StudyWorldHeader() {
               placeholder="Search courses..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleSearchKeyDown}
             />
           </div>
+
+          {searchQuery.trim().length > 0 && (
+            <div className="up-drawer-search-results">
+              {searchResults.length > 0 ? (
+                searchResults.map((course) => (
+                  <div
+                    key={course.slug}
+                    className="up-search-result-item"
+                    onClick={() => handleSelectCourse(course.slug)}
+                  >
+                    <div className="up-search-result-info">
+                      <span className="up-search-result-title">{course.title}</span>
+                      <span className="up-search-result-meta">{course.duration}</span>
+                    </div>
+                    <span className="up-search-result-badge">{course.category}</span>
+                  </div>
+                ))
+              ) : (
+                <div className="up-search-empty">
+                  <span>No courses found</span>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* CATEGORIZED COURSES IN DRAWER */}
           {courseCategories.map((group) => (

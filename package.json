@@ -3,24 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "workspaces": [
-    "frontend",
-    "backend"
+    "frontend"
   ],
   "scripts": {
-    "dev": "concurrently -n web,api -c blue,magenta \"npm run dev -w @onevriksh/web\" \"npm run dev -w @onevriksh/api\"",
-    "dev:web": "npm run dev -w @onevriksh/web",
-    "dev:api": "npm run dev -w @onevriksh/api",
+    "dev": "npm run dev -w @onevriksh/web",
     "build": "npm run build -w @onevriksh/web",
-    "start": "concurrently -n web,api \"npm run start -w @onevriksh/web\" \"npm run start -w @onevriksh/api\"",
-    "seed": "npm run seed -w @onevriksh/api"
+    "start": "npm run start -w @onevriksh/web"
   },
-  "devDependencies": {
-    "concurrently": "^9.1.2"
-  },
+  "devDependencies": {},
   "overrides": {
     "postcss": "^8.5.10"
-  },
-  "dependencies": {
-    "compression": "^1.8.1"
   }
 }

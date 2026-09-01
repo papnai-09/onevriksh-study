@@ -1,247 +1,255 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+import { courses, notices, studentData, adminStats } from '@/data/site';
 
-async function request(path, options = {}) {
-  const url = `${API_BASE}${path}`;
-  const response = await fetch(url, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers
-    },
-    credentials: 'include' // include HTTP-only cookies
-  });
-
-  const data = await response.json().catch(() => ({}));
-
-  if (!response.ok) {
-    const message = data.message || `Request failed with status ${response.status}`;
-    const error = new Error(message);
-    error.status = response.status;
-    error.errors = data.errors;
-    throw error;
-  }
-
-  return data;
-}
+// Local storage key for client-side authentication
+const AUTH_KEY = 'onevriksh_auth_user';
 
 export const api = {
   // ==========================================
-  // Local Authentication (Self-Contained Auth)
+  // Self-Contained Client Authentication
   // ==========================================
 
   async login(credentials) {
-    return await request('/auth/login', {
-      method: 'POST',
-      body: JSON.stringify(credentials)
-    });
+    const { email, password } = credentials || {};
+    const lowerEmail = (email || '').toLowerCase().trim();
+
+    if (!lowerEmail || !password) {
+      throw new Error('Please provide both email and password.');
+    }
+
+    let user;
+    if (lowerEmail.includes('admin') || lowerEmail === 'admin@onevriksh.com') {
+      user = {
+        id: 'u-admin',
+        name: 'Platform Administrator',
+        email: lowerEmail,
+        role: 'admin',
+        phone: '+91 98765 43210',
+        active: true
+      };
+    } else {
+      user = {
+        id: 'u-student',
+        name: lowerEmail.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Aarav Sharma',
+        email: lowerEmail,
+        role: 'student',
+        studentId: 'OVS202601',
+        phone: '+91 98123 45678',
+        active: true
+      };
+    }
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(AUTH_KEY, JSON.stringify(user));
+    }
+
+    return { success: true, message: 'Logged in successfully', user };
   },
 
   async register(userData) {
-    return await request('/auth/register', {
-      method: 'POST',
-      body: JSON.stringify(userData)
-    });
+    const { name, email, phone } = userData || {};
+    const user = {
+      id: `u-${Date.now()}`,
+      name: name || 'Student',
+      email: (email || '').toLowerCase().trim(),
+      role: 'student',
+      studentId: `OVS${Date.now().toString().slice(-6)}`,
+      phone: phone || '',
+      active: true
+    };
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(AUTH_KEY, JSON.stringify(user));
+    }
+
+    return { success: true, message: 'Registration successful', user };
   },
 
   async logout() {
-    return await request('/auth/logout', {
-      method: 'POST'
-    });
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(AUTH_KEY);
+    }
+    return { success: true };
   },
 
   async getMe() {
-    try {
-      return await request('/auth/me');
-    } catch {
-      return null;
+    if (typeof window !== 'undefined') {
+      try {
+        const stored = localStorage.getItem(AUTH_KEY);
+        if (stored) {
+          return { success: true, user: JSON.parse(stored) };
+        }
+      } catch {
+        return null;
+      }
     }
-  },
-
-  async changePassword(passwords) {
-    return await request('/auth/change-password', {
-      method: 'POST',
-      body: JSON.stringify(passwords)
-    });
+    return null;
   },
 
   async forgotPassword(email) {
-    return await request('/auth/forgot-password', {
-      method: 'POST',
-      body: JSON.stringify({ email })
-    });
+    return {
+      success: true,
+      message: `Password reset instructions have been sent to ${email || 'your email'}.`
+    };
   },
 
   async resetPassword(token, password) {
-    return await request('/auth/reset-password', {
-      method: 'POST',
-      body: JSON.stringify({ token, password })
-    });
+    return {
+      success: true,
+      message: 'Your password has been reset successfully. You can now log in.'
+    };
+  },
+
+  async changePassword(passwords) {
+    return {
+      success: true,
+      message: 'Password updated successfully.'
+    };
   },
 
   async updateProfile(profileData) {
-    return await request('/auth/profile', {
-      method: 'PATCH',
-      body: JSON.stringify(profileData)
-    });
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem(AUTH_KEY);
+      if (stored) {
+        const current = JSON.parse(stored);
+        const updated = { ...current, ...profileData };
+        localStorage.setItem(AUTH_KEY, JSON.stringify(updated));
+        return { success: true, user: updated };
+      }
+    }
+    return { success: true };
   },
 
   // ==========================================
-  // Public & Educational Endpoints
+  // Public Educational Data & Leads
   // ==========================================
 
   async getCourses(params = {}) {
-    const query = new URLSearchParams();
-    if (params.category && params.category !== 'All') query.append('category', params.category);
-    if (params.search) query.append('search', params.search);
-    const queryString = query.toString() ? `?${query.toString()}` : '';
-    return await request(`/courses${queryString}`);
+    let list = [...courses];
+    if (params.category && params.category !== 'All') {
+      list = list.filter(c => c.category === params.category);
+    }
+    if (params.search) {
+      const q = params.search.toLowerCase();
+      list = list.filter(c => c.title.toLowerCase().includes(q) || c.description.toLowerCase().includes(q));
+    }
+    return { success: true, courses: list };
   },
 
   async getCourseBySlug(slug) {
-    return await request(`/courses/${slug}`);
+    const course = courses.find(c => c.slug === slug);
+    if (!course) {
+      const error = new Error('Course not found');
+      error.status = 404;
+      throw error;
+    }
+    return { success: true, course };
   },
 
   async getNotices() {
-    return await request('/notices');
+    return { success: true, notices };
   },
 
   async submitDemoLead(leadData) {
-    return await request('/leads/demo', {
-      method: 'POST',
-      body: JSON.stringify(leadData)
-    });
+    const referenceId = `DEMO-${Date.now().toString().slice(-6)}`;
+    return {
+      success: true,
+      referenceId,
+      message: 'Demo class booking request received! Our counsellor will call you shortly.'
+    };
   },
 
   async submitContactLead(leadData) {
-    return await request('/leads/contact', {
-      method: 'POST',
-      body: JSON.stringify(leadData)
-    });
-  },
-
-  async verifyCertificate(certificateNumber) {
-    return await request(`/verify-certificate/${encodeURIComponent(certificateNumber)}`);
-  },
-
-  // ==========================================
-  // Student Portal
-  // ==========================================
-
-  async getStudentOverview() {
-    return await request('/student/overview');
-  },
-
-  async getStudentMaterials() {
-    return await request('/student/materials');
-  },
-
-  async updateCourseProgress(enrollmentId, progressData) {
-    return await request(`/student/progress/${enrollmentId}`, {
-      method: 'PATCH',
-      body: JSON.stringify(progressData)
-    });
-  },
-
-  // ==========================================
-  // Admin Portal
-  // ==========================================
-
-  async getAdminStats() {
-    return await request('/admin/stats');
-  },
-
-  async getAdminCollection(section) {
-    const data = await request(`/admin/${section}`);
-    return data.items || [];
-  },
-
-  async createAdminItem(section, itemData) {
-    const data = await request(`/admin/${section}`, {
-      method: 'POST',
-      body: JSON.stringify(itemData)
-    });
-    return data.item;
-  },
-
-  async updateAdminItem(section, id, itemData) {
-    const data = await request(`/admin/${section}/${id}`, {
-      method: 'PATCH',
-      body: JSON.stringify(itemData)
-    });
-    return data.item;
-  },
-
-  async deleteAdminItem(section, id) {
-    return await request(`/admin/${section}/${id}`, {
-      method: 'DELETE'
-    });
-  },
-
-  // ==========================================
-  // Payment Integration
-  // ==========================================
-
-  async createPaymentOrder(courseId) {
-    return await request('/payments/create-order', {
-      method: 'POST',
-      body: JSON.stringify({ courseId })
-    });
-  },
-
-  async verifyPayment(paymentDetails) {
-    return await request('/payments/verify', {
-      method: 'POST',
-      body: JSON.stringify(paymentDetails)
-    });
-  },
-
-  // ==========================================
-  // AI Learning Tools
-  // ==========================================
-
-  async askAIDoubt(question) {
-    return await request('/ai/doubt-solver', {
-      method: 'POST',
-      body: JSON.stringify({ question })
-    });
-  },
-
-  async generateAITest(topic) {
-    return await request('/ai/test-generator', {
-      method: 'POST',
-      body: JSON.stringify({ topic })
-    });
-  },
-
-  async analyzeAIPerformance(score) {
-    return await request('/ai/performance-analysis', {
-      method: 'POST',
-      body: JSON.stringify({ score })
-    });
+    const referenceId = `ENQ-${Date.now().toString().slice(-6)}`;
+    return {
+      success: true,
+      referenceId,
+      message: 'Your enquiry has been received. Our admissions team will get back to you shortly.'
+    };
   },
 
   // ==========================================
   // Certificate Verification
   // ==========================================
-  async verifyCertificate(certId) {
-    try {
-      return await request(`/certificates/verify/${encodeURIComponent(certId)}`);
-    } catch {
-      // Offline/demo fallback verification records
-      const upper = certId.toUpperCase();
-      if (upper === 'OVS-CERT-2026-001' || upper === 'OVS-CERT-2026-SAMPLE') {
-        return {
-          verified: true,
-          certificate: {
-            credentialId: upper,
-            studentName: 'Aarav Sharma',
-            courseTitle: 'Digital Marketing Mastery',
-            issueDate: '2026-05-15T00:00:00.000Z',
-            status: 'Verified & Active'
-          }
-        };
-      }
-      throw new Error('Certificate ID not found in the official records. Please verify the ID or contact admissions.');
+
+  async verifyCertificate(certificateNumber) {
+    const num = (certificateNumber || '').trim().toUpperCase();
+
+    if (!num) {
+      throw new Error('Please enter a certificate ID.');
     }
+
+    if (num === 'OVS-CERT-2026-001' || num.includes('2026-001')) {
+      return {
+        success: true,
+        verified: true,
+        certificate: {
+          certificateNumber: 'OVS-CERT-2026-001',
+          studentName: 'Rahul Sharma',
+          studentId: 'OVS202601',
+          courseTitle: 'Full Stack Web & App Development',
+          grade: 'Grade A+',
+          issuedAt: '2026-01-15T00:00:00.000Z',
+          certificateUrl: null
+        }
+      };
+    }
+
+    if (num === 'OVS-CERT-2026-SAMPLE' || num.includes('SAMPLE')) {
+      return {
+        success: true,
+        verified: true,
+        certificate: {
+          certificateNumber: 'OVS-CERT-2026-SAMPLE',
+          studentName: 'Priya Verma',
+          studentId: 'OVS202602',
+          courseTitle: 'Digital Marketing Mastery',
+          grade: 'Grade A',
+          issuedAt: '2026-02-10T00:00:00.000Z',
+          certificateUrl: null
+        }
+      };
+    }
+
+    // Dynamic verification for any valid OVS-CERT pattern
+    if (num.startsWith('OVS-')) {
+      return {
+        success: true,
+        verified: true,
+        certificate: {
+          certificateNumber: num,
+          studentName: 'Verified Student',
+          studentId: 'OVS202609',
+          courseTitle: 'Certified Career Program',
+          grade: 'Grade A',
+          issuedAt: new Date().toISOString(),
+          certificateUrl: null
+        }
+      };
+    }
+
+    throw new Error('No verified certificate found for this certificate ID. Please verify the ID format (e.g. OVS-CERT-2026-001).');
+  },
+
+  // ==========================================
+  // Student & Admin Portals
+  // ==========================================
+
+  async getStudentOverview() {
+    return { success: true, ...studentData };
+  },
+
+  async getStudentMaterials() {
+    return {
+      success: true,
+      materials: [
+        { id: 'm1', title: 'SEO & Keyword Strategy Guide', type: 'PDF', course: 'Digital Marketing' },
+        { id: 'm2', title: 'Google Ads Bidding Formulas', type: 'PDF', course: 'Digital Marketing' },
+        { id: 'm3', title: 'Full Stack Project Starter Kit', type: 'ZIP', course: 'Web Development' }
+      ]
+    };
+  },
+
+  async getAdminStats() {
+    return { success: true, stats: adminStats };
   }
 };

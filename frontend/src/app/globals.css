@@ -2197,6 +2197,15 @@
   background: #E2E8F0;
 }
 
+.up-primary-nav-row {
+  font-weight: 700;
+}
+
+.up-drawer-arrow {
+  flex-shrink: 0;
+  color: #94A3B8;
+}
+
 .up-drawer-chips-grid {
   display: flex;
   flex-wrap: wrap;

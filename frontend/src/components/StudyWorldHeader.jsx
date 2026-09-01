@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Search, ChevronDown, ChevronRight, Check, Globe, MapPin, Award, Globe2, Building2, X } from 'lucide-react';
+import { Search, ChevronDown, ChevronRight, Check, Globe, MapPin, X } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useRegion } from '@/context/RegionContext';
 import { Brand } from './Brand';
@@ -554,51 +554,33 @@ export function StudyWorldHeader() {
         </div>
 
         <div className="up-drawer-body">
-          {/* STANDALONE INDIVIDUAL IDENTITIES: CERTIFICATION, STUDY ABROAD, OFFLINE CENTERS */}
-          <div className="up-drawer-primary-cards">
+          {/* STANDALONE INDIVIDUAL LINKS: CERTIFICATION, STUDY ABROAD, OFFLINE CENTERS */}
+          <div className="up-drawer-primary-links">
             <Link
               href="/certification"
-              className="up-drawer-primary-card"
+              className="up-drawer-nav-row up-primary-nav-row"
               onClick={() => setMobileDrawerOpen(false)}
             >
-              <div className="up-drawer-card-icon gold">
-                <Award size={18} />
-              </div>
-              <div className="up-drawer-card-content">
-                <strong>Certification</strong>
-                <span>Recognized certificate upon completion</span>
-              </div>
-              <ChevronRight size={15} className="up-drawer-card-arrow" />
+              <span>Certification</span>
+              <ChevronRight size={14} className="up-drawer-arrow" />
             </Link>
 
             <Link
               href="/study-abroad"
-              className="up-drawer-primary-card"
+              className="up-drawer-nav-row up-primary-nav-row"
               onClick={() => setMobileDrawerOpen(false)}
             >
-              <div className="up-drawer-card-icon blue">
-                <Globe2 size={18} />
-              </div>
-              <div className="up-drawer-card-content">
-                <strong>Study Abroad</strong>
-                <span>Global university admissions &amp; test prep</span>
-              </div>
-              <ChevronRight size={15} className="up-drawer-card-arrow" />
+              <span>Study Abroad</span>
+              <ChevronRight size={14} className="up-drawer-arrow" />
             </Link>
 
             <Link
               href="/offline-center"
-              className="up-drawer-primary-card"
+              className="up-drawer-nav-row up-primary-nav-row"
               onClick={() => setMobileDrawerOpen(false)}
             >
-              <div className="up-drawer-card-icon teal">
-                <Building2 size={18} />
-              </div>
-              <div className="up-drawer-card-content">
-                <strong>Offline Centers</strong>
-                <span>In-person classroom training hubs</span>
-              </div>
-              <ChevronRight size={15} className="up-drawer-card-arrow" />
+              <span>Offline Centers</span>
+              <ChevronRight size={14} className="up-drawer-arrow" />
             </Link>
           </div>
 

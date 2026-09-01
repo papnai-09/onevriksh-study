@@ -398,7 +398,7 @@ export function StudyWorldHeader() {
                           className={`up-menu-row ${selectedLang.code === l.code ? 'active' : ''}`}
                           onClick={() => {
                             handleSelectLanguage(l);
-                            setRegionTab('country'); // seamlessly advance to country selection
+                            setRegionTab('country');
                           }}
                         >
                           <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -425,7 +425,7 @@ export function StudyWorldHeader() {
                           className={`up-menu-row ${selectedCountry.code === c.code ? 'active' : ''}`}
                           onClick={() => {
                             handleSelectCountry(c);
-                            setRegionDropdownOpen(false); // close dropdown on final selection
+                            setRegionDropdownOpen(false);
                           }}
                         >
                           <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -588,7 +588,7 @@ export function StudyWorldHeader() {
         </div>
       )}
 
-      {/* SLIDE-IN MOBILE RIGHT DRAWER */}
+      {/* SLIDE-IN MOBILE RIGHT DRAWER (CLEAN NAVIGATION - NO REDUNDANT SEARCH INSIDE) */}
       <div className={`up-drawer-backdrop ${mobileDrawerOpen ? 'visible' : ''}`} onClick={() => setMobileDrawerOpen(false)} />
       <aside className={`up-drawer ${mobileDrawerOpen ? 'open' : ''}`}>
         <div className="up-drawer-header">
@@ -597,41 +597,6 @@ export function StudyWorldHeader() {
         </div>
 
         <div className="up-drawer-body">
-          {/* SEARCH IN DRAWER */}
-          <div className="up-drawer-search">
-            <input
-              type="text"
-              placeholder="Search courses..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={handleSearchKeyDown}
-            />
-          </div>
-
-          {searchQuery.trim().length > 0 && (
-            <div className="up-drawer-search-results">
-              {searchResults.length > 0 ? (
-                searchResults.map((course) => (
-                  <div
-                    key={course.slug}
-                    className="up-search-result-item"
-                    onClick={() => handleSelectCourse(course.slug)}
-                  >
-                    <div className="up-search-result-info">
-                      <span className="up-search-result-title">{course.title}</span>
-                      <span className="up-search-result-meta">{course.duration}</span>
-                    </div>
-                    <span className="up-search-result-badge">{course.category}</span>
-                  </div>
-                ))
-              ) : (
-                <div className="up-search-empty">
-                  <span>No courses found</span>
-                </div>
-              )}
-            </div>
-          )}
-
           {/* CATEGORIZED COURSES IN DRAWER */}
           {courseCategories.map((group) => (
             <div key={group.category} className="up-drawer-section">

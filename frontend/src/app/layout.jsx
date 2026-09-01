@@ -1,6 +1,7 @@
 import './globals.css';
 import { AppChrome } from '@/components/AppChrome';
 import { AuthProvider } from '@/context/AuthContext';
+import { RegionProvider } from '@/context/RegionContext';
 
 export const metadata = {
   metadataBase: new URL('https://study.onevriksh.com'),
@@ -14,7 +15,9 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <body>
         <AuthProvider>
-          <AppChrome>{children}</AppChrome>
+          <RegionProvider>
+            <AppChrome>{children}</AppChrome>
+          </RegionProvider>
         </AuthProvider>
       </body>
     </html>

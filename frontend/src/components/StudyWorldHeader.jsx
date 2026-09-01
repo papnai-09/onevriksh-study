@@ -3,12 +3,13 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Search, ChevronDown, ChevronRight, Check, Globe, MapPin, Award, Globe2, Building2 } from 'lucide-react';
+import { Search, ChevronDown, ChevronRight, Check, Globe, MapPin, Award, Globe2, Building2, X } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { useRegion } from '@/context/RegionContext';
 import { Brand } from './Brand';
 import { courses } from '@/data/site';
 
-// Categorized Courses for Full-Width Side-Divided Hover Mega Dropdown
+// Categorized Courses for Full-Width Mega Dropdown
 const courseCategories = [
   {
     category: 'Marketing',
@@ -41,31 +42,10 @@ const courseCategories = [
   }
 ];
 
-const languages = [
-  { code: 'EN', name: 'English', native: 'English', flag: '🇬🇧' },
-  { code: 'HI', name: 'Hindi', native: 'हिन्दी', flag: '🇮🇳' },
-  { code: 'ES', name: 'Spanish', native: 'Español', flag: '🇪🇸' },
-  { code: 'FR', name: 'French', native: 'Français', flag: '🇫🇷' },
-  { code: 'DE', name: 'German', native: 'Deutsch', flag: '🇩🇪' },
-];
-
-const countries = [
-  { code: 'IN', name: 'India', currency: '₹ INR', flag: '🇮🇳' },
-  { code: 'US', name: 'United States', currency: '$ USD', flag: '🇺🇸' },
-  { code: 'UK', name: 'United Kingdom', currency: '£ GBP', flag: '🇬🇧' },
-  { code: 'AE', name: 'UAE', currency: 'AED', flag: '🇦🇪' },
-  { code: 'CA', name: 'Canada', currency: '$ CAD', flag: '🇨🇦' },
-  { code: 'DE', name: 'Germany', currency: '€ EUR', flag: '🇩🇪' },
-];
-
-/**
- * Clean Header Component with 3-Line Ascending Hamburger Before Logo,
- * Standalone Individual Identity Pages (Certification, Study Abroad, Offline Centers),
- * Live Real-time Course Search, and Functional Language & Region Selector
- */
 export function StudyWorldHeader() {
   const router = useRouter();
   const { user, logout } = useAuth();
+  const { selectedLang, selectedCountry, setLanguage, setCountry, languages, countries } = useRegion();
 
   const [allCoursesOpen, setAllCoursesOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState(courseCategories[0].category);
@@ -77,49 +57,10 @@ export function StudyWorldHeader() {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
-  const [selectedLang, setSelectedLang] = useState(languages[0]);
-  const [selectedCountry, setSelectedCountry] = useState(countries[0]);
-
   const navRef = useRef(null);
   const searchContainerRef = useRef(null);
   const regionContainerRef = useRef(null);
   const timeoutRef = useRef(null);
-
-  // Load saved language and country from localStorage
-  useEffect(() => {
-    try {
-      const savedLang = localStorage.getItem('ovs_lang');
-      if (savedLang) {
-        const found = languages.find((l) => l.code === savedLang);
-        if (found) setSelectedLang(found);
-      }
-      const savedCountry = localStorage.getItem('ovs_country');
-      if (savedCountry) {
-        const found = countries.find((c) => c.code === savedCountry);
-        if (found) setSelectedCountry(found);
-      }
-    } catch {
-      // ignore
-    }
-  }, []);
-
-  const handleSelectLanguage = (lang) => {
-    setSelectedLang(lang);
-    try {
-      localStorage.setItem('ovs_lang', lang.code);
-    } catch {
-      // ignore
-    }
-  };
-
-  const handleSelectCountry = (country) => {
-    setSelectedCountry(country);
-    try {
-      localStorage.setItem('ovs_country', country.code);
-    } catch {
-      // ignore
-    }
-  };
 
   // Live filter courses based on search query
   const searchResults = useMemo(() => {
@@ -230,9 +171,9 @@ export function StudyWorldHeader() {
       onMouseLeave={closeAllCourses}
     >
       <header className="up-header">
-        {/* LEFT NAV GROUP: (MOBILE: 3 ASCENDING LINES HAMBURGER BEFORE LOGO) + LOGO + ALL COURSES + LINKS */}
+        {/* LEFT NAV GROUP: MOBILE 3-LINE ASCENDING HAMBURGER BEFORE LOGO + LOGO + ALL COURSES + LINKS */}
         <div className="up-left-nav-group">
-          {/* 3 ASCENDING LINES HAMBURGER BUTTON (MOBILE ONLY — PLACED BEFORE LOGO) */}
+          {/* 3 ASCENDING LINES HAMBURGER BUTTON (MOBILE ONLY) */}
           <button
             type="button"
             className="up-mobile-menu-btn up-mobile-only"
@@ -356,7 +297,7 @@ export function StudyWorldHeader() {
                 setAllCoursesOpen(false);
                 setUserDropdownOpen(false);
               }}
-              title="Select Language & Country"
+              title="Select Language & Region"
             >
               <span className="up-region-flag">{selectedCountry.flag}</span>
               <span>{selectedLang.code}</span>
@@ -367,47 +308,54 @@ export function StudyWorldHeader() {
 
             {regionDropdownOpen && (
               <div className="up-dropdown-menu up-region-dropdown up-fade-in">
-                {/* SELECTOR TABS */}
-                <div className="up-region-tabs">
+                {/* MODAL HEADER WITH TABS & CLOSE BUTTON */}
+                <div className="up-region-header-row">
+                  <div className="up-region-tabs">
+                    <button
+                      type="button"
+                      className={`up-region-tab ${regionTab === 'lang' ? 'active' : ''}`}
+                      onClick={() => setRegionTab('lang')}
+                    >
+                      <Globe size={13} />
+                      <span>Language</span>
+                    </button>
+                    <button
+                      type="button"
+                      className={`up-region-tab ${regionTab === 'country' ? 'active' : ''}`}
+                      onClick={() => setRegionTab('country')}
+                    >
+                      <MapPin size={13} />
+                      <span>Country ({selectedCountry.currencyCode})</span>
+                    </button>
+                  </div>
                   <button
                     type="button"
-                    className={`up-region-tab ${regionTab === 'lang' ? 'active' : ''}`}
-                    onClick={() => setRegionTab('lang')}
+                    className="up-region-close-btn"
+                    onClick={() => setRegionDropdownOpen(false)}
+                    aria-label="Close"
                   >
-                    <Globe size={13} />
-                    <span>Language</span>
-                  </button>
-                  <button
-                    type="button"
-                    className={`up-region-tab ${regionTab === 'country' ? 'active' : ''}`}
-                    onClick={() => setRegionTab('country')}
-                  >
-                    <MapPin size={13} />
-                    <span>Country ({selectedCountry.currency})</span>
+                    <X size={14} />
                   </button>
                 </div>
 
                 {/* TAB 1: LANGUAGES */}
                 {regionTab === 'lang' && (
                   <div className="up-menu-section">
-                    <div className="up-menu-title">Select Preferred Language</div>
+                    <div className="up-menu-title">Select Language</div>
                     <div className="up-region-list">
                       {languages.map((l) => (
                         <button
                           key={l.code}
                           type="button"
                           className={`up-menu-row ${selectedLang.code === l.code ? 'active' : ''}`}
-                          onClick={() => {
-                            handleSelectLanguage(l);
-                            setRegionTab('country');
-                          }}
+                          onClick={() => setLanguage(l)}
                         >
-                          <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <span style={{ fontSize: '1.05rem' }}>{l.flag}</span>
-                            <strong>{l.native}</strong>
-                            <small style={{ color: '#64748B', fontWeight: 500 }}>({l.name})</small>
+                          <span className="up-menu-row-label">
+                            <span className="up-region-emoji">{l.flag}</span>
+                            <span className="up-menu-native-text">{l.native}</span>
+                            <span className="up-menu-en-text">({l.name})</span>
                           </span>
-                          {selectedLang.code === l.code && <Check size={14} style={{ color: '#0F766E' }} />}
+                          {selectedLang.code === l.code && <Check size={14} className="up-check-active" />}
                         </button>
                       ))}
                     </div>
@@ -417,29 +365,37 @@ export function StudyWorldHeader() {
                 {/* TAB 2: COUNTRIES */}
                 {regionTab === 'country' && (
                   <div className="up-menu-section">
-                    <div className="up-menu-title">Select Region &amp; Currency</div>
+                    <div className="up-menu-title">Select Country &amp; Currency</div>
                     <div className="up-region-list">
                       {countries.map((c) => (
                         <button
                           key={c.code}
                           type="button"
                           className={`up-menu-row ${selectedCountry.code === c.code ? 'active' : ''}`}
-                          onClick={() => {
-                            handleSelectCountry(c);
-                            setRegionDropdownOpen(false);
-                          }}
+                          onClick={() => setCountry(c)}
                         >
-                          <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <span style={{ fontSize: '1.05rem' }}>{c.flag}</span>
-                            <strong>{c.name}</strong>
-                            <span className="up-currency-badge">{c.currency}</span>
+                          <span className="up-menu-row-label">
+                            <span className="up-region-emoji">{c.flag}</span>
+                            <span className="up-menu-native-text">{c.name}</span>
+                            <span className="up-currency-badge">{c.currency} {c.currencyCode}</span>
                           </span>
-                          {selectedCountry.code === c.code && <Check size={14} style={{ color: '#0F766E' }} />}
+                          {selectedCountry.code === c.code && <Check size={14} className="up-check-active" />}
                         </button>
                       ))}
                     </div>
                   </div>
                 )}
+
+                {/* FOOTER DONE BUTTON */}
+                <div className="up-region-footer">
+                  <button
+                    type="button"
+                    className="up-region-apply-btn"
+                    onClick={() => setRegionDropdownOpen(false)}
+                  >
+                    Done
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -589,7 +545,7 @@ export function StudyWorldHeader() {
         </div>
       )}
 
-      {/* SLIDE-IN MOBILE RIGHT DRAWER (CLEAN NAVIGATION - STANDALONE INDIVIDUAL IDENTITIES) */}
+      {/* SLIDE-IN MOBILE RIGHT DRAWER */}
       <div className={`up-drawer-backdrop ${mobileDrawerOpen ? 'visible' : ''}`} onClick={() => setMobileDrawerOpen(false)} />
       <aside className={`up-drawer ${mobileDrawerOpen ? 'open' : ''}`}>
         <div className="up-drawer-header">
@@ -668,40 +624,44 @@ export function StudyWorldHeader() {
 
           <div className="up-drawer-divider" />
 
-          {/* REGION & LANGUAGE SELECTION IN DRAWER */}
+          {/* MODERN INTERACTIVE LANGUAGE SELECTOR FOR MOBILE */}
           <div className="up-drawer-section">
-            <div className="up-drawer-section-title">Language &amp; Region</div>
-            <div className="up-drawer-select-row">
-              <label>Language:</label>
-              <select
-                value={selectedLang.code}
-                onChange={(e) => {
-                  const l = languages.find((lang) => lang.code === e.target.value);
-                  if (l) handleSelectLanguage(l);
-                }}
-              >
-                {languages.map((l) => (
-                  <option key={l.code} value={l.code}>
-                    {l.flag} {l.native} ({l.name})
-                  </option>
-                ))}
-              </select>
+            <div className="up-drawer-section-title">Select Language</div>
+            <div className="up-drawer-chips-grid">
+              {languages.map((l) => (
+                <button
+                  key={l.code}
+                  type="button"
+                  className={`up-drawer-chip ${selectedLang.code === l.code ? 'active' : ''}`}
+                  onClick={() => setLanguage(l)}
+                >
+                  <span>{l.flag}</span>
+                  <strong>{l.native}</strong>
+                  {selectedLang.code === l.code && <Check size={12} className="up-check-active" />}
+                </button>
+              ))}
             </div>
-            <div className="up-drawer-select-row">
-              <label>Country:</label>
-              <select
-                value={selectedCountry.code}
-                onChange={(e) => {
-                  const c = countries.find((cntry) => cntry.code === e.target.value);
-                  if (c) handleSelectCountry(c);
-                }}
-              >
-                {countries.map((c) => (
-                  <option key={c.code} value={c.code}>
-                    {c.flag} {c.name} ({c.currency})
-                  </option>
-                ))}
-              </select>
+          </div>
+
+          <div className="up-drawer-divider" />
+
+          {/* MODERN INTERACTIVE REGION & CURRENCY SELECTOR FOR MOBILE */}
+          <div className="up-drawer-section">
+            <div className="up-drawer-section-title">Select Region &amp; Currency</div>
+            <div className="up-drawer-chips-grid">
+              {countries.map((c) => (
+                <button
+                  key={c.code}
+                  type="button"
+                  className={`up-drawer-chip ${selectedCountry.code === c.code ? 'active' : ''}`}
+                  onClick={() => setCountry(c)}
+                >
+                  <span>{c.flag}</span>
+                  <strong>{c.name}</strong>
+                  <small className="up-chip-currency">{c.currency}</small>
+                  {selectedCountry.code === c.code && <Check size={12} className="up-check-active" />}
+                </button>
+              ))}
             </div>
           </div>
         </div>

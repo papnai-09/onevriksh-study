@@ -299,10 +299,7 @@ export function StudyWorldHeader() {
               }}
               title="Select Language & Region"
             >
-              <span className="up-region-flag">{selectedCountry.flag}</span>
               <span>{selectedLang.code}</span>
-              <span className="up-divider-pipe">|</span>
-              <span>{selectedCountry.code}</span>
               <ChevronDown size={12} className={`up-chevron ${regionDropdownOpen ? 'open' : ''}`} />
             </button>
 
@@ -325,7 +322,7 @@ export function StudyWorldHeader() {
                       onClick={() => setRegionTab('country')}
                     >
                       <MapPin size={13} />
-                      <span>Country ({selectedCountry.currencyCode})</span>
+                      <span>Country</span>
                     </button>
                   </div>
                   <button
@@ -341,7 +338,7 @@ export function StudyWorldHeader() {
                 {/* TAB 1: LANGUAGES */}
                 {regionTab === 'lang' && (
                   <div className="up-menu-section">
-                    <div className="up-menu-title">Select Language</div>
+                    <div className="up-menu-title">Language</div>
                     <div className="up-region-list">
                       {languages.map((l) => (
                         <button
@@ -351,7 +348,6 @@ export function StudyWorldHeader() {
                           onClick={() => setLanguage(l)}
                         >
                           <span className="up-menu-row-label">
-                            <span className="up-region-emoji">{l.flag}</span>
                             <span className="up-menu-native-text">{l.native}</span>
                             <span className="up-menu-en-text">({l.name})</span>
                           </span>
@@ -365,7 +361,7 @@ export function StudyWorldHeader() {
                 {/* TAB 2: COUNTRIES */}
                 {regionTab === 'country' && (
                   <div className="up-menu-section">
-                    <div className="up-menu-title">Select Country &amp; Currency</div>
+                    <div className="up-menu-title">Country</div>
                     <div className="up-region-list">
                       {countries.map((c) => (
                         <button
@@ -375,9 +371,7 @@ export function StudyWorldHeader() {
                           onClick={() => setCountry(c)}
                         >
                           <span className="up-menu-row-label">
-                            <span className="up-region-emoji">{c.flag}</span>
                             <span className="up-menu-native-text">{c.name}</span>
-                            <span className="up-currency-badge">{c.currency} {c.currencyCode}</span>
                           </span>
                           {selectedCountry.code === c.code && <Check size={14} className="up-check-active" />}
                         </button>
@@ -606,9 +600,9 @@ export function StudyWorldHeader() {
 
           <div className="up-drawer-divider" />
 
-          {/* MODERN INTERACTIVE LANGUAGE SELECTOR FOR MOBILE */}
+          {/* LANGUAGE SELECTOR FOR MOBILE */}
           <div className="up-drawer-section">
-            <div className="up-drawer-section-title">Select Language</div>
+            <div className="up-drawer-section-title">Language</div>
             <div className="up-drawer-chips-grid">
               {languages.map((l) => (
                 <button
@@ -617,7 +611,6 @@ export function StudyWorldHeader() {
                   className={`up-drawer-chip ${selectedLang.code === l.code ? 'active' : ''}`}
                   onClick={() => setLanguage(l)}
                 >
-                  <span>{l.flag}</span>
                   <strong>{l.native}</strong>
                   {selectedLang.code === l.code && <Check size={12} className="up-check-active" />}
                 </button>
@@ -627,9 +620,9 @@ export function StudyWorldHeader() {
 
           <div className="up-drawer-divider" />
 
-          {/* MODERN INTERACTIVE REGION & CURRENCY SELECTOR FOR MOBILE */}
+          {/* REGION & CURRENCY SELECTOR FOR MOBILE */}
           <div className="up-drawer-section">
-            <div className="up-drawer-section-title">Select Region &amp; Currency</div>
+            <div className="up-drawer-section-title">Region &amp; Currency</div>
             <div className="up-drawer-chips-grid">
               {countries.map((c) => (
                 <button
@@ -638,9 +631,7 @@ export function StudyWorldHeader() {
                   className={`up-drawer-chip ${selectedCountry.code === c.code ? 'active' : ''}`}
                   onClick={() => setCountry(c)}
                 >
-                  <span>{c.flag}</span>
                   <strong>{c.name}</strong>
-                  <small className="up-chip-currency">{c.currency}</small>
                   {selectedCountry.code === c.code && <Check size={12} className="up-check-active" />}
                 </button>
               ))}

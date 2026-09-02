@@ -1,8 +1,8 @@
-import { Clock3, Mail, MapPin, Phone } from 'lucide-react';
+﻿import { Clock3, Mail, MapPin, Phone } from 'lucide-react';
 import { FormCard } from '@/components/FormCard';
 import { institute } from '@/data/site';
 
-export const metadata = { title: 'Contact Us | Onevriksh Study' };
+export const metadata = { title: 'Contact Us | ONEVRIKSH Study' };
 
 const fields = [
   { name: 'name', label: 'Full name', placeholder: 'Your name' },
@@ -88,7 +88,7 @@ export default function ContactPage() {
       </section>
       <section className="map-section">
         <iframe
-          title="Onevriksh Study location"
+          title="ONEVRIKSH Study location"
           src="https://maps.google.com/maps?q=Connaught%20Place%20New%20Delhi&t=&z=14&ie=UTF8&iwloc=&output=embed"
           loading="lazy"
         />

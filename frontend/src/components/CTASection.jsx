@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 import { Calendar, ArrowRight } from 'lucide-react';
@@ -15,7 +15,7 @@ export function CTASection({
     <section className="cta-band">
       <div className="container cta-inner">
         <div>
-          <span className="eyebrow light">Onevriksh Study</span>
+          <span className="eyebrow light">ONEVRIKSH Study</span>
           <h2>{title}</h2>
           <p>{subtitle}</p>
         </div>

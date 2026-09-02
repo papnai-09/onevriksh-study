@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "npm run dev -w @onevriksh/web",
     "build": "npm run build -w @onevriksh/web",
-    "start": "npm run start -w @onevriksh/web"
+    "start": "npm run start -w @onevriksh/web",
+    "backend": "node backend/src/index.js",
+    "backend:dev": "node --watch backend/src/index.js"
   },
   "devDependencies": {},
   "overrides": {

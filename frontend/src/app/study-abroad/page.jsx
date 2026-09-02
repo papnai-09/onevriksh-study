@@ -1,9 +1,9 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import { CTASection } from '@/components/CTASection';
 import { Globe, Plane, GraduationCap, FileCheck, Languages, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export const metadata = {
-  title: 'Study Abroad & Language Exam Prep | Onevriksh Study',
+  title: 'Study Abroad & Language Exam Prep | ONEVRIKSH Study',
   description:
     'Expert preparation for DELF (France), Goethe-Zertifikat (Germany), DELE (Spain), and CILS (Italy) language requirements and international student visa counselling.'
 };

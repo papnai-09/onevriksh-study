@@ -1,5 +1,5 @@
-export const institute = {
-  name: 'Onevriksh Study',
+﻿export const institute = {
+  name: 'ONEVRIKSH Study',
   tagline: 'Root Your Skills. Rise Your Future.',
   phone: '+91 87005 36553',
   email: 'study@onevriksh.com',

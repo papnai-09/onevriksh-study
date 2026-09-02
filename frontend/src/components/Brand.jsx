@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import Image from 'next/image';
 
 export function Brand({ compact = false }) {
@@ -6,7 +6,7 @@ export function Brand({ compact = false }) {
     <Link
       href="/"
       className="brand"
-      aria-label="Onevriksh Study home"
+      aria-label="ONEVRIKSH Study home"
       style={{
         display: 'inline-flex',
         alignItems: 'flex-end',
@@ -18,7 +18,7 @@ export function Brand({ compact = false }) {
       <span className="brand-mark-wrap" style={{ display: 'inline-flex', alignItems: 'flex-end', lineHeight: 1 }}>
         <Image
           src="/Black_Transparent.png"
-          alt="Onevriksh Logo"
+          alt="ONEVRIKSH Logo"
           width={compact ? 80 : 100}
           height={compact ? 16 : 20}
           priority

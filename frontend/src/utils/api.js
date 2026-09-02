@@ -1,118 +1,61 @@
 import { courses, notices, studentData, adminStats } from '@/data/site';
 
-const AUTH_KEY = 'onevriksh_auth_user';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+
+async function apiFetch(path, options = {}) {
+  const res = await fetch(`${BASE_URL}${path}`, {
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json', ...options.headers },
+    ...options,
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.message || 'Something went wrong.');
+  return data;
+}
 
 export const api = {
   // ==========================================
-  // Mobile Number + OTP Authentication
+  // Password-Based Authentication (Real API)
   // ==========================================
 
-  async sendOtp(phone) {
-    const cleanPhone = (phone || '').replace(/\D/g, '');
-    if (cleanPhone.length < 10) {
-      throw new Error('Please enter a valid 10-digit mobile number.');
-    }
-    // Instant OTP generation (simulated for live/production readiness)
-    return {
-      success: true,
-      message: `OTP sent successfully to +91 ${cleanPhone.slice(-10)}`,
-      otp: '123456'
-    };
+  async login({ phone, password }) {
+    return apiFetch('/api/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ phone, password }),
+    });
   },
 
-  async login(credentials) {
-    const { phone, otp, email, role } = credentials || {};
-    const cleanPhone = (phone || '').replace(/\D/g, '');
-
-    // Allow quick role login or phone OTP login
-    let user;
-    if (cleanPhone.includes('9876543210') || (email && email.includes('admin')) || role === 'admin') {
-      user = {
-        id: 'u-admin',
-        name: 'Platform Administrator',
-        phone: '+91 98765 43210',
-        email: 'admin@onevriksh.com',
-        role: 'admin',
-        active: true
-      };
-    } else {
-      const studentPhone = cleanPhone ? `+91 ${cleanPhone.slice(-10)}` : '+91 98123 45678';
-      user = {
-        id: 'u-student',
-        name: credentials.name || 'Rahul Sharma',
-        phone: studentPhone,
-        email: 'student@onevriksh.com',
-        role: 'student',
-        studentId: 'OVS202601',
-        active: true
-      };
-    }
-
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(AUTH_KEY, JSON.stringify(user));
-    }
-
-    return { success: true, message: 'Logged in successfully', user };
+  async register({ name, phone, password, course }) {
+    return apiFetch('/api/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({ name, phone, password, course }),
+    });
   },
 
-  async register(userData) {
-    const { name, phone, course } = userData || {};
-    const cleanPhone = (phone || '').replace(/\D/g, '');
-
-    if (!name || cleanPhone.length < 10) {
-      throw new Error('Please enter your full name and a valid 10-digit mobile number.');
-    }
-
-    const user = {
-      id: `u-${Date.now()}`,
-      name: name.trim(),
-      phone: `+91 ${cleanPhone.slice(-10)}`,
-      email: `${name.toLowerCase().replace(/\s+/g, '')}@student.onevriksh.com`,
-      role: 'student',
-      studentId: `OVS${Date.now().toString().slice(-6)}`,
-      course: course || 'Digital Marketing',
-      active: true
-    };
-
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(AUTH_KEY, JSON.stringify(user));
-    }
-
-    return { success: true, message: 'Account created successfully', user };
+  async resetPassword({ phone, password }) {
+    return apiFetch('/api/auth/reset-password', {
+      method: 'POST',
+      body: JSON.stringify({ phone, password }),
+    });
   },
 
   async logout() {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem(AUTH_KEY);
-    }
-    return { success: true };
+    return apiFetch('/api/auth/logout', { method: 'POST' });
   },
 
   async getMe() {
-    if (typeof window !== 'undefined') {
-      try {
-        const stored = localStorage.getItem(AUTH_KEY);
-        if (stored) {
-          return { success: true, user: JSON.parse(stored) };
-        }
-      } catch {
-        return null;
-      }
+    try {
+      return await apiFetch('/api/auth/me');
+    } catch {
+      return null;
     }
-    return null;
   },
 
   async updateProfile(profileData) {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem(AUTH_KEY);
-      if (stored) {
-        const current = JSON.parse(stored);
-        const updated = { ...current, ...profileData };
-        localStorage.setItem(AUTH_KEY, JSON.stringify(updated));
-        return { success: true, user: updated };
-      }
-    }
-    return { success: true };
+    return apiFetch('/api/auth/profile', {
+      method: 'PATCH',
+      body: JSON.stringify(profileData),
+    });
   },
 
   // ==========================================

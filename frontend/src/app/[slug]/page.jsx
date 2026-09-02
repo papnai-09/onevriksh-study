@@ -7,7 +7,7 @@ import { courses } from '@/data/site';
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const course = courses.find((item) => item.slug === slug);
-  return { title: course ? `${course.title} | Onevriksh Study` : 'Course' };
+  return { title: course ? `${course.title} | ONEVRIKSH Study` : 'Course' };
 }
 
 export default async function CourseDetailPage({ params }) {

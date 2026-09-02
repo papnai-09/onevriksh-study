@@ -1,9 +1,9 @@
-import Image from 'next/image';
+﻿import Image from 'next/image';
 import { BadgeCheck, Clock, Users } from 'lucide-react';
 import { FormCard } from '@/components/FormCard';
 import { courses } from '@/data/site';
 
-export const metadata = { title: 'Book a Free Demo | Onevriksh Study' };
+export const metadata = { title: 'Book a Free Demo | ONEVRIKSH Study' };
 
 const fields = [
   { name: 'name', label: 'Full name', placeholder: 'Your full name' },
@@ -37,7 +37,7 @@ export default function DemoPage() {
       <div className="demo-bg">
         <Image
           src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1800&q=85"
-          alt="Onevriksh Demo Session"
+          alt="ONEVRIKSH Demo Session"
           fill
           priority
         />
@@ -45,7 +45,7 @@ export default function DemoPage() {
       <div className="demo-overlay" />
       <div className="container demo-layout">
         <div className="demo-copy">
-          <span className="eyebrow light">Experience Onevriksh</span>
+          <span className="eyebrow light">Experience ONEVRIKSH</span>
           <h1>Your first class is on us.</h1>
           <p>
             Meet the trainer, experience our teaching style and get a personalized course recommendation with no pressure to enroll.

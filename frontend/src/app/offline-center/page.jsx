@@ -1,10 +1,10 @@
-import Image from 'next/image';
+﻿import Image from 'next/image';
 import Link from 'next/link';
 import { institute } from '@/data/site';
 import { MapPin, Users, Monitor, Wifi, Coffee, Clock3, Navigation } from 'lucide-react';
 
 export const metadata = {
-  title: 'Offline Training Centre in Connaught Place | Onevriksh Study',
+  title: 'Offline Training Centre in Connaught Place | ONEVRIKSH Study',
   description:
     'Visit our modern classroom studio in Connaught Place, New Delhi. Air-conditioned classrooms, dedicated student workstations, high-speed Wi-Fi, and small batch sizes.'
 };

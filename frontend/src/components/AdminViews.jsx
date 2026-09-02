@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { BookOpen, CalendarCheck, CheckCircle2, ChevronRight, CircleDollarSign, Download, Edit3, FilePlus2, GraduationCap, MoreHorizontal, Plus, QrCode, Search, Send, Trash2, TrendingUp, Upload, UserPlus, Users, WalletCards, X } from 'lucide-react';
 import { useEffect, useState, useCallback, useMemo } from 'react';
@@ -408,7 +408,7 @@ export function AdminSection({ section }) {
         <section className="panel settings-section">
           <h2>Institute information</h2>
           <div className="form-grid">
-            <label><span>Institute name</span><input defaultValue="Onevriksh Study" /></label>
+            <label><span>Institute name</span><input defaultValue="ONEVRIKSH Study" /></label>
             <label><span>Contact number</span><input defaultValue="+91 87005 36553" /></label>
             <label className="full"><span>Email</span><input defaultValue="study@onevriksh.com" /></label>
             <label className="full"><span>Address</span><textarea defaultValue="Shop No. 28, NDMC Market, Connaught Place, New Delhi 110001" /></label>

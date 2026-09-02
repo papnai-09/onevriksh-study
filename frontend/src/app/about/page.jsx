@@ -1,9 +1,9 @@
-import Image from 'next/image';
+﻿import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Award, Eye, HeartHandshake, Lightbulb, Target, Users } from 'lucide-react';
 import { SectionHeading } from '@/components/SectionHeading';
 
-export const metadata = { title: 'About Us | Onevriksh Study' };
+export const metadata = { title: 'About Us | ONEVRIKSH Study' };
 
 export default function AboutPage() {
   return (
@@ -15,10 +15,10 @@ export default function AboutPage() {
             <h1>
               We help ambition become <em>ability.</em>
             </h1>
-            <p>Onevriksh Study brings practical education, close mentoring and career direction together under one roof.</p>
+            <p>ONEVRIKSH Study brings practical education, close mentoring and career direction together under one roof.</p>
           </div>
           <div className="page-hero-image">
-            <Image src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=85" alt="Students at Onevriksh Study" fill priority />
+            <Image src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=85" alt="Students at ONEVRIKSH Study" fill priority />
           </div>
         </div>
       </section>
@@ -30,7 +30,7 @@ export default function AboutPage() {
           </div>
           <div>
             <SectionHeading eyebrow="Our story" title="A coaching institute built for the gap between theory and work." />
-            <p className="lead">Onevriksh began with a simple observation: students did not need more passive lectures. They needed practice, patient mentors and a place where questions were welcome.</p>
+            <p className="lead">ONEVRIKSH began with a simple observation: students did not need more passive lectures. They needed practice, patient mentors and a place where questions were welcome.</p>
             <p>From our Connaught Place centre, we now train learners across digital skills, design, communication and international languages. Our classrooms stay small, our curriculum stays current, and our focus stays personal.</p>
             <Link href="/demo" className="button button-primary">
               Meet us in a free demo <ArrowRight size={18} />
@@ -85,7 +85,7 @@ export default function AboutPage() {
             </div>
           </div>
           <div className="trainer-image">
-            <Image src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1000&q=85" alt="Onevriksh trainer" fill />
+            <Image src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1000&q=85" alt="ONEVRIKSH trainer" fill />
           </div>
         </div>
       </section>

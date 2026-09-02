@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from './Brand';
@@ -13,7 +13,7 @@ export function AuthCard() {
         <Brand />
       </div>
       <div className="auth-title">
-        <span>Onevriksh Central Identity</span>
+        <span>ONEVRIKSH Central Identity</span>
         <h1>Single Sign-On (SSO)</h1>
         <p>Log in or create your student account securely using <strong>accounts.onevriksh.in</strong>.</p>
       </div>
@@ -28,7 +28,7 @@ export function AuthCard() {
         <Shield size={36} style={{ margin: '0 auto 0.75rem', color: '#2563eb' }} />
         <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.25rem' }}>Unified Account</h3>
         <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground, #64748b)' }}>
-          One login for all Onevriksh services, courses, certificates, and student dashboard.
+          One login for all ONEVRIKSH services, courses, certificates, and student dashboard.
         </p>
       </div>
 

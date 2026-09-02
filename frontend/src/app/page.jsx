@@ -1,4 +1,4 @@
-import Image from 'next/image';
+﻿import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, CirclePlay, Check } from 'lucide-react';
 import { CourseCard } from '@/components/CourseCard';
@@ -10,7 +10,7 @@ export default function HomePage() {
     <>
       <section className="hero">
         <div className="hero-media">
-          <Image src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=2000&q=85" alt="Students learning together at Onevriksh Study" fill priority sizes="100vw" />
+          <Image src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=2000&q=85" alt="Students learning together at ONEVRIKSH Study" fill priority sizes="100vw" />
         </div>
         <div className="hero-overlay" />
         <div className="container hero-content">
@@ -28,11 +28,11 @@ export default function HomePage() {
       <section className="section intro-section">
         <div className="container intro-grid">
           <div className="intro-images">
-            <div className="image-main"><Image src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=85" alt="Onevriksh students collaborating" fill sizes="50vw" /></div>
+            <div className="image-main"><Image src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=85" alt="ONEVRIKSH students collaborating" fill sizes="50vw" /></div>
             <div className="experience-card"><strong>8+</strong><span>Years of training excellence</span></div>
           </div>
           <div>
-            <SectionHeading eyebrow="About Onevriksh" title="Learning feels different when it connects to real life." text="We are an offline-first coaching institute in the heart of New Delhi, built for students who want practical skills, close mentoring and a clear path to opportunity." />
+            <SectionHeading eyebrow="About ONEVRIKSH" title="Learning feels different when it connects to real life." text="We are an offline-first coaching institute in the heart of New Delhi, built for students who want practical skills, close mentoring and a clear path to opportunity." />
             <div className="check-list">
               <span><Check /> Live, trainer-led classes</span>
               <span><Check /> Hands-on assignments and projects</span>

@@ -44,7 +44,7 @@ const courseCategories = [
 
 export function StudyWorldHeader() {
   const router = useRouter();
-  const { user, logout } = useAuth();
+  const { user, logout, openAuthModal } = useAuth();
   const { selectedLang, selectedCountry, setLanguage, setCountry, languages, countries } = useRegion();
 
   const [allCoursesOpen, setAllCoursesOpen] = useState(false);
@@ -152,7 +152,7 @@ export function StudyWorldHeader() {
     if (e) e.preventDefault();
     setUserDropdownOpen(false);
     setMobileDrawerOpen(false);
-    router.push('/login');
+    openAuthModal('login');
   };
 
   const handleLogoutClick = async (e) => {
@@ -160,7 +160,7 @@ export function StudyWorldHeader() {
     setUserDropdownOpen(false);
     setMobileDrawerOpen(false);
     await logout();
-    router.push('/login');
+    router.push('/');
   };
 
   return (

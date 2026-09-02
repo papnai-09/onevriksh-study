@@ -1,37 +1,57 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 import { Brand } from '@/components/Brand';
 import { AuthLayout } from '@/components/AuthLayout';
 import { api } from '@/utils/api';
-import { Mail, LoaderCircle, AlertCircle, CheckCircle2, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Phone, Lock, Eye, EyeOff, ShieldCheck, LoaderCircle, AlertCircle, CheckCircle2 } from 'lucide-react';
 
 export default function ForgotPasswordPage() {
-  const [email, setEmail] = useState('');
+  const router = useRouter();
+  const { setUser } = useAuth();
+
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
-  const [resetToken, setResetToken] = useState('');
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    if (!email.trim()) {
-      setError('Please enter your email address.');
+    const cleanPhone = phone.replace(/\D/g, '');
+    if (cleanPhone.length < 10) {
+      setError('Please enter a valid 10-digit mobile number.');
+      return;
+    }
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
       return;
     }
 
     setLoading(true);
     try {
-      const res = await api.forgotPassword(email.trim());
-      setSubmitted(true);
-      if (res.resetToken) {
-        setResetToken(res.resetToken);
+      const res = await api.resetPassword({ phone: cleanPhone, password });
+      if (res.user && setUser) {
+        setUser(res.user);
       }
+      setSuccess(true);
+      setTimeout(() => {
+        router.push(res.user?.role === 'admin' ? '/admin' : '/student');
+      }, 1200);
     } catch (err) {
-      setError(err.message || 'Failed to process password reset request.');
+      setError(err.message || 'Failed to reset password. Please verify your mobile number.');
     } finally {
       setLoading(false);
     }
@@ -40,116 +60,124 @@ export default function ForgotPasswordPage() {
   return (
     <AuthLayout>
       <div className="auth-card">
-        <div style={{ marginBottom: '24px' }}>
+        <div style={{ marginBottom: '20px' }}>
           <Brand />
         </div>
 
-        {submitted ? (
-          <div style={{ textAlign: 'center' }}>
+        {success ? (
+          <div style={{ textAlign: 'center', padding: '16px 0' }}>
             <div
               style={{
-                width: '56px',
-                height: '56px',
+                width: '50px',
+                height: '50px',
                 borderRadius: '50%',
-                background: 'var(--green-soft)',
-                color: 'var(--green)',
+                background: 'rgba(34, 197, 94, 0.1)',
+                color: '#16a34a',
                 display: 'grid',
                 placeItems: 'center',
-                margin: '0 auto 16px'
+                margin: '0 auto 12px'
               }}
             >
-              <CheckCircle2 size={32} />
+              <CheckCircle2 size={28} />
             </div>
-            <h1 style={{ fontSize: '1.4rem', marginBottom: '8px' }}>Check Your Email</h1>
-            <p style={{ fontSize: '0.88rem', color: 'var(--muted)', marginBottom: '24px' }}>
-              If an account is associated with <strong>{email}</strong>, we have sent instructions to reset your password.
+            <h2 style={{ fontSize: '1.25rem', marginBottom: '6px', color: 'var(--ink)' }}>Password Updated!</h2>
+            <p style={{ fontSize: '0.82rem', color: 'var(--muted)', margin: 0 }}>
+              Your password has been reset successfully. Redirecting to your dashboard...
             </p>
-
-            {resetToken && (
-              <div
-                style={{
-                  background: 'var(--surface-2)',
-                  border: '1px solid var(--line)',
-                  padding: '14px',
-                  borderRadius: '6px',
-                  marginBottom: '24px',
-                  fontSize: '0.82rem'
-                }}
-              >
-                <strong>Direct Reset Link (Dev Mode):</strong>
-                <div style={{ marginTop: '6px' }}>
-                  <Link
-                    href={`/reset-password?token=${resetToken}`}
-                    style={{ color: 'var(--blue)', fontWeight: 700, wordBreak: 'break-all' }}
-                  >
-                    Click here to reset your password now &rarr;
-                  </Link>
-                </div>
-              </div>
-            )}
-
-            <Link href="/login" className="button button-ghost button-wide">
-              <ArrowLeft size={16} />
-              <span>Return to Sign In</span>
-            </Link>
           </div>
         ) : (
           <>
-            <div className="auth-title" style={{ marginBottom: '20px' }}>
-              <span>Account Recovery</span>
-              <h1>Reset Your Password</h1>
-              <p>Enter the email address registered with your student account and we will help you recover access.</p>
+            <div className="auth-title" style={{ marginBottom: '18px' }}>
+              <h1>Reset Password</h1>
+              <p>Enter your registered mobile number and set a new password.</p>
             </div>
 
             {error && (
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  background: 'rgba(239, 68, 68, 0.1)',
-                  color: 'var(--red)',
-                  border: '1px solid rgba(239, 68, 68, 0.25)',
-                  padding: '12px 16px',
-                  borderRadius: '6px',
-                  fontSize: '0.85rem',
-                  marginBottom: '20px'
-                }}
-                role="alert"
-              >
-                <AlertCircle size={18} style={{ minWidth: '18px' }} />
+              <div className="auth-error-box" role="alert">
+                <AlertCircle size={16} style={{ minWidth: 16 }} />
                 <span>{error}</span>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '16px' }}>
+            <form onSubmit={handleSubmit}>
               <label>
-                <span>Email address</span>
-                <div className="input-icon">
-                  <Mail size={18} />
-                  <input
-                    id="forgot-email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    required
-                    autoComplete="email"
-                    disabled={loading}
-                  />
+                <span>Mobile Number</span>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <div className="phone-prefix">+91</div>
+                  <div className="input-icon" style={{ flex: 1 }}>
+                    <Phone size={16} />
+                    <input
+                      type="tel"
+                      maxLength={10}
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                      placeholder="98765 43210"
+                      required
+                      autoFocus
+                      disabled={loading}
+                    />
+                  </div>
                 </div>
               </label>
 
-              <button type="submit" className="button button-primary button-large button-wide" disabled={loading} style={{ marginTop: '8px' }}>
-                {loading ? <LoaderCircle size={18} className="spin" /> : <ArrowRight size={18} />}
-                <span>{loading ? 'Sending instructions...' : 'Send Reset Instructions'}</span>
+              <label>
+                <span>New Password</span>
+                <div className="input-icon">
+                  <Lock size={16} />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="At least 6 characters"
+                    required
+                    disabled={loading}
+                  />
+                  <button type="button" onClick={() => setShowPassword((v) => !v)} tabIndex={-1}>
+                    {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                  </button>
+                </div>
+              </label>
+
+              <label>
+                <span>Confirm New Password</span>
+                <div className="input-icon">
+                  <Lock size={16} />
+                  <input
+                    type={showConfirm ? 'text' : 'password'}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Re-enter your new password"
+                    required
+                    disabled={loading}
+                  />
+                  <button type="button" onClick={() => setShowConfirm((v) => !v)} tabIndex={-1}>
+                    {showConfirm ? <EyeOff size={15} /> : <Eye size={15} />}
+                  </button>
+                </div>
+              </label>
+
+              <button
+                type="submit"
+                className="button button-primary button-full"
+                disabled={loading || phone.length < 10 || !password || !confirmPassword}
+                style={{ marginTop: '4px' }}
+              >
+                {loading ? (
+                  <>
+                    <LoaderCircle size={16} className="animate-spin" /> Updating...
+                  </>
+                ) : (
+                  <>
+                    <ShieldCheck size={16} /> Update Password
+                  </>
+                )}
               </button>
             </form>
 
-            <div className="auth-switch" style={{ marginTop: '22px', textAlign: 'center', fontSize: '0.82rem' }}>
-              <Link href="/login" style={{ color: 'var(--muted)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                <ArrowLeft size={15} />
-                <span>Back to sign in</span>
+            <div className="auth-footer" style={{ marginTop: '16px', textAlign: 'center', fontSize: '0.82rem' }}>
+              <span>Remember your password?</span>{' '}
+              <Link href="/login" className="text-link" style={{ fontWeight: 600 }}>
+                Sign in
               </Link>
             </div>
           </>

@@ -1,16 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 
 export function AuthLayout({ children }) {
   return (
     <main className="auth-layout">
-      <Link href="/" className="auth-back">
-        <ArrowLeft size={16} />
-        <span>Back to Website</span>
-      </Link>
       <section className="auth-visual">
         <Image
           src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=85"

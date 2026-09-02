@@ -1,31 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { Brand } from '@/components/Brand';
 import { AuthLayout } from '@/components/AuthLayout';
-import { User, Phone, BookOpen, ShieldCheck, KeyRound, LoaderCircle, AlertCircle, ArrowRight } from 'lucide-react';
-import { courses } from '@/data/site';
+import { User, Phone, Lock, Eye, EyeOff, ShieldCheck, LoaderCircle, AlertCircle } from 'lucide-react';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const { register, sendOtp, user } = useAuth();
+  const { register, user } = useAuth();
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [course, setCourse] = useState(courses[0].title);
-  const [otp, setOtp] = useState('');
-  const [step, setStep] = useState(1); // 1: Details, 2: OTP Verification
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  if (user) {
-    router.replace('/student');
-  }
+  useEffect(() => {
+    if (user) router.replace('/student');
+  }, [user, router]);
 
-  const handleProceedToOtp = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -38,39 +38,21 @@ export default function RegisterPage() {
       setError('Please enter a valid 10-digit mobile number.');
       return;
     }
-
-    setLoading(true);
-    try {
-      await sendOtp(cleanPhone);
-      setStep(2);
-      setOtp('123456'); // Pre-fill test OTP
-    } catch (err) {
-      setError(err.message || 'Failed to send OTP.');
-    } finally {
-      setLoading(false);
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.');
+      return;
     }
-  };
-
-  const handleRegisterSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-
-    if (!otp.trim()) {
-      setError('Please enter the 6-digit verification code.');
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
       return;
     }
 
     setLoading(true);
     try {
-      await register({
-        name: name.trim(),
-        phone: phone.trim(),
-        course,
-        otp
-      });
+      await register({ name: name.trim(), phone: cleanPhone, password });
       router.push('/student');
     } catch (err) {
-      setError(err.message || 'Registration failed.');
+      setError(err.message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -84,9 +66,8 @@ export default function RegisterPage() {
         </div>
 
         <div className="auth-title" style={{ marginBottom: '20px' }}>
-          <span>Student Registration</span>
-          <h1>Create Student Account</h1>
-          <p>Join Onevriksh Study to access classroom materials, track attendance, and build skills.</p>
+          <h1>Create Account</h1>
+          <p>Join ONEVRIKSH Study to access classroom materials, track attendance, and build skills.</p>
         </div>
 
         {error && (
@@ -110,181 +91,151 @@ export default function RegisterPage() {
           </div>
         )}
 
-        {step === 1 ? (
-          <form onSubmit={handleProceedToOtp} style={{ display: 'grid', gap: '15px' }}>
-            <label>
-              <span>Full name</span>
-              <div className="input-icon">
-                <User size={18} />
-                <input
-                  id="reg-name"
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. Rahul Sharma"
-                  required
-                  autoFocus
-                  disabled={loading}
-                />
-              </div>
-            </label>
+        <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '15px' }}>
+          {/* Full Name */}
+          <label>
+            <span>Full Name</span>
+            <div className="input-icon">
+              <User size={18} />
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="e.g. Rahul Sharma"
+                required
+                autoFocus
+                disabled={loading}
+              />
+            </div>
+          </label>
 
-            <label>
-              <span>Mobile Number</span>
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    padding: '0 12px',
-                    background: 'var(--surface-2)',
-                    border: '1px solid var(--line)',
-                    borderRadius: '6px',
-                    fontWeight: 600,
-                    fontSize: '0.85rem',
-                    color: 'var(--ink)'
-                  }}
-                >
-                  +91
-                </div>
-                <div className="input-icon" style={{ flex: 1 }}>
-                  <Phone size={18} />
-                  <input
-                    id="reg-phone"
-                    type="tel"
-                    maxLength={10}
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
-                    placeholder="98765 43210"
-                    required
-                    disabled={loading}
-                  />
-                </div>
-              </div>
-            </label>
-
-            <label>
-              <span>Interested Program</span>
-              <div className="input-icon">
-                <BookOpen size={18} />
-                <select
-                  id="reg-course"
-                  value={course}
-                  onChange={(e) => setCourse(e.target.value)}
-                  disabled={loading}
-                  style={{
-                    width: '100%',
-                    padding: '12px 14px 12px 42px',
-                    background: 'var(--surface-2)',
-                    border: '1px solid var(--line)',
-                    borderRadius: '6px',
-                    fontSize: '0.9rem',
-                    color: 'var(--ink)'
-                  }}
-                >
-                  {courses.map((c) => (
-                    <option key={c.slug} value={c.title}>
-                      {c.title} ({c.category})
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </label>
-
-            <button
-              type="submit"
-              className="button button-primary button-full"
-              disabled={loading || !name.trim() || phone.length < 10}
-              style={{ marginTop: '8px' }}
-            >
-              {loading ? (
-                <>
-                  <LoaderCircle size={18} className="animate-spin" /> Sending OTP...
-                </>
-              ) : (
-                <>
-                  Verify Mobile &amp; Continue <ArrowRight size={18} />
-                </>
-              )}
-            </button>
-          </form>
-        ) : (
-          <form onSubmit={handleRegisterSubmit} style={{ display: 'grid', gap: '16px' }}>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '10px 14px',
-                background: 'var(--surface-2)',
-                borderRadius: '6px',
-                border: '1px solid var(--line)',
-                fontSize: '0.85rem'
-              }}
-            >
-              <span>
-                Code sent to <strong>+91 {phone}</strong>
-              </span>
-              <button
-                type="button"
-                onClick={() => setStep(1)}
+          {/* Mobile Number */}
+          <label>
+            <span>Mobile Number</span>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <div
                 style={{
-                  background: 'none',
-                  border: 'none',
-                  color: '#0F766E',
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '0 12px',
+                  background: 'var(--surface-2)',
+                  border: '1px solid var(--line)',
+                  borderRadius: '6px',
                   fontWeight: 600,
-                  fontSize: '0.8rem',
-                  cursor: 'pointer'
+                  fontSize: '0.85rem',
+                  color: 'var(--ink)'
                 }}
               >
-                Change
-              </button>
-            </div>
-
-            <label>
-              <span>6-Digit Verification Code</span>
-              <div className="input-icon">
-                <KeyRound size={18} />
+                +91
+              </div>
+              <div className="input-icon" style={{ flex: 1 }}>
+                <Phone size={18} />
                 <input
-                  id="reg-otp"
-                  type="text"
-                  maxLength={6}
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-                  placeholder="123456"
+                  type="tel"
+                  maxLength={10}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                  placeholder="98765 43210"
                   required
-                  autoFocus
                   disabled={loading}
-                  style={{ letterSpacing: '0.2em', fontWeight: 700, fontSize: '1.1rem' }}
                 />
               </div>
-              <small style={{ color: 'var(--muted)', fontSize: '0.75rem', marginTop: '4px', display: 'block' }}>
-                Default Test OTP: <strong>123456</strong>
-              </small>
-            </label>
+            </div>
+          </label>
 
-            <button
-              type="submit"
-              className="button button-primary button-full"
-              disabled={loading || otp.length < 6}
-            >
-              {loading ? (
-                <>
-                  <LoaderCircle size={18} className="animate-spin" /> Creating Account...
-                </>
-              ) : (
-                <>
-                  <ShieldCheck size={18} /> Complete Registration
-                </>
-              )}
-            </button>
-          </form>
-        )}
+          {/* Password */}
+          <label>
+            <span>Password</span>
+            <div className="input-icon">
+              <Lock size={18} />
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="At least 6 characters"
+                required
+                disabled={loading}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                style={{
+                  position: 'absolute',
+                  right: '12px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: 'var(--muted)',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+          </label>
+
+          {/* Confirm Password */}
+          <label>
+            <span>Confirm Password</span>
+            <div className="input-icon">
+              <Lock size={18} />
+              <input
+                type={showConfirm ? 'text' : 'password'}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Re-enter your password"
+                required
+                disabled={loading}
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirm((v) => !v)}
+                style={{
+                  position: 'absolute',
+                  right: '12px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: 'var(--muted)',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+                tabIndex={-1}
+              >
+                {showConfirm ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+          </label>
+
+
+          <button
+            type="submit"
+            className="button button-primary button-full"
+            disabled={loading || !name.trim() || phone.length < 10 || !password || !confirmPassword}
+            style={{ marginTop: '8px' }}
+          >
+            {loading ? (
+              <>
+                <LoaderCircle size={18} className="animate-spin" /> Creating Account...
+              </>
+            ) : (
+              <>
+                <ShieldCheck size={18} /> Create Account
+              </>
+            )}
+          </button>
+        </form>
 
         <div className="auth-footer" style={{ marginTop: '20px', textAlign: 'center', fontSize: '0.85rem' }}>
           <span>Already registered?</span>{' '}
           <Link href="/login" className="text-link" style={{ fontWeight: 600 }}>
-            Sign in with mobile
+            Sign in
           </Link>
         </div>
       </div>

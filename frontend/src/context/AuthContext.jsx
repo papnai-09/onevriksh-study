@@ -29,14 +29,7 @@ export function AuthProvider({ children }) {
   }, [fetchUser]);
 
   /**
-   * Send OTP to Mobile Number
-   */
-  const sendOtp = useCallback(async (phone) => {
-    return await api.sendOtp(phone);
-  }, []);
-
-  /**
-   * Mobile OTP Login
+   * Password Login
    */
   const login = useCallback(async (credentials) => {
     const data = await api.login(credentials);
@@ -48,7 +41,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   /**
-   * Mobile Registration
+   * Password Registration
    */
   const register = useCallback(async (userData) => {
     const data = await api.register(userData);
@@ -72,6 +65,16 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
+  const [authModal, setAuthModal] = useState(null); // 'login' | 'register' | 'forgot-password' | null
+
+  const openAuthModal = useCallback((type = 'login') => {
+    setAuthModal(type);
+  }, []);
+
+  const closeAuthModal = useCallback(() => {
+    setAuthModal(null);
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
@@ -81,11 +84,13 @@ export function AuthProvider({ children }) {
         isAuthenticated: !!user,
         isAdmin: user?.role === 'admin',
         isStudent: user?.role === 'student',
-        sendOtp,
         login,
         register,
         logout,
-        reloadUser: fetchUser
+        reloadUser: fetchUser,
+        authModal,
+        openAuthModal,
+        closeAuthModal,
       }}
     >
       {children}

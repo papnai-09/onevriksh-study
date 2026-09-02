@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -454,7 +454,7 @@ export function StudentSection({ section }) {
           <div className="ai-head">
             <span><Sparkles /></span>
             <div>
-              <h2>Onevriksh AI Tutor</h2>
+              <h2>ONEVRIKSH AI Tutor</h2>
               <p>Answers based on your current course</p>
             </div>
             <Status>Online</Status>

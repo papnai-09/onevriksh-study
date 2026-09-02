@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Youtube } from 'lucide-react';
 import { Brand } from './Brand';
 import { institute } from '@/data/site';
@@ -47,7 +47,7 @@ export function Footer() {
         </div>
       </div>
       <div className="container footer-bottom">
-        <span>© 2026 Onevriksh Study. All rights reserved.</span>
+        <span>© 2026 ONEVRIKSH Study. All rights reserved.</span>
         <div>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>

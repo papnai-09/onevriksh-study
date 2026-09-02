@@ -1,4 +1,4 @@
-﻿import express from 'express';
+import express from 'express';
 import db from '../db.js';
 
 const router = express.Router();
@@ -15,10 +15,10 @@ router.get('/stats', async (req, res) => {
     const leadCount = parseInt(leadRes.rows[0].count, 10);
 
     const stats = [
-      { label: 'Total students', value: `${(2500 + studentCount).toLocaleString()}+`, delta: '+12.4%', tone: 'blue' },
-      { label: 'Active courses', value: `${courseCount}`, delta: 'Active', tone: 'green' },
+      { label: 'Total students', value: `${studentCount}`, delta: 'Registered', tone: 'blue' },
+      { label: 'Active courses', value: `${courseCount}`, delta: 'Available', tone: 'green' },
       { label: 'New inquiries', value: `${leadCount}`, delta: 'Leads', tone: 'magenta' },
-      { label: 'Attendance today', value: '87.2%', delta: '+2.1%', tone: 'amber' }
+      { label: 'System status', value: '100%', delta: 'Online', tone: 'amber' }
     ];
 
     const recentRes = await db.query(`

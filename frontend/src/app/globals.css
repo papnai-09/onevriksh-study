@@ -2898,37 +2898,46 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* 3D Scroll Perspective Container */
+/* Smooth Natural Scroll Container */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
+}
+
 .up-main-content,
 main.up-main-content,
 main {
-  perspective: 1200px;
   overflow-x: hidden;
   padding-top: 0px !important;
   margin-top: 0px !important;
 }
 
-/* 3D Scroll Elements */
+/* Lightweight Butter-Smooth Scroll Transitions */
+.fade-up,
 .scroll-3d {
   opacity: 0;
-  transform: translateY(60px) rotateX(12deg) scale(0.97);
-  transform-origin: top center;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1.0s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
+  transform: translateY(16px);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fade-up.visible,
+.scroll-3d.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .fade-up,
   .scroll-3d {
     transition: none !important;
     opacity: 1 !important;
     transform: none !important;
   }
-}
-
-.scroll-3d.visible {
-  opacity: 1;
-  transform: translateY(0) rotateX(0deg) scale(1);
 }
 
 

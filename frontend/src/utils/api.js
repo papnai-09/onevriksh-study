@@ -1,4 +1,4 @@
-import { courses, notices, studentData, adminStats } from '@/data/site';
+﻿import { courses as fallbackCourses, notices as fallbackNotices, studentData as fallbackStudentData, adminStats as fallbackAdminStats } from '@/data/site';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
@@ -59,124 +59,122 @@ export const api = {
   },
 
   // ==========================================
-  // Courses, Notices, Leads, Certificates
+  // Courses (Real API)
   // ==========================================
 
   async getCourses(params = {}) {
-    let list = [...courses];
-    if (params.category && params.category !== 'All') {
-      list = list.filter(c => c.category === params.category);
+    try {
+      const query = new URLSearchParams();
+      if (params.category && params.category !== 'All') query.set('category', params.category);
+      if (params.search) query.set('search', params.search);
+      const qs = query.toString() ? `?${query.toString()}` : '';
+      return await apiFetch(`/api/courses${qs}`);
+    } catch {
+      let list = [...fallbackCourses];
+      if (params.category && params.category !== 'All') {
+        list = list.filter(c => c.category === params.category);
+      }
+      if (params.search) {
+        const q = params.search.toLowerCase();
+        list = list.filter(c => c.title.toLowerCase().includes(q) || c.description.toLowerCase().includes(q));
+      }
+      return { success: true, courses: list };
     }
-    if (params.search) {
-      const q = params.search.toLowerCase();
-      list = list.filter(c => c.title.toLowerCase().includes(q) || c.description.toLowerCase().includes(q));
-    }
-    return { success: true, courses: list };
   },
 
   async getCourseBySlug(slug) {
-    const course = courses.find(c => c.slug === slug);
-    if (!course) {
-      const error = new Error('Course not found');
-      error.status = 404;
-      throw error;
+    try {
+      return await apiFetch(`/api/courses/${slug}`);
+    } catch {
+      const course = fallbackCourses.find(c => c.slug === slug);
+      if (!course) {
+        const error = new Error('Course not found');
+        error.status = 404;
+        throw error;
+      }
+      return { success: true, course };
     }
-    return { success: true, course };
   },
+
+  // ==========================================
+  // Notices (Real API)
+  // ==========================================
 
   async getNotices() {
-    return { success: true, notices };
+    try {
+      return await apiFetch('/api/notices');
+    } catch {
+      return { success: true, notices: fallbackNotices };
+    }
   },
 
+  // ==========================================
+  // Leads & Enquiries (Real API)
+  // ==========================================
+
   async submitDemoLead(leadData) {
-    const referenceId = `DEMO-${Date.now().toString().slice(-6)}`;
-    return {
-      success: true,
-      referenceId,
-      message: 'Demo class booking request received! Our counsellor will call you shortly.'
-    };
+    return apiFetch('/api/leads/demo', {
+      method: 'POST',
+      body: JSON.stringify(leadData),
+    });
   },
 
   async submitContactLead(leadData) {
-    const referenceId = `ENQ-${Date.now().toString().slice(-6)}`;
-    return {
-      success: true,
-      referenceId,
-      message: 'Your enquiry has been received. Our admissions team will get back to you shortly.'
-    };
+    return apiFetch('/api/leads/contact', {
+      method: 'POST',
+      body: JSON.stringify(leadData),
+    });
   },
+
+  // ==========================================
+  // Certificate Verification (Real API)
+  // ==========================================
 
   async verifyCertificate(certificateNumber) {
     const num = (certificateNumber || '').trim().toUpperCase();
     if (!num) throw new Error('Please enter a certificate ID.');
-
-    if (num === 'OVS-CERT-2026-001' || num.includes('2026-001')) {
-      return {
-        success: true,
-        verified: true,
-        certificate: {
-          certificateNumber: 'OVS-CERT-2026-001',
-          studentName: 'Rahul Sharma',
-          studentId: 'OVS202601',
-          courseTitle: 'Full Stack Web & App Development',
-          grade: 'Grade A+',
-          issuedAt: '2026-01-15T00:00:00.000Z',
-          certificateUrl: null
-        }
-      };
-    }
-
-    if (num === 'OVS-CERT-2026-SAMPLE' || num.includes('SAMPLE')) {
-      return {
-        success: true,
-        verified: true,
-        certificate: {
-          certificateNumber: 'OVS-CERT-2026-SAMPLE',
-          studentName: 'Priya Verma',
-          studentId: 'OVS202602',
-          courseTitle: 'Digital Marketing Mastery',
-          grade: 'Grade A',
-          issuedAt: '2026-02-10T00:00:00.000Z',
-          certificateUrl: null
-        }
-      };
-    }
-
-    if (num.startsWith('OVS-')) {
-      return {
-        success: true,
-        verified: true,
-        certificate: {
-          certificateNumber: num,
-          studentName: 'Verified Student',
-          studentId: 'OVS202609',
-          courseTitle: 'Certified Career Program',
-          grade: 'Grade A',
-          issuedAt: new Date().toISOString(),
-          certificateUrl: null
-        }
-      };
-    }
-
-    throw new Error('No verified certificate found for this certificate ID.');
+    return apiFetch(`/api/certificates/verify/${encodeURIComponent(num)}`);
   },
 
+  // ==========================================
+  // Student Dashboard (Real API)
+  // ==========================================
+
   async getStudentOverview() {
-    return { success: true, ...studentData };
+    try {
+      return await apiFetch('/api/student/overview');
+    } catch {
+      return { success: true, ...fallbackStudentData };
+    }
   },
 
   async getStudentMaterials() {
-    return {
-      success: true,
-      materials: [
-        { id: 'm1', title: 'SEO & Keyword Strategy Guide', type: 'PDF', course: 'Digital Marketing' },
-        { id: 'm2', title: 'Google Ads Bidding Formulas', type: 'PDF', course: 'Digital Marketing' },
-        { id: 'm3', title: 'Full Stack Project Starter Kit', type: 'ZIP', course: 'Web Development' }
-      ]
-    };
+    try {
+      return await apiFetch('/api/student/materials');
+    } catch {
+      return {
+        success: true,
+        materials: [
+          { id: 1, title: 'SEO & Keyword Strategy Guide', type: 'PDF' },
+          { id: 2, title: 'Google Ads Bidding Formulas', type: 'PDF' }
+        ]
+      };
+    }
   },
 
+  // ==========================================
+  // Admin Dashboard (Real API)
+  // ==========================================
+
   async getAdminStats() {
-    return { success: true, stats: adminStats };
+    try {
+      return await apiFetch('/api/admin/stats');
+    } catch {
+      return { success: true, stats: fallbackAdminStats };
+    }
+  },
+
+  async getAdminStudents() {
+    return apiFetch('/api/admin/students');
   }
 };

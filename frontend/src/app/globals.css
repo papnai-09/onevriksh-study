@@ -2368,6 +2368,107 @@
   transform: translateX(2px);
 }
 
+.up-drawer-acc-group {
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.up-drawer-acc-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: #0F172A;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+
+.up-drawer-acc-trigger:hover,
+.up-drawer-acc-trigger.active {
+  color: #EE2C3C;
+  background: rgba(238, 44, 60, 0.05);
+}
+
+.up-drawer-acc-icon {
+  flex-shrink: 0;
+  color: #64748B;
+  transition: transform 0.2s ease, color 0.15s ease;
+}
+
+.up-drawer-acc-icon.rotated {
+  transform: rotate(180deg);
+  color: #EE2C3C;
+}
+
+.up-drawer-acc-body {
+  padding: 6px 8px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-left: 2px solid #FEE2E2;
+  margin-left: 10px;
+  margin-bottom: 8px;
+}
+
+.up-drawer-subcat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.up-drawer-subcat-title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94A3B8;
+  margin-top: 4px;
+  margin-bottom: 2px;
+  padding-left: 6px;
+}
+
+.up-drawer-subcat-link {
+  display: block;
+  padding: 6px 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #334155;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.up-drawer-subcat-link:hover {
+  background: rgba(238, 44, 60, 0.08);
+  color: #EE2C3C;
+  padding-left: 12px;
+}
+
+.up-drawer-acc-explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #EE2C3C;
+  text-decoration: none;
+  padding: 6px 8px;
+  margin-top: 4px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.up-drawer-acc-explore:hover {
+  background: rgba(238, 44, 60, 0.08);
+  gap: 8px;
+}
+
 .up-drawer-section-heading {
   font-size: 0.72rem;
   font-weight: 800;

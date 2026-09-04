@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Youtube } from 'lucide-react';
 import { Brand } from './Brand';
 import { institute } from '@/data/site';
@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="footer">
       <div className="container footer-grid">
         <div className="footer-about">
-          <Brand />
+          <Brand dark />
           <p>Practical, mentor-led training that helps students build real skills, stronger confidence and better careers.</p>
           <div className="social-links">
             <a href="#" aria-label="Instagram"><Instagram size={18} /></a>

@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-export function Brand({ compact = false }) {
+export function Brand({ compact = false, dark = false }) {
   return (
     <Link
       href="/"
-      className="brand"
+      className={`brand ${dark ? 'brand-dark' : ''}`}
       aria-label="ONEVRIKSH Study home"
       style={{
         display: 'inline-flex',
@@ -22,7 +22,14 @@ export function Brand({ compact = false }) {
           width={compact ? 80 : 100}
           height={compact ? 16 : 20}
           priority
-          style={{ objectFit: 'contain', width: 'auto', height: compact ? '16px' : '20px', display: 'block', verticalAlign: 'bottom' }}
+          style={{
+            objectFit: 'contain',
+            width: 'auto',
+            height: compact ? '16px' : '20px',
+            display: 'block',
+            verticalAlign: 'bottom',
+            filter: dark ? 'brightness(0) invert(1)' : undefined
+          }}
         />
       </span>
       <span
@@ -31,7 +38,7 @@ export function Brand({ compact = false }) {
           fontFamily: "'Roboto', -apple-system, BlinkMacSystemFont, sans-serif",
           fontSize: compact ? '0.88rem' : '1.05rem',
           fontWeight: 500,
-          color: '#475569',
+          color: dark ? '#FFFFFF' : '#475569',
           lineHeight: 1,
           display: 'inline-block',
           letterSpacing: '0.01em',

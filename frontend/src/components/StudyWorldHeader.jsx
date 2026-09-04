@@ -1159,21 +1159,14 @@ export function StudyWorldHeader() {
                           className="up-drawer-subcat-link"
                           onClick={() => setMobileDrawerOpen(false)}
                         >
-                          <span>Language Exam Preparation &amp; Guidance</span>
+                          <span>Overseas Education &amp; Admissions</span>
                         </Link>
                         <Link
-                          href="/german-language"
+                          href="/demo"
                           className="up-drawer-subcat-link"
                           onClick={() => setMobileDrawerOpen(false)}
                         >
-                          <span>Germany (Goethe CEFR Pathway)</span>
-                        </Link>
-                        <Link
-                          href="/french-language"
-                          className="up-drawer-subcat-link"
-                          onClick={() => setMobileDrawerOpen(false)}
-                        >
-                          <span>France (DELF Pathway)</span>
+                          <span>Book Free Abroad Counseling</span>
                         </Link>
                       </div>
                     )}

@@ -170,7 +170,7 @@ export default function CertificationPage() {
       {/* SECTION 2 — INTRODUCTION */}
       <section className="section" style={{ background: 'var(--surface)', padding: '52px 0' }}>
         <div className="container">
-          <span className="eyebrow" style={{ color: '#0F766E' }}>Academic Recognition</span>
+          <span className="eyebrow">Academic Recognition</span>
           <h2 style={{ fontSize: 'clamp(1.4rem, 2.4vw, 1.85rem)', margin: '6px 0 14px', color: 'var(--ink)', maxWidth: '820px', fontWeight: 700 }}>
             Certification That Recognizes Your Learning
           </h2>
@@ -250,8 +250,8 @@ export default function CertificationPage() {
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '6px',
-                    background: '#CCFBF1',
-                    color: '#0F766E',
+                    background: '#FDF2F4',
+                    color: '#EE2C3C',
                     padding: '5px 10px',
                     borderRadius: '6px',
                     fontSize: '0.74rem',
@@ -259,7 +259,7 @@ export default function CertificationPage() {
                     marginBottom: '16px',
                     alignSelf: 'flex-start'
                   }}>
-                    <BadgeCheck size={15} style={{ color: '#0F766E' }} />
+                    <BadgeCheck size={15} style={{ color: '#EE2C3C' }} />
                     <span>Course Completion Certificate</span>
                   </div>
 
@@ -376,7 +376,7 @@ export default function CertificationPage() {
               padding: '28px 24px',
               boxShadow: 'var(--shadow-sm)'
             }}>
-              <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0F766E', display: 'block', marginBottom: '12px', fontFamily: 'var(--font-display)' }}>01</span>
+              <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#EE2C3C', display: 'block', marginBottom: '12px', fontFamily: 'var(--font-display)' }}>01</span>
               <h3 style={{ fontSize: '1.05rem', margin: '0 0 8px', color: 'var(--ink)', fontWeight: 700 }}>Choose Your Course</h3>
               <p style={{ fontSize: '0.88rem', color: 'var(--muted)', lineHeight: 1.6, margin: 0 }}>
                 Select the OneVriksh program you want to pursue.
@@ -390,7 +390,7 @@ export default function CertificationPage() {
               padding: '28px 24px',
               boxShadow: 'var(--shadow-sm)'
             }}>
-              <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0F766E', display: 'block', marginBottom: '12px', fontFamily: 'var(--font-display)' }}>02</span>
+              <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#EE2C3C', display: 'block', marginBottom: '12px', fontFamily: 'var(--font-display)' }}>02</span>
               <h3 style={{ fontSize: '1.05rem', margin: '0 0 8px', color: 'var(--ink)', fontWeight: 700 }}>Complete Your Learning</h3>
               <p style={{ fontSize: '0.88rem', color: 'var(--muted)', lineHeight: 1.6, margin: 0 }}>
                 Attend your sessions and complete the required coursework.
@@ -404,7 +404,7 @@ export default function CertificationPage() {
               padding: '28px 24px',
               boxShadow: 'var(--shadow-sm)'
             }}>
-              <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0F766E', display: 'block', marginBottom: '12px', fontFamily: 'var(--font-display)' }}>03</span>
+              <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#EE2C3C', display: 'block', marginBottom: '12px', fontFamily: 'var(--font-display)' }}>03</span>
               <h3 style={{ fontSize: '1.05rem', margin: '0 0 8px', color: 'var(--ink)', fontWeight: 700 }}>Complete Requirements</h3>
               <p style={{ fontSize: '0.88rem', color: 'var(--muted)', lineHeight: 1.6, margin: 0 }}>
                 Complete applicable assignments, assessments, and practical work.
@@ -418,7 +418,7 @@ export default function CertificationPage() {
               padding: '28px 24px',
               boxShadow: 'var(--shadow-sm)'
             }}>
-              <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0F766E', display: 'block', marginBottom: '12px', fontFamily: 'var(--font-display)' }}>04</span>
+              <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#EE2C3C', display: 'block', marginBottom: '12px', fontFamily: 'var(--font-display)' }}>04</span>
               <h3 style={{ fontSize: '1.05rem', margin: '0 0 8px', color: 'var(--ink)', fontWeight: 700 }}>Get Certified</h3>
               <p style={{ fontSize: '0.88rem', color: 'var(--muted)', lineHeight: 1.6, margin: 0 }}>
                 Meet the requirements and receive your OneVriksh Course Completion Certificate.
@@ -562,7 +562,7 @@ export default function CertificationPage() {
               <p style={{ fontSize: '0.88rem', color: 'var(--muted)', maxWidth: '580px', margin: '0 auto 14px', lineHeight: 1.65 }}>
                 has successfully completed all the learning modules, practical exercises, and completion requirements for the program:
               </p>
-              <h3 style={{ fontSize: '1.2rem', color: '#0F766E', margin: '0 0 18px', fontWeight: 700 }}>
+              <h3 style={{ fontSize: '1.2rem', color: '#EE2C3C', margin: '0 0 18px', fontWeight: 700 }}>
                 [ Course Name ]
               </h3>
             </div>
@@ -671,12 +671,12 @@ export default function CertificationPage() {
             {result && (
               <div style={{
                 marginTop: '22px',
-                border: '1px solid #86EFAC',
+                border: '1px solid #FCA5A5',
                 borderRadius: '8px',
                 padding: '20px',
-                background: '#F0FDF4'
+                background: '#FEF2F2'
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#16A34A', marginBottom: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#EE2C3C', marginBottom: '12px' }}>
                   <CheckCircle2 size={18} />
                   <strong style={{ fontSize: '0.9rem' }}>Verified OneVriksh Certificate</strong>
                 </div>

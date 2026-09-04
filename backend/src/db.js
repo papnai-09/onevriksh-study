@@ -1,4 +1,4 @@
-﻿import pg from 'pg';
+import pg from 'pg';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -116,16 +116,14 @@ export async function initDb() {
       console.log('Seeded default admin (9999999999 / admin123)');
     }
 
-    // 3. Courses Seed
-    const courseCount = await client.query('SELECT COUNT(*) as count FROM courses');
-    if (parseInt(courseCount.rows[0].count, 10) === 0) {
-      const seedCourses = [
+    // 3. Courses Seed & Sync
+    const seedCourses = [
         {
           slug: 'digital-marketing-foundation',
           title: 'Digital Marketing Foundation',
           category: 'Marketing',
           duration: '4 Months',
-          fee: 18999,
+          fee: 27000,
           rating: 4.9,
           students: 340,
           level: 'Beginner',
@@ -147,7 +145,7 @@ export async function initDb() {
           title: 'Digital Marketing Advanced',
           category: 'Marketing',
           duration: '8 Months',
-          fee: 28999,
+          fee: 54000,
           rating: 4.9,
           students: 420,
           level: 'Intermediate',
@@ -169,7 +167,7 @@ export async function initDb() {
           title: 'Digital Marketing Mastery',
           category: 'Marketing',
           duration: '12 Months',
-          fee: 38999,
+          fee: 81000,
           rating: 4.9,
           students: 510,
           level: 'Advanced',
@@ -207,7 +205,7 @@ export async function initDb() {
           title: 'French Language Program',
           category: 'Languages',
           duration: '4 Months',
-          fee: 18999,
+          fee: 84000,
           rating: 4.9,
           students: 198,
           level: 'Beginner',
@@ -223,7 +221,7 @@ export async function initDb() {
           title: 'German Language Program',
           category: 'Languages',
           duration: '4 Months',
-          fee: 18999,
+          fee: 84000,
           rating: 4.8,
           students: 174,
           level: 'Beginner',
@@ -239,7 +237,7 @@ export async function initDb() {
           title: 'Spanish Language Program',
           category: 'Languages',
           duration: '4 Months',
-          fee: 16999,
+          fee: 84000,
           rating: 4.7,
           students: 152,
           level: 'Beginner',
@@ -255,7 +253,7 @@ export async function initDb() {
           title: 'English Speaking & Personality',
           category: 'Communication',
           duration: '3 Months',
-          fee: 14999,
+          fee: 48000,
           rating: 4.9,
           students: 510,
           level: 'Intermediate',
@@ -288,13 +286,12 @@ export async function initDb() {
         await client.query(`
           INSERT INTO courses (slug, title, category, duration, fee, rating, students, level, image, description, trainer, trainer_role, benefits, curriculum)
           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
-          ON CONFLICT (slug) DO NOTHING
+          ON CONFLICT (slug) DO UPDATE SET fee = EXCLUDED.fee, title = EXCLUDED.title, duration = EXCLUDED.duration, category = EXCLUDED.category
         `, [
           c.slug, c.title, c.category, c.duration, c.fee, c.rating, c.students, c.level, c.image, c.description, c.trainer, c.trainerRole, c.benefits, c.curriculum
         ]);
       }
-      console.log('Seeded 9 courses to Neon PostgreSQL');
-    }
+      console.log('Synced courses to Neon PostgreSQL');
 
     // 4. Notices Seed
     const noticeCount = await client.query('SELECT COUNT(*) as count FROM notices');

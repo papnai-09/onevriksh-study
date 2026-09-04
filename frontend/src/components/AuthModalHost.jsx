@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
@@ -406,8 +406,8 @@ export function AuthModalHost() {
                       width: '48px',
                       height: '48px',
                       borderRadius: '50%',
-                      background: 'rgba(34, 197, 94, 0.1)',
-                      color: '#16a34a',
+                      background: 'rgba(238, 44, 60, 0.1)',
+                      color: '#EE2C3C',
                       display: 'grid',
                       placeItems: 'center',
                       margin: '0 auto 12px'

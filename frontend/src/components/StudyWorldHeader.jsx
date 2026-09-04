@@ -3,52 +3,227 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Search, ChevronDown, ChevronRight, Check, Globe, MapPin, X } from 'lucide-react';
+import Image from 'next/image';
+import {
+  Search,
+  ChevronDown,
+  ChevronRight,
+  Check,
+  Globe,
+  MapPin,
+  X,
+  LayoutGrid,
+  ArrowRight,
+  Sparkles
+} from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useRegion } from '@/context/RegionContext';
 import { Brand } from './Brand';
 import { courses } from '@/data/site';
 
-// Categorized Courses for Full-Width Mega Dropdown
+// Categorized Courses for upGrad-Style 3-Column Mega Dropdown
 const courseCategories = [
   {
-    category: 'Marketing',
+    category: 'Digital Marketing',
+    description: 'Master SEO, Performance Ads, GA4 Analytics & CRO',
+    featured: {
+      title: 'Performance Marketing Mastery',
+      tag: '🔥 Placement Track',
+      desc: 'Live campaigns with real ad spends & portfolio capstone defense.',
+      href: '/digital-marketing-mastery',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=400&q=80'
+    },
     courses: [
-      { title: 'Digital Marketing Foundation', href: '/digital-marketing-foundation' },
-      { title: 'Digital Marketing Advanced', href: '/digital-marketing-advanced' },
-      { title: 'Digital Marketing Mastery', href: '/digital-marketing-mastery' }
+      {
+        title: 'Digital Marketing Foundation',
+        href: '/digital-marketing-foundation',
+        duration: '4 Months',
+        badge: 'Beginner',
+        tag: 'Live SEO Briefs',
+        partner: 'ONEVRIKSH Studio'
+      },
+      {
+        title: 'Digital Marketing Advanced',
+        href: '/digital-marketing-advanced',
+        duration: '8 Months',
+        badge: 'Bestseller',
+        tag: 'Google & Meta Ads',
+        partner: 'Performance Lab'
+      },
+      {
+        title: 'Digital Marketing Mastery',
+        href: '/digital-marketing-mastery',
+        duration: '12 Months',
+        badge: '100% Placement*',
+        tag: 'Full-Stack CRO & Capstone',
+        partner: 'Industry Defense'
+      }
     ]
   },
   {
-    category: 'Design',
+    category: 'Global Languages',
+    description: 'CEFR-Aligned European Language & Exam Preparation',
+    featured: {
+      title: 'German & European Fluency Track',
+      tag: '🌍 CEFR Certified',
+      desc: 'Complete Goethe, DELF, DELE & CILS exam coaching with native speaking labs.',
+      href: '/german-language',
+      image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80'
+    },
     courses: [
-      { title: 'Graphic Design', href: '/graphic-design' }
+      {
+        title: 'German Language',
+        href: '/german-language',
+        duration: '4 Months',
+        badge: 'Goethe Aligned',
+        tag: 'Speaking Club',
+        partner: 'Goethe Prep'
+      },
+      {
+        title: 'French Language',
+        href: '/french-language',
+        duration: '4 Months',
+        badge: 'DELF Aligned',
+        tag: 'Conversation Labs',
+        partner: 'DELF Paris'
+      },
+      {
+        title: 'Spanish Language',
+        href: '/spanish-language',
+        duration: '4 Months',
+        badge: 'DELE Prep',
+        tag: 'Cultural Immersion',
+        partner: 'Cervantes Standard'
+      },
+      {
+        title: 'Italian Language',
+        href: '/italian-language',
+        duration: '4 Months',
+        badge: 'CILS Prep',
+        tag: 'Native Certified',
+        partner: 'CILS Siena'
+      }
     ]
   },
   {
-    category: 'Languages',
+    category: 'Design & Creative',
+    description: 'UI/UX, Visual Branding & Portfolio Studio',
+    featured: {
+      title: 'Graphic Design Studio Track',
+      tag: '🎨 Portfolio Defense',
+      desc: 'Build client-ready branding kits & Adobe suite mastery.',
+      href: '/graphic-design',
+      image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=400&q=80'
+    },
     courses: [
-      { title: 'Spanish Language', href: '/spanish-language' },
-      { title: 'German Language', href: '/german-language' },
-      { title: 'French Language', href: '/french-language' },
-      { title: 'Italian Language', href: '/italian-language' }
+      {
+        title: 'Graphic Design Mastery',
+        href: '/graphic-design',
+        duration: '5 Months',
+        badge: 'Bestseller',
+        tag: 'Adobe Suite + Portfolio',
+        partner: 'Creative Studio'
+      }
+    ]
+  },
+  {
+    category: 'Communication',
+    description: 'Spoken English, Fluency & Corporate Personality',
+    featured: {
+      title: 'Executive English & Personality',
+      tag: '🎙️ Public Speaking',
+      desc: 'Interview simulations, fluency labs & presentation mastery.',
+      href: '/english-speaking',
+      image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=400&q=80'
+    },
+    courses: [
+      {
+        title: 'English Speaking & Personality',
+        href: '/english-speaking',
+        duration: '3 Months',
+        badge: 'Popular',
+        tag: 'Daily Speaking Labs',
+        partner: 'Fluency Hub'
+      }
+    ]
+  }
+];
+
+const certificationCategories = [
+  {
+    category: 'Digital Marketing',
+    courses: [
+      { title: 'Digital Marketing Foundation Certificate', href: '/digital-marketing-foundation' },
+      { title: 'Digital Marketing Advanced Certificate', href: '/digital-marketing-advanced' },
+      { title: 'Digital Marketing Mastery Certificate', href: '/digital-marketing-mastery' },
+    ]
+  },
+  {
+    category: 'Global Languages',
+    courses: [
+      { title: 'German Language (Goethe CEFR Certificate)', href: '/german-language' },
+      { title: 'French Language (DELF Certified Program)', href: '/french-language' },
+      { title: 'Spanish Language (DELE Standard Certificate)', href: '/spanish-language' },
+      { title: 'Italian Language (CILS Preparation Certificate)', href: '/italian-language' },
+    ]
+  },
+  {
+    category: 'Design & Creative',
+    courses: [
+      { title: 'Graphic Design Mastery Certificate', href: '/graphic-design' },
     ]
   },
   {
     category: 'Communication',
     courses: [
-      { title: 'English Speaking', href: '/english-speaking' }
+      { title: 'English Speaking & Personality Certificate', href: '/english-speaking' },
     ]
   }
 ];
+
+const studyAbroadCategories = [];
+
+const offlineCenterCategories = [
+  {
+    category: 'Connaught Place (Delhi)',
+    courses: [
+      { title: 'Digital Marketing Classroom Batches', href: '/digital-marketing-foundation' },
+      { title: 'German Language Classroom Classes', href: '/german-language' },
+      { title: 'French Language Classroom Classes', href: '/french-language' },
+      { title: 'Spanish Language Classroom Classes', href: '/spanish-language' },
+      { title: 'Italian Language Classroom Classes', href: '/italian-language' },
+      { title: 'Graphic Design Studio Classes', href: '/graphic-design' },
+      { title: 'English Speaking & Personality Batches', href: '/english-speaking' },
+    ]
+  },
+  {
+    category: 'GTB Nagar (Delhi)',
+    courses: [
+      { title: 'Digital Marketing Classroom Batches', href: '/digital-marketing-foundation' },
+      { title: 'German Language Classroom Classes', href: '/german-language' },
+      { title: 'French Language Classroom Classes', href: '/french-language' },
+      { title: 'Spanish Language Classroom Classes', href: '/spanish-language' },
+      { title: 'Italian Language Classroom Classes', href: '/italian-language' },
+      { title: 'Graphic Design Studio Classes', href: '/graphic-design' },
+      { title: 'English Speaking & Personality Batches', href: '/english-speaking' },
+    ]
+  }
+];
+
+const moreMenuCategories = [];
 
 export function StudyWorldHeader() {
   const router = useRouter();
   const { user, logout, openAuthModal } = useAuth();
   const { selectedLang, selectedCountry, setLanguage, setCountry, languages, countries } = useRegion();
 
-  const [allCoursesOpen, setAllCoursesOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState(courseCategories[0].category);
+  const [activeMenu, setActiveMenu] = useState(null); // 'courses' | 'cert' | 'abroad' | 'center' | 'more' | null
+  const [activeCategory, setActiveCategory] = useState(courseCategories[0]?.category || '');
+  const [activeCertCategory, setActiveCertCategory] = useState(certificationCategories[0]?.category || '');
+  const [activeAbroadCategory, setActiveAbroadCategory] = useState(studyAbroadCategories[0]?.category || '');
+  const [activeCenterCategory, setActiveCenterCategory] = useState(offlineCenterCategories[0]?.category || '');
+  const [activeMoreCategory, setActiveMoreCategory] = useState(moreMenuCategories[0]?.category || '');
+
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
   const [regionDropdownOpen, setRegionDropdownOpen] = useState(false);
@@ -60,7 +235,8 @@ export function StudyWorldHeader() {
   const navRef = useRef(null);
   const searchContainerRef = useRef(null);
   const regionContainerRef = useRef(null);
-  const timeoutRef = useRef(null);
+  const menuTimeoutRef = useRef(null);
+  const lastMenuHoverTime = useRef(0);
 
   // Live filter courses based on search query
   const searchResults = useMemo(() => {
@@ -77,30 +253,56 @@ export function StudyWorldHeader() {
 
   const showSearchResults = searchQuery.trim().length > 0 && searchFocused;
 
-  const openAllCourses = () => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    setAllCoursesOpen(true);
+  const cancelMenuClose = () => {
+    if (menuTimeoutRef.current) {
+      clearTimeout(menuTimeoutRef.current);
+      menuTimeoutRef.current = null;
+    }
   };
 
-  const closeAllCourses = () => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => {
-      setAllCoursesOpen(false);
-    }, 150);
+  const openMenu = (menuName) => {
+    cancelMenuClose();
+    lastMenuHoverTime.current = Date.now();
+    setActiveMenu(menuName);
+  };
+
+  const closeMenu = () => {
+    cancelMenuClose();
+    menuTimeoutRef.current = setTimeout(() => {
+      setActiveMenu(null);
+    }, 280);
+  };
+
+  const toggleMenu = (e, menuName) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    cancelMenuClose();
+    const now = Date.now();
+    if (now - lastMenuHoverTime.current < 400 && activeMenu === menuName) {
+      setActiveMenu(menuName);
+      return;
+    }
+    setActiveMenu((prev) => (prev === menuName ? null : menuName));
   };
 
   useEffect(() => {
     return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      cancelMenuClose();
     };
   }, []);
 
-  const activeGroup = courseCategories.find((c) => c.category === activeCategory) || courseCategories[0];
+  const activeGroup = courseCategories.find((c) => c.category === activeCategory) || courseCategories[0] || { category: '', courses: [] };
+  const activeCertGroup = certificationCategories.find((c) => c.category === activeCertCategory) || certificationCategories[0] || { category: '', courses: [] };
+  const activeAbroadGroup = studyAbroadCategories.find((c) => c.category === activeAbroadCategory) || studyAbroadCategories[0] || { category: '', courses: [] };
+  const activeCenterGroup = offlineCenterCategories.find((c) => c.category === activeCenterCategory) || offlineCenterCategories[0] || { category: '', courses: [] };
+  const activeMoreGroup = moreMenuCategories.find((c) => c.category === activeMoreCategory) || moreMenuCategories[0] || { category: '', courses: [] };
 
   useEffect(() => {
     function handleClickOutside(event) {
       if (navRef.current && !navRef.current.contains(event.target)) {
-        setAllCoursesOpen(false);
+        setActiveMenu(null);
         setUserDropdownOpen(false);
       }
       if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
@@ -130,6 +332,7 @@ export function StudyWorldHeader() {
     setSearchFocused(false);
     setMobileSearchOpen(false);
     setMobileDrawerOpen(false);
+    setAllCoursesOpen(false);
     router.push(`/${slug}`);
   };
 
@@ -167,8 +370,7 @@ export function StudyWorldHeader() {
     <div
       className="up-header-wrapper"
       ref={navRef}
-      style={{ position: 'relative' }}
-      onMouseLeave={closeAllCourses}
+      onMouseLeave={closeMenu}
     >
       <header className="up-header">
         {/* LEFT NAV GROUP: MOBILE 3-LINE ASCENDING HAMBURGER BEFORE LOGO + LOGO + ALL COURSES + LINKS */}
@@ -190,102 +392,102 @@ export function StudyWorldHeader() {
             <Brand />
           </div>
 
-          {/* ALL COURSES BUTTON (DESKTOP ONLY) */}
-          <div
-            className="up-dropdown-container up-desktop-only"
-            onMouseEnter={openAllCourses}
-            onMouseLeave={closeAllCourses}
-          >
-            <button
-              className={`up-courses-btn ${allCoursesOpen ? 'active' : ''}`}
-              onClick={() => setAllCoursesOpen(!allCoursesOpen)}
-            >
-              <span className="up-nowrap">All Courses</span>
-              <ChevronDown size={13} className={`up-chevron ${allCoursesOpen ? 'open' : ''}`} />
-            </button>
-          </div>
-
-          {/* LEFT INDIVIDUAL IDENTITY LINKS (DESKTOP ONLY) */}
+          {/* DESKTOP NAV LINKS ROW */}
           <nav className="up-nav-links up-desktop-only" aria-label="Header Links">
-            <Link href="/certification" className="up-nav-item">
-              <span className="up-nowrap">Certification</span>
-            </Link>
-            <Link href="/study-abroad" className="up-nav-item">
-              <span className="up-nowrap">Study Abroad</span>
-            </Link>
-            <Link href="/offline-center" className="up-nav-item">
-              <span className="up-nowrap">Offline Centers</span>
-            </Link>
+            {/* 1. ALL COURSES DROPDOWN TRIGGER */}
+            <div
+              className="up-dropdown-container"
+              onMouseEnter={() => openMenu('courses')}
+              onMouseLeave={closeMenu}
+            >
+              <button
+                type="button"
+                className={`up-nav-item up-nav-dropdown-trigger ${activeMenu === 'courses' ? 'active' : ''}`}
+                onClick={(e) => toggleMenu(e, 'courses')}
+                onMouseEnter={() => openMenu('courses')}
+                aria-expanded={activeMenu === 'courses'}
+              >
+                <span className="up-nowrap">All Courses</span>
+                <ChevronDown size={13} className={`up-chevron ${activeMenu === 'courses' ? 'open' : ''}`} />
+              </button>
+            </div>
+
+            {/* 2. CERTIFICATION DROPDOWN TRIGGER */}
+            <div
+              className="up-dropdown-container"
+              onMouseEnter={() => openMenu('cert')}
+              onMouseLeave={closeMenu}
+            >
+              <button
+                type="button"
+                className={`up-nav-item up-nav-dropdown-trigger ${activeMenu === 'cert' ? 'active' : ''}`}
+                onClick={(e) => toggleMenu(e, 'cert')}
+                onMouseEnter={() => openMenu('cert')}
+                aria-expanded={activeMenu === 'cert'}
+              >
+                <span className="up-nowrap">Certification</span>
+                <ChevronDown size={13} className={`up-chevron ${activeMenu === 'cert' ? 'open' : ''}`} />
+              </button>
+            </div>
+
+            {/* 3. STUDY ABROAD DROPDOWN TRIGGER */}
+            <div
+              className="up-dropdown-container"
+              onMouseEnter={() => openMenu('abroad')}
+              onMouseLeave={closeMenu}
+            >
+              <button
+                type="button"
+                className={`up-nav-item up-nav-dropdown-trigger ${activeMenu === 'abroad' ? 'active' : ''}`}
+                onClick={(e) => toggleMenu(e, 'abroad')}
+                onMouseEnter={() => openMenu('abroad')}
+                aria-expanded={activeMenu === 'abroad'}
+              >
+                <span className="up-nowrap">Study Abroad</span>
+                <ChevronDown size={13} className={`up-chevron ${activeMenu === 'abroad' ? 'open' : ''}`} />
+              </button>
+            </div>
+
+            {/* 4. OFFLINE CENTERS DROPDOWN TRIGGER */}
+            <div
+              className="up-dropdown-container"
+              onMouseEnter={() => openMenu('center')}
+              onMouseLeave={closeMenu}
+            >
+              <button
+                type="button"
+                className={`up-nav-item up-nav-dropdown-trigger ${activeMenu === 'center' ? 'active' : ''}`}
+                onClick={(e) => toggleMenu(e, 'center')}
+                onMouseEnter={() => openMenu('center')}
+                aria-expanded={activeMenu === 'center'}
+              >
+                <span className="up-nowrap">Offline Centers</span>
+                <ChevronDown size={13} className={`up-chevron ${activeMenu === 'center' ? 'open' : ''}`} />
+              </button>
+            </div>
+
+            {/* 5. MORE DROPDOWN TRIGGER */}
+            <div
+              className="up-dropdown-container"
+              onMouseEnter={() => openMenu('more')}
+              onMouseLeave={closeMenu}
+            >
+              <button
+                type="button"
+                className={`up-nav-item up-nav-dropdown-trigger ${activeMenu === 'more' ? 'active' : ''}`}
+                onClick={(e) => toggleMenu(e, 'more')}
+                onMouseEnter={() => openMenu('more')}
+                aria-expanded={activeMenu === 'more'}
+              >
+                <span className="up-nowrap">More</span>
+                <ChevronDown size={13} className={`up-chevron ${activeMenu === 'more' ? 'open' : ''}`} />
+              </button>
+            </div>
           </nav>
         </div>
 
-        {/* RIGHT CONTROLS GROUP: SEARCH BAR, REGION SELECTOR, SIGN IN BUTTON */}
+        {/* RIGHT CONTROLS GROUP: REGION SELECTOR, SIGN IN BUTTON */}
         <div className="up-right-actions up-desktop-tablet-only">
-          {/* COMPACT LIVE SEARCH BAR */}
-          <div className="up-search-wrapper" ref={searchContainerRef} style={{ position: 'relative' }}>
-            <div className={`up-search-box ${searchFocused ? 'focused' : ''}`}>
-              <input
-                type="text"
-                className="up-search-input"
-                placeholder="Search courses..."
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setSearchFocused(true);
-                }}
-                onFocus={() => setSearchFocused(true)}
-                onKeyDown={handleSearchKeyDown}
-              />
-              {searchQuery ? (
-                <button
-                  className="up-search-clear"
-                  onClick={() => {
-                    setSearchQuery('');
-                    setSearchFocused(false);
-                  }}
-                  type="button"
-                >
-                  ✕
-                </button>
-              ) : (
-                <div className="up-search-icon-btn-sm" title="Search">
-                  <Search size={14} />
-                </div>
-              )}
-            </div>
-
-            {/* LIVE SEARCH RESULTS DROPDOWN (RIGHT-ANCHORED TO SEARCH BAR) */}
-            {showSearchResults && (
-              <div className="up-search-dropdown up-fade-in">
-                <div className="up-search-dropdown-header">
-                  <span>Courses ({searchResults.length})</span>
-                </div>
-                {searchResults.length > 0 ? (
-                  <div className="up-search-dropdown-list">
-                    {searchResults.map((course) => (
-                      <div
-                        key={course.slug}
-                        className="up-search-result-item"
-                        onMouseDown={() => handleSelectCourse(course.slug)}
-                      >
-                        <div className="up-search-result-info">
-                          <span className="up-search-result-title">{course.title}</span>
-                          <span className="up-search-result-meta">
-                            {course.duration} • {course.level || 'All Levels'}
-                          </span>
-                        </div>
-                        <span className="up-search-result-badge">{course.category}</span>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="up-search-empty">
-                    <span>No courses found matching &ldquo;{searchQuery}&rdquo;</span>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
 
           {/* COMBINED REGION / LANGUAGE SELECTOR */}
           <div className="up-dropdown-container" ref={regionContainerRef} style={{ position: 'relative' }}>
@@ -456,45 +658,307 @@ export function StudyWorldHeader() {
         </div>
       </header>
 
-      {/* FULL-WIDTH STRETCHED MEGA DROPDOWN */}
-      {allCoursesOpen && (
+      {/* 1. FULL-SCREEN WIDTH ALL COURSES DROPDOWN */}
+      {activeMenu === 'courses' && (
         <div
-          className="up-fullwidth-hover-mega up-fade-in"
-          onMouseEnter={openAllCourses}
-          onMouseLeave={closeAllCourses}
+          className="up-fullwidth-dropdown up-fade-in"
+          onMouseEnter={cancelMenuClose}
+          onMouseLeave={closeMenu}
         >
-          <div className="up-fullwidth-side-body">
-            {/* LEFT SIDEBAR CATEGORIES */}
-            <div className="up-side-sidebar">
-              {courseCategories.map((group) => (
-                <button
-                  key={group.category}
-                  className={`up-side-cat-btn ${activeCategory === group.category ? 'active' : ''}`}
-                  onMouseEnter={() => setActiveCategory(group.category)}
-                  onClick={() => setActiveCategory(group.category)}
-                >
-                  <span>{group.category}</span>
-                  <ChevronRight size={13} className="up-side-cat-arrow" />
-                </button>
-              ))}
+          <div className="up-fullwidth-inner">
+            {/* LEFT: CATEGORIES SIDEBAR */}
+            <div className="up-fullwidth-cats">
+              {courseCategories.map((group) => {
+                const isActive = activeCategory === group.category;
+                return (
+                  <button
+                    key={group.category}
+                    type="button"
+                    className={`up-fullwidth-cat-btn ${isActive ? 'active' : ''}`}
+                    onMouseEnter={cancelMenuClose}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      cancelMenuClose();
+                      setActiveCategory(group.category);
+                    }}
+                  >
+                    <span>{group.category}</span>
+                  </button>
+                );
+              })}
             </div>
 
-            {/* RIGHT CONTENT PANEL (COURSES) */}
-            <div className="up-side-content">
-              <div className="up-side-title">{activeGroup.category} Programs</div>
-              <div className="up-side-courses-grid">
+            {/* RIGHT: COURSES GRID */}
+            <div className="up-fullwidth-courses">
+              <div className="up-fullwidth-courses-grid">
                 {activeGroup.courses.map((item) => (
                   <Link
                     key={item.title}
                     href={item.href}
-                    className="up-side-course-card"
-                    onClick={() => setAllCoursesOpen(false)}
+                    className="up-fullwidth-course-link"
+                    onClick={() => setActiveMenu(null)}
                   >
                     <span>{item.title}</span>
                   </Link>
                 ))}
               </div>
             </div>
+          </div>
+
+          {/* FOOTER BAR: EXPLORE ALL COURSES */}
+          <div className="up-fullwidth-footer-bar">
+            <Link
+              href="/courses"
+              className="up-fullwidth-explore-btn"
+              onClick={() => setActiveMenu(null)}
+            >
+              <span>Explore All Courses</span>
+              <ArrowRight size={12} />
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* 2. FULL-SCREEN WIDTH CERTIFICATION DROPDOWN */}
+      {activeMenu === 'cert' && (
+        <div
+          className="up-fullwidth-dropdown up-fade-in"
+          onMouseEnter={cancelMenuClose}
+          onMouseLeave={closeMenu}
+        >
+          <div className="up-fullwidth-inner">
+            {/* LEFT: CATEGORIES SIDEBAR */}
+            <div className="up-fullwidth-cats">
+              {certificationCategories.map((group) => {
+                const isActive = activeCertCategory === group.category;
+                return (
+                  <button
+                    key={group.category}
+                    type="button"
+                    className={`up-fullwidth-cat-btn ${isActive ? 'active' : ''}`}
+                    onMouseEnter={cancelMenuClose}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      cancelMenuClose();
+                      setActiveCertCategory(group.category);
+                    }}
+                  >
+                    <span>{group.category}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* RIGHT: COURSES GRID */}
+            <div className="up-fullwidth-courses">
+              <div className="up-fullwidth-courses-grid">
+                {activeCertGroup.courses.map((item) => (
+                  <Link
+                    key={item.title}
+                    href={item.href}
+                    className="up-fullwidth-course-link"
+                    onClick={() => setActiveMenu(null)}
+                  >
+                    <span>{item.title}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* FOOTER BAR: EXPLORE ALL CERTIFICATIONS */}
+          <div className="up-fullwidth-footer-bar">
+            <Link
+              href="/certification"
+              className="up-fullwidth-explore-btn"
+              onClick={() => setActiveMenu(null)}
+            >
+              <span>Explore All Certifications</span>
+              <ArrowRight size={12} />
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* 3. FULL-SCREEN WIDTH STUDY ABROAD DROPDOWN */}
+      {activeMenu === 'abroad' && (
+        <div
+          className="up-fullwidth-dropdown up-fade-in"
+          onMouseEnter={cancelMenuClose}
+          onMouseLeave={closeMenu}
+        >
+          <div className="up-fullwidth-inner">
+            {/* LEFT: CATEGORIES SIDEBAR */}
+            <div className="up-fullwidth-cats">
+              {studyAbroadCategories.map((group) => {
+                const isActive = activeAbroadCategory === group.category;
+                return (
+                  <button
+                    key={group.category}
+                    type="button"
+                    className={`up-fullwidth-cat-btn ${isActive ? 'active' : ''}`}
+                    onMouseEnter={cancelMenuClose}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      cancelMenuClose();
+                      setActiveAbroadCategory(group.category);
+                    }}
+                  >
+                    <span>{group.category}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* RIGHT: COURSES GRID */}
+            <div className="up-fullwidth-courses">
+              <div className="up-fullwidth-courses-grid">
+                {activeAbroadGroup?.courses?.map((item) => (
+                  <Link
+                    key={item.title}
+                    href={item.href}
+                    className="up-fullwidth-course-link"
+                    onClick={() => setActiveMenu(null)}
+                  >
+                    <span>{item.title}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* FOOTER BAR: EXPLORE STUDY ABROAD */}
+          <div className="up-fullwidth-footer-bar">
+            <Link
+              href="/study-abroad"
+              className="up-fullwidth-explore-btn"
+              onClick={() => setActiveMenu(null)}
+            >
+              <span>Explore Study Abroad</span>
+              <ArrowRight size={12} />
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* 4. FULL-SCREEN WIDTH OFFLINE CENTERS DROPDOWN */}
+      {activeMenu === 'center' && (
+        <div
+          className="up-fullwidth-dropdown up-fade-in"
+          onMouseEnter={cancelMenuClose}
+          onMouseLeave={closeMenu}
+        >
+          <div className="up-fullwidth-inner">
+            {/* LEFT: CATEGORIES SIDEBAR */}
+            <div className="up-fullwidth-cats">
+              {offlineCenterCategories.map((group) => {
+                const isActive = activeCenterCategory === group.category;
+                return (
+                  <button
+                    key={group.category}
+                    type="button"
+                    className={`up-fullwidth-cat-btn ${isActive ? 'active' : ''}`}
+                    onMouseEnter={cancelMenuClose}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      cancelMenuClose();
+                      setActiveCenterCategory(group.category);
+                    }}
+                  >
+                    <span>{group.category}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* RIGHT: COURSES GRID */}
+            <div className="up-fullwidth-courses">
+              <div className="up-fullwidth-courses-grid">
+                {activeCenterGroup?.courses?.map((item) => (
+                  <Link
+                    key={item.title}
+                    href={item.href}
+                    className="up-fullwidth-course-link"
+                    onClick={() => setActiveMenu(null)}
+                  >
+                    <span>{item.title}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* FOOTER BAR: EXPLORE OFFLINE CENTERS */}
+          <div className="up-fullwidth-footer-bar">
+            <Link
+              href="/offline-center"
+              className="up-fullwidth-explore-btn"
+              onClick={() => setActiveMenu(null)}
+            >
+              <span>Explore All Centers</span>
+              <ArrowRight size={12} />
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* 5. FULL-SCREEN WIDTH MORE DROPDOWN */}
+      {activeMenu === 'more' && (
+        <div
+          className="up-fullwidth-dropdown up-fade-in"
+          onMouseEnter={cancelMenuClose}
+          onMouseLeave={closeMenu}
+        >
+          <div className="up-fullwidth-inner">
+            {/* LEFT: CATEGORIES SIDEBAR */}
+            <div className="up-fullwidth-cats">
+              {moreMenuCategories.map((group) => {
+                const isActive = activeMoreCategory === group.category;
+                return (
+                  <button
+                    key={group.category}
+                    type="button"
+                    className={`up-fullwidth-cat-btn ${isActive ? 'active' : ''}`}
+                    onMouseEnter={cancelMenuClose}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      cancelMenuClose();
+                      setActiveMoreCategory(group.category);
+                    }}
+                  >
+                    <span>{group.category}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* RIGHT: COURSES GRID */}
+            <div className="up-fullwidth-courses">
+              <div className="up-fullwidth-courses-grid">
+                {activeMoreGroup?.courses?.map((item) => (
+                  <Link
+                    key={item.title}
+                    href={item.href}
+                    className="up-fullwidth-course-link"
+                    onClick={() => setActiveMenu(null)}
+                  >
+                    <span>{item.title}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* FOOTER BAR: EXPLORE MORE ABOUT US */}
+          <div className="up-fullwidth-footer-bar">
+            <Link
+              href="/about"
+              className="up-fullwidth-explore-btn"
+              onClick={() => setActiveMenu(null)}
+            >
+              <span>Explore About Us</span>
+              <ArrowRight size={12} />
+            </Link>
           </div>
         </div>
       )}
@@ -540,7 +1004,9 @@ export function StudyWorldHeader() {
       )}
 
       {/* SLIDE-IN MOBILE RIGHT DRAWER */}
-      <div className={`up-drawer-backdrop ${mobileDrawerOpen ? 'visible' : ''}`} onClick={() => setMobileDrawerOpen(false)} />
+      {mobileDrawerOpen && (
+        <div className="up-drawer-backdrop visible" onClick={() => setMobileDrawerOpen(false)} />
+      )}
       <aside className={`up-drawer ${mobileDrawerOpen ? 'open' : ''}`}>
         <div className="up-drawer-header">
           <Brand compact />
@@ -574,6 +1040,24 @@ export function StudyWorldHeader() {
               onClick={() => setMobileDrawerOpen(false)}
             >
               <span>Offline Centers</span>
+              <ChevronRight size={14} className="up-drawer-arrow" />
+            </Link>
+
+            <Link
+              href="/about"
+              className="up-drawer-nav-row up-primary-nav-row"
+              onClick={() => setMobileDrawerOpen(false)}
+            >
+              <span>About Us</span>
+              <ChevronRight size={14} className="up-drawer-arrow" />
+            </Link>
+
+            <Link
+              href="/contact"
+              className="up-drawer-nav-row up-primary-nav-row"
+              onClick={() => setMobileDrawerOpen(false)}
+            >
+              <span>Contact Us</span>
               <ChevronRight size={14} className="up-drawer-arrow" />
             </Link>
           </div>

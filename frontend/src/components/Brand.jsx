@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import Image from 'next/image';
 
 export function Brand({ compact = false }) {
@@ -28,7 +28,7 @@ export function Brand({ compact = false }) {
       <span
         className="brand-study-text"
         style={{
-          fontFamily: "'Outfit', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif",
+          fontFamily: "'Roboto', -apple-system, BlinkMacSystemFont, sans-serif",
           fontSize: compact ? '0.88rem' : '1.05rem',
           fontWeight: 500,
           color: '#475569',

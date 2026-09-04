@@ -232,9 +232,18 @@ export function StudyWorldHeader() {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [openDrawerSection, setOpenDrawerSection] = useState(null); // 'courses' | 'cert' | 'abroad' | 'center' | 'more' | null
+  const [openDrawerCategory, setOpenDrawerCategory] = useState(null);
 
   const toggleDrawerSection = (section) => {
-    setOpenDrawerSection((prev) => (prev === section ? null : section));
+    setOpenDrawerSection((prev) => {
+      if (prev === section) return null;
+      setOpenDrawerCategory(null);
+      return section;
+    });
+  };
+
+  const toggleDrawerCategory = (catKey) => {
+    setOpenDrawerCategory((prev) => (prev === catKey ? null : catKey));
   };
 
   const navRef = useRef(null);
@@ -1031,21 +1040,37 @@ export function StudyWorldHeader() {
             </button>
             {openDrawerSection === 'courses' && (
               <div className="up-drawer-acc-body">
-                {courseCategories.map((group) => (
-                  <div key={group.category} className="up-drawer-subcat">
-                    <span className="up-drawer-subcat-title">{group.category}</span>
-                    {group.courses.map((item) => (
-                      <Link
-                        key={item.title}
-                        href={item.href}
-                        className="up-drawer-subcat-link"
-                        onClick={() => setMobileDrawerOpen(false)}
-                      >
-                        {item.title}
-                      </Link>
-                    ))}
-                  </div>
-                ))}
+                <div className="up-drawer-nested-cats">
+                  {courseCategories.map((group) => {
+                    const isCatOpen = openDrawerCategory === `courses_${group.category}`;
+                    return (
+                      <div key={group.category} className="up-drawer-subacc-item">
+                        <button
+                          type="button"
+                          className={`up-drawer-subacc-trigger ${isCatOpen ? 'active' : ''}`}
+                          onClick={() => toggleDrawerCategory(`courses_${group.category}`)}
+                        >
+                          <span>{group.category}</span>
+                          <ChevronDown size={14} className={`up-drawer-subacc-icon ${isCatOpen ? 'rotated' : ''}`} />
+                        </button>
+                        {isCatOpen && (
+                          <div className="up-drawer-subacc-body">
+                            {group.courses.map((item) => (
+                              <Link
+                                key={item.title}
+                                href={item.href}
+                                className="up-drawer-subcat-link"
+                                onClick={() => setMobileDrawerOpen(false)}
+                              >
+                                <span>{item.title}</span>
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
                 <Link href="/courses" className="up-drawer-acc-explore" onClick={() => setMobileDrawerOpen(false)}>
                   <span>Explore All Courses</span>
                   <ArrowRight size={12} />
@@ -1066,21 +1091,37 @@ export function StudyWorldHeader() {
             </button>
             {openDrawerSection === 'cert' && (
               <div className="up-drawer-acc-body">
-                {certificationCategories.map((group) => (
-                  <div key={group.category} className="up-drawer-subcat">
-                    <span className="up-drawer-subcat-title">{group.category}</span>
-                    {group.courses.map((item) => (
-                      <Link
-                        key={item.title}
-                        href={item.href}
-                        className="up-drawer-subcat-link"
-                        onClick={() => setMobileDrawerOpen(false)}
-                      >
-                        {item.title}
-                      </Link>
-                    ))}
-                  </div>
-                ))}
+                <div className="up-drawer-nested-cats">
+                  {certificationCategories.map((group) => {
+                    const isCatOpen = openDrawerCategory === `cert_${group.category}`;
+                    return (
+                      <div key={group.category} className="up-drawer-subacc-item">
+                        <button
+                          type="button"
+                          className={`up-drawer-subacc-trigger ${isCatOpen ? 'active' : ''}`}
+                          onClick={() => toggleDrawerCategory(`cert_${group.category}`)}
+                        >
+                          <span>{group.category}</span>
+                          <ChevronDown size={14} className={`up-drawer-subacc-icon ${isCatOpen ? 'rotated' : ''}`} />
+                        </button>
+                        {isCatOpen && (
+                          <div className="up-drawer-subacc-body">
+                            {group.courses.map((item) => (
+                              <Link
+                                key={item.title}
+                                href={item.href}
+                                className="up-drawer-subcat-link"
+                                onClick={() => setMobileDrawerOpen(false)}
+                              >
+                                <span>{item.title}</span>
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
                 <Link href="/certification" className="up-drawer-acc-explore" onClick={() => setMobileDrawerOpen(false)}>
                   <span>Explore All Certifications</span>
                   <ArrowRight size={12} />
@@ -1101,34 +1142,43 @@ export function StudyWorldHeader() {
             </button>
             {openDrawerSection === 'abroad' && (
               <div className="up-drawer-acc-body">
-                {studyAbroadCategories.length > 0 ? (
-                  studyAbroadCategories.map((group) => (
-                    <div key={group.category} className="up-drawer-subcat">
-                      <span className="up-drawer-subcat-title">{group.category}</span>
-                      {group.courses.map((item) => (
+                <div className="up-drawer-nested-cats">
+                  <div className="up-drawer-subacc-item">
+                    <button
+                      type="button"
+                      className={`up-drawer-subacc-trigger ${openDrawerCategory === 'abroad_programs' ? 'active' : ''}`}
+                      onClick={() => toggleDrawerCategory('abroad_programs')}
+                    >
+                      <span>Global Education Programs</span>
+                      <ChevronDown size={14} className={`up-drawer-subacc-icon ${openDrawerCategory === 'abroad_programs' ? 'rotated' : ''}`} />
+                    </button>
+                    {openDrawerCategory === 'abroad_programs' && (
+                      <div className="up-drawer-subacc-body">
                         <Link
-                          key={item.title}
-                          href={item.href}
+                          href="/study-abroad"
                           className="up-drawer-subcat-link"
                           onClick={() => setMobileDrawerOpen(false)}
                         >
-                          {item.title}
+                          <span>Language Exam Preparation &amp; Guidance</span>
                         </Link>
-                      ))}
-                    </div>
-                  ))
-                ) : (
-                  <div className="up-drawer-subcat">
-                    <span className="up-drawer-subcat-title">Global Education Programs</span>
-                    <Link
-                      href="/study-abroad"
-                      className="up-drawer-subcat-link"
-                      onClick={() => setMobileDrawerOpen(false)}
-                    >
-                      Language Exam Preparation &amp; Guidance
-                    </Link>
+                        <Link
+                          href="/german-language"
+                          className="up-drawer-subcat-link"
+                          onClick={() => setMobileDrawerOpen(false)}
+                        >
+                          <span>Germany (Goethe CEFR Pathway)</span>
+                        </Link>
+                        <Link
+                          href="/french-language"
+                          className="up-drawer-subcat-link"
+                          onClick={() => setMobileDrawerOpen(false)}
+                        >
+                          <span>France (DELF Pathway)</span>
+                        </Link>
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
                 <Link href="/study-abroad" className="up-drawer-acc-explore" onClick={() => setMobileDrawerOpen(false)}>
                   <span>Explore Study Abroad</span>
                   <ArrowRight size={12} />
@@ -1149,21 +1199,37 @@ export function StudyWorldHeader() {
             </button>
             {openDrawerSection === 'center' && (
               <div className="up-drawer-acc-body">
-                {offlineCenterCategories.map((group) => (
-                  <div key={group.category} className="up-drawer-subcat">
-                    <span className="up-drawer-subcat-title">{group.category}</span>
-                    {group.courses.map((item) => (
-                      <Link
-                        key={item.title}
-                        href={item.href}
-                        className="up-drawer-subcat-link"
-                        onClick={() => setMobileDrawerOpen(false)}
-                      >
-                        {item.title}
-                      </Link>
-                    ))}
-                  </div>
-                ))}
+                <div className="up-drawer-nested-cats">
+                  {offlineCenterCategories.map((group) => {
+                    const isCatOpen = openDrawerCategory === `center_${group.category}`;
+                    return (
+                      <div key={group.category} className="up-drawer-subacc-item">
+                        <button
+                          type="button"
+                          className={`up-drawer-subacc-trigger ${isCatOpen ? 'active' : ''}`}
+                          onClick={() => toggleDrawerCategory(`center_${group.category}`)}
+                        >
+                          <span>{group.category}</span>
+                          <ChevronDown size={14} className={`up-drawer-subacc-icon ${isCatOpen ? 'rotated' : ''}`} />
+                        </button>
+                        {isCatOpen && (
+                          <div className="up-drawer-subacc-body">
+                            {group.courses.map((item) => (
+                              <Link
+                                key={item.title}
+                                href={item.href}
+                                className="up-drawer-subcat-link"
+                                onClick={() => setMobileDrawerOpen(false)}
+                              >
+                                <span>{item.title}</span>
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
                 <Link href="/offline-center" className="up-drawer-acc-explore" onClick={() => setMobileDrawerOpen(false)}>
                   <span>Explore All Centers</span>
                   <ArrowRight size={12} />
@@ -1184,17 +1250,30 @@ export function StudyWorldHeader() {
             </button>
             {openDrawerSection === 'more' && (
               <div className="up-drawer-acc-body">
-                <div className="up-drawer-subcat">
-                  <span className="up-drawer-subcat-title">Company &amp; Support</span>
-                  <Link href="/about" className="up-drawer-subcat-link" onClick={() => setMobileDrawerOpen(false)}>
-                    About ONEVRIKSH
-                  </Link>
-                  <Link href="/contact" className="up-drawer-subcat-link" onClick={() => setMobileDrawerOpen(false)}>
-                    Contact Us &amp; Centers
-                  </Link>
-                  <Link href="/demo" className="up-drawer-subcat-link" onClick={() => setMobileDrawerOpen(false)}>
-                    Book Free 1-on-1 Demo
-                  </Link>
+                <div className="up-drawer-nested-cats">
+                  <div className="up-drawer-subacc-item">
+                    <button
+                      type="button"
+                      className={`up-drawer-subacc-trigger ${openDrawerCategory === 'more_links' ? 'active' : ''}`}
+                      onClick={() => toggleDrawerCategory('more_links')}
+                    >
+                      <span>Company &amp; Support</span>
+                      <ChevronDown size={14} className={`up-drawer-subacc-icon ${openDrawerCategory === 'more_links' ? 'rotated' : ''}`} />
+                    </button>
+                    {openDrawerCategory === 'more_links' && (
+                      <div className="up-drawer-subacc-body">
+                        <Link href="/about" className="up-drawer-subcat-link" onClick={() => setMobileDrawerOpen(false)}>
+                          <span>About ONEVRIKSH</span>
+                        </Link>
+                        <Link href="/contact" className="up-drawer-subcat-link" onClick={() => setMobileDrawerOpen(false)}>
+                          <span>Contact Us &amp; Centers</span>
+                        </Link>
+                        <Link href="/demo" className="up-drawer-subcat-link" onClick={() => setMobileDrawerOpen(false)}>
+                          <span>Book Free 1-on-1 Demo</span>
+                        </Link>
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <Link href="/about" className="up-drawer-acc-explore" onClick={() => setMobileDrawerOpen(false)}>
                   <span>Explore About Us</span>

@@ -214,7 +214,6 @@ const moreMenuCategories = [
   {
     category: 'Blog',
     courses: [
-      { title: 'Blog', href: '/blog' },
       { title: 'Digital Marketing Course in Connaught Place', href: '/blog/digital-marketing-course-in-connaught-place' },
     ]
   }

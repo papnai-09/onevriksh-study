@@ -87,53 +87,5 @@ Want to experience our classroom environment before enrolling? We host weekly **
 * **Email:** study@onevriksh.com
 * **Walk-in Hours:** Monday – Saturday, 9:00 AM – 7:00 PM
 `
-  },
-  {
-    slug: 'top-digital-marketing-career-opportunities-2026',
-    title: 'Top 7 High-Paying Digital Marketing Career Paths in 2026',
-    shortTitle: 'High-Paying Digital Marketing Careers 2026',
-    category: 'Career Guide',
-    readTime: '5 min read',
-    publishedAt: '02 Sep 2026',
-    author: {
-      name: 'Rohit Sharma',
-      role: 'Lead Performance Marketing Mentor',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
-    },
-    image: 'https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&w=1200&q=80',
-    excerpt: 'Explore the fastest-growing and highest-paying roles in digital marketing for 2026, including Performance Marketing, SEO Strategy, GA4 Measurement, and Growth Automation.',
-    tags: ['Careers', 'Salaries', 'Jobs', 'Performance Marketing'],
-    featured: false,
-    content: `
-## The Evolution of Marketing Careers in 2026
-
-The digital marketing landscape is shifting towards data-driven performance and automation. Companies are no longer looking for generic social media posters—they are seeking performance architects who understand return on ad spend (ROAS), GA4 attribution, and conversion funnels.
-
-Here are the top 7 career tracks you can pursue this year with structured practical training.
-`
-  },
-  {
-    slug: 'how-to-prepare-for-delf-goethe-language-exams',
-    title: 'How to Crack Goethe (German) and DELF (French) Exams on Your First Attempt',
-    shortTitle: 'Crack Goethe & DELF Exams',
-    category: 'Languages',
-    readTime: '4 min read',
-    publishedAt: '28 Aug 2026',
-    author: {
-      name: 'Ananya Verma',
-      role: 'DELF & Goethe Certified Trainer',
-      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80'
-    },
-    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80',
-    excerpt: 'A step-by-step preparation strategy for clearing CEFR-aligned international language tests including Goethe-Zertifikat A1-B2 and DELF Paris examinations.',
-    tags: ['German', 'French', 'Goethe', 'DELF', 'Study Abroad'],
-    featured: false,
-    content: `
-## Demystifying International Language Certifications
-
-Whether planning to study in Germany or migrate to France/Canada, mastering speaking and listening formats is key to achieving high scores on CEFR evaluations.
-
-Learn how small batch conversation labs and structured mock exams help students achieve 90%+ pass rates.
-`
   }
 ];

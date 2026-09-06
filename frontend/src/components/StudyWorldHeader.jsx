@@ -212,21 +212,10 @@ const offlineCenterCategories = [
 
 const moreMenuCategories = [
   {
-    category: 'Blog & Articles',
+    category: 'Blog',
     courses: [
-      { title: 'Study Blog & Guides', href: '/blog' },
-      { title: 'Digital Marketing in Connaught Place', href: '/blog/digital-marketing-course-in-connaught-place' },
-      { title: 'Digital Marketing Careers in 2026', href: '/blog/top-digital-marketing-career-opportunities-2026' },
-      { title: 'Goethe & DELF Language Prep', href: '/blog/how-to-prepare-for-delf-goethe-language-exams' },
-    ]
-  },
-  {
-    category: 'About ONEVRIKSH',
-    courses: [
-      { title: 'About Us & Story', href: '/about' },
-      { title: 'Central Delhi Classroom Studio', href: '/offline-center' },
-      { title: 'Book Free 1-on-1 Demo', href: '/demo' },
-      { title: 'Contact Us & Centers', href: '/contact' },
+      { title: 'Blog', href: '/blog' },
+      { title: 'Digital Marketing Course in Connaught Place', href: '/blog/digital-marketing-course-in-connaught-place' },
     ]
   }
 ];
@@ -982,14 +971,14 @@ export function StudyWorldHeader() {
             </div>
           </div>
 
-          {/* FOOTER BAR: EXPLORE BLOG & ARTICLES */}
+          {/* FOOTER BAR: EXPLORE BLOG */}
           <div className="up-fullwidth-footer-bar">
             <Link
               href="/blog"
               className="up-fullwidth-explore-btn"
               onClick={() => setActiveMenu(null)}
             >
-              <span>Explore Study Blog &amp; Insights</span>
+              <span>Explore Blog</span>
               <ArrowRight size={12} />
             </Link>
           </div>
@@ -1294,7 +1283,7 @@ export function StudyWorldHeader() {
                   })}
                 </div>
                 <Link href="/blog" className="up-drawer-acc-explore" onClick={() => setMobileDrawerOpen(false)}>
-                  <span>Explore Study Blog &amp; Insights</span>
+                  <span>Explore Blog</span>
                   <ArrowRight size={12} />
                 </Link>
               </div>

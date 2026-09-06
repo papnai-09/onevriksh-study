@@ -8,8 +8,8 @@ export const institute = {
 
 export const courses = [
   {
-    slug: 'digital-marketing-foundation',
-    title: 'Digital Marketing Foundation',
+    slug: 'digital-marketing-course',
+    title: 'Foundation in Digital Marketing',
     category: 'Marketing',
     duration: '4 Months',
     fee: 27000,
@@ -30,8 +30,8 @@ export const courses = [
     ]
   },
   {
-    slug: 'digital-marketing-advanced',
-    title: 'Digital Marketing Advanced',
+    slug: 'advanced-digital-marketing-course',
+    title: 'Advanced Digital Marketing',
     category: 'Marketing',
     duration: '8 Months',
     fee: 54000,
@@ -52,8 +52,8 @@ export const courses = [
     ]
   },
   {
-    slug: 'digital-marketing-mastery',
-    title: 'Digital Marketing Mastery',
+    slug: 'master-in-digital-marketing-course',
+    title: 'Master in Digital Marketing',
     category: 'Marketing',
     duration: '12 Months',
     fee: 81000,
@@ -172,7 +172,7 @@ export const courses = [
 ];
 
 export const testimonials = [
-  { name: 'Sakshi Jain', course: 'Digital Marketing Mastery', quote: 'The live projects made all the difference. I walked into interviews with real campaign results, not just a certificate.', initials: 'SJ' },
+  { name: 'Sakshi Jain', course: 'Master in Digital Marketing', quote: 'The live projects made all the difference. I walked into interviews with real campaign results, not just a certificate.', initials: 'SJ' },
   { name: 'Aditya Singh', course: 'German Language', quote: 'Small batches meant I could actually speak in every class. The Goethe preparation was structured and practical.', initials: 'AS' },
   { name: 'Riya Mehta', course: 'Graphic Design', quote: 'My portfolio finally looked professional. The trainer feedback was direct, personal and genuinely useful.', initials: 'RM' }
 ];

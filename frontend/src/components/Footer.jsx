@@ -29,7 +29,7 @@ export function Footer() {
         </div>
         <div>
           <h3>Popular courses</h3>
-          <Link href="/digital-marketing-foundation">Digital Marketing</Link>
+          <Link href="/digital-marketing-course">Digital Marketing</Link>
           <Link href="/graphic-design">Graphic Design</Link>
           <Link href="/spanish-language">Spanish Language</Link>
           <Link href="/german-language">German Language</Link>

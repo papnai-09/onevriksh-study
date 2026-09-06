@@ -116,11 +116,16 @@ export async function initDb() {
       console.log('Seeded default admin (9999999999 / admin123)');
     }
 
+    // Clean up obsolete course slugs if present
+    await client.query(`
+      DELETE FROM courses WHERE slug IN ('digital-marketing-foundation', 'digital-marketing-advanced', 'digital-marketing-mastery');
+    `);
+
     // 3. Courses Seed & Sync
     const seedCourses = [
         {
-          slug: 'digital-marketing-foundation',
-          title: 'Digital Marketing Foundation',
+          slug: 'digital-marketing-course',
+          title: 'Foundation in Digital Marketing',
           category: 'Marketing',
           duration: '4 Months',
           fee: 27000,
@@ -141,8 +146,8 @@ export async function initDb() {
           ])
         },
         {
-          slug: 'digital-marketing-advanced',
-          title: 'Digital Marketing Advanced',
+          slug: 'advanced-digital-marketing-course',
+          title: 'Advanced Digital Marketing',
           category: 'Marketing',
           duration: '8 Months',
           fee: 54000,
@@ -163,8 +168,8 @@ export async function initDb() {
           ])
         },
         {
-          slug: 'digital-marketing-mastery',
-          title: 'Digital Marketing Mastery',
+          slug: 'master-in-digital-marketing-course',
+          title: 'Master in Digital Marketing',
           category: 'Marketing',
           duration: '12 Months',
           fee: 81000,
@@ -305,8 +310,8 @@ export async function initDb() {
     // 5. Certificates Seed
     const certCount = await client.query('SELECT COUNT(*) as count FROM certificates');
     if (parseInt(certCount.rows[0].count, 10) === 0) {
-      await client.query('INSERT INTO certificates (certificate_number, student_name, student_id, course_title, grade, issued_at) VALUES ($1, $2, $3, $4, $5, $6)', ['OVS-CERT-2026-001', 'Rahul Sharma', 'OVS202601', 'Digital Marketing Foundation', 'Grade A+', '2026-01-15T00:00:00.000Z']);
-      await client.query('INSERT INTO certificates (certificate_number, student_name, student_id, course_title, grade, issued_at) VALUES ($1, $2, $3, $4, $5, $6)', ['OVS-CERT-2026-SAMPLE', 'Priya Verma', 'OVS202602', 'Digital Marketing Mastery', 'Grade A', '2026-02-10T00:00:00.000Z']);
+      await client.query('INSERT INTO certificates (certificate_number, student_name, student_id, course_title, grade, issued_at) VALUES ($1, $2, $3, $4, $5, $6)', ['OVS-CERT-2026-001', 'Rahul Sharma', 'OVS202601', 'Foundation in Digital Marketing', 'Grade A+', '2026-01-15T00:00:00.000Z']);
+      await client.query('INSERT INTO certificates (certificate_number, student_name, student_id, course_title, grade, issued_at) VALUES ($1, $2, $3, $4, $5, $6)', ['OVS-CERT-2026-SAMPLE', 'Priya Verma', 'OVS202602', 'Master in Digital Marketing', 'Grade A', '2026-02-10T00:00:00.000Z']);
       await client.query('INSERT INTO certificates (certificate_number, student_name, student_id, course_title, grade, issued_at) VALUES ($1, $2, $3, $4, $5, $6)', ['OVS-CERT-2026-003', 'Aarav Mehta', 'OVS202603', 'Graphic Design Mastery', 'Grade A', '2026-03-01T00:00:00.000Z']);
       console.log('Seeded certificates to Neon PostgreSQL');
     }
@@ -314,8 +319,8 @@ export async function initDb() {
     // 6. Materials Seed
     const matCount = await client.query('SELECT COUNT(*) as count FROM materials');
     if (parseInt(matCount.rows[0].count, 10) === 0) {
-      await client.query('INSERT INTO materials (course_slug, title, type, size) VALUES ($1, $2, $3, $4)', ['digital-marketing-advanced', 'SEO & Keyword Strategy Guide', 'PDF', '4.2 MB']);
-      await client.query('INSERT INTO materials (course_slug, title, type, size) VALUES ($1, $2, $3, $4)', ['digital-marketing-advanced', 'Google Ads Bidding Formulas & Cheatsheet', 'PDF', '2.8 MB']);
+      await client.query('INSERT INTO materials (course_slug, title, type, size) VALUES ($1, $2, $3, $4)', ['advanced-digital-marketing-course', 'SEO & Keyword Strategy Guide', 'PDF', '4.2 MB']);
+      await client.query('INSERT INTO materials (course_slug, title, type, size) VALUES ($1, $2, $3, $4)', ['advanced-digital-marketing-course', 'Google Ads Bidding Formulas & Cheatsheet', 'PDF', '2.8 MB']);
       await client.query('INSERT INTO materials (course_slug, title, type, size) VALUES ($1, $2, $3, $4)', ['graphic-design', 'Design System & Typography Starter Kit', 'ZIP', '18.5 MB']);
       await client.query('INSERT INTO materials (course_slug, title, type, size) VALUES ($1, $2, $3, $4)', ['french-language', 'DELF A1 Speaking Dialogues & Audio Script', 'PDF', '3.1 MB']);
       console.log('Seeded materials to Neon PostgreSQL');

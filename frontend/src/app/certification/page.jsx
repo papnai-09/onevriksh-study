@@ -31,7 +31,7 @@ const eligibleCourses = [
   {
     title: 'Digital Marketing',
     category: 'Career Skills',
-    slug: 'digital-marketing-mastery',
+    slug: 'master-in-digital-marketing-course',
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
     description: 'Learn practical digital marketing skills across SEO, paid advertising, social media, content, analytics, and more.'
   },

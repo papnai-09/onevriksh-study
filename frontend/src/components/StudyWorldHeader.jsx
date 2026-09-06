@@ -30,29 +30,29 @@ const courseCategories = [
       title: 'Performance Marketing Mastery',
       tag: '🔥 Placement Track',
       desc: 'Live campaigns with real ad spends & portfolio capstone defense.',
-      href: '/digital-marketing-mastery',
+      href: '/master-in-digital-marketing-course',
       image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=400&q=80'
     },
     courses: [
       {
-        title: 'Digital Marketing Foundation',
-        href: '/digital-marketing-foundation',
+        title: 'Foundation in Digital Marketing',
+        href: '/digital-marketing-course',
         duration: '4 Months',
         badge: 'Beginner',
         tag: 'Live SEO Briefs',
         partner: 'ONEVRIKSH Studio'
       },
       {
-        title: 'Digital Marketing Advanced',
-        href: '/digital-marketing-advanced',
+        title: 'Advanced Digital Marketing',
+        href: '/advanced-digital-marketing-course',
         duration: '8 Months',
         badge: 'Bestseller',
         tag: 'Google & Meta Ads',
         partner: 'Performance Lab'
       },
       {
-        title: 'Digital Marketing Mastery',
-        href: '/digital-marketing-mastery',
+        title: 'Master in Digital Marketing',
+        href: '/master-in-digital-marketing-course',
         duration: '12 Months',
         badge: '100% Placement*',
         tag: 'Full-Stack CRO & Capstone',
@@ -153,9 +153,9 @@ const certificationCategories = [
   {
     category: 'Digital Marketing',
     courses: [
-      { title: 'Digital Marketing Foundation Certificate', href: '/digital-marketing-foundation' },
-      { title: 'Digital Marketing Advanced Certificate', href: '/digital-marketing-advanced' },
-      { title: 'Digital Marketing Mastery Certificate', href: '/digital-marketing-mastery' },
+      { title: 'Foundation in Digital Marketing Certificate', href: '/digital-marketing-course' },
+      { title: 'Advanced Digital Marketing Certificate', href: '/advanced-digital-marketing-course' },
+      { title: 'Master in Digital Marketing Certificate', href: '/master-in-digital-marketing-course' },
     ]
   },
   {
@@ -187,7 +187,7 @@ const offlineCenterCategories = [
   {
     category: 'Connaught Place (Delhi)',
     courses: [
-      { title: 'Digital Marketing Classroom Batches', href: '/digital-marketing-foundation' },
+      { title: 'Digital Marketing Classroom Batches', href: '/digital-marketing-course' },
       { title: 'German Language Classroom Classes', href: '/german-language' },
       { title: 'French Language Classroom Classes', href: '/french-language' },
       { title: 'Spanish Language Classroom Classes', href: '/spanish-language' },
@@ -199,7 +199,7 @@ const offlineCenterCategories = [
   {
     category: 'GTB Nagar (Delhi)',
     courses: [
-      { title: 'Digital Marketing Classroom Batches', href: '/digital-marketing-foundation' },
+      { title: 'Digital Marketing Classroom Batches', href: '/digital-marketing-course' },
       { title: 'German Language Classroom Classes', href: '/german-language' },
       { title: 'French Language Classroom Classes', href: '/french-language' },
       { title: 'Spanish Language Classroom Classes', href: '/spanish-language' },

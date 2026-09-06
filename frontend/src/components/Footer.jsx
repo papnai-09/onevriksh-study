@@ -21,6 +21,7 @@ export function Footer() {
           <h3>Explore</h3>
           <Link href="/about">About us</Link>
           <Link href="/courses">All courses</Link>
+          <Link href="/blog">Blog &amp; Insights</Link>
           <Link href="/certification">Certification</Link>
           <Link href="/study-abroad">Study abroad</Link>
           <Link href="/offline-center">Offline centers</Link>

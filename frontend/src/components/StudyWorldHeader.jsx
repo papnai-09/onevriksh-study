@@ -210,7 +210,26 @@ const offlineCenterCategories = [
   }
 ];
 
-const moreMenuCategories = [];
+const moreMenuCategories = [
+  {
+    category: 'Blog & Articles',
+    courses: [
+      { title: 'Study Blog & Guides', href: '/blog' },
+      { title: 'Digital Marketing in Connaught Place', href: '/blog/digital-marketing-course-in-connaught-place' },
+      { title: 'Digital Marketing Careers in 2026', href: '/blog/top-digital-marketing-career-opportunities-2026' },
+      { title: 'Goethe & DELF Language Prep', href: '/blog/how-to-prepare-for-delf-goethe-language-exams' },
+    ]
+  },
+  {
+    category: 'About ONEVRIKSH',
+    courses: [
+      { title: 'About Us & Story', href: '/about' },
+      { title: 'Central Delhi Classroom Studio', href: '/offline-center' },
+      { title: 'Book Free 1-on-1 Demo', href: '/demo' },
+      { title: 'Contact Us & Centers', href: '/contact' },
+    ]
+  }
+];
 
 export function StudyWorldHeader() {
   const router = useRouter();
@@ -963,14 +982,14 @@ export function StudyWorldHeader() {
             </div>
           </div>
 
-          {/* FOOTER BAR: EXPLORE MORE ABOUT US */}
+          {/* FOOTER BAR: EXPLORE BLOG & ARTICLES */}
           <div className="up-fullwidth-footer-bar">
             <Link
-              href="/about"
+              href="/blog"
               className="up-fullwidth-explore-btn"
               onClick={() => setActiveMenu(null)}
             >
-              <span>Explore About Us</span>
+              <span>Explore Study Blog &amp; Insights</span>
               <ArrowRight size={12} />
             </Link>
           </div>
@@ -1244,32 +1263,38 @@ export function StudyWorldHeader() {
             {openDrawerSection === 'more' && (
               <div className="up-drawer-acc-body">
                 <div className="up-drawer-nested-cats">
-                  <div className="up-drawer-subacc-item">
-                    <button
-                      type="button"
-                      className={`up-drawer-subacc-trigger ${openDrawerCategory === 'more_links' ? 'active' : ''}`}
-                      onClick={() => toggleDrawerCategory('more_links')}
-                    >
-                      <span>Company &amp; Support</span>
-                      <ChevronDown size={14} className={`up-drawer-subacc-icon ${openDrawerCategory === 'more_links' ? 'rotated' : ''}`} />
-                    </button>
-                    {openDrawerCategory === 'more_links' && (
-                      <div className="up-drawer-subacc-body">
-                        <Link href="/about" className="up-drawer-subcat-link" onClick={() => setMobileDrawerOpen(false)}>
-                          <span>About ONEVRIKSH</span>
-                        </Link>
-                        <Link href="/contact" className="up-drawer-subcat-link" onClick={() => setMobileDrawerOpen(false)}>
-                          <span>Contact Us &amp; Centers</span>
-                        </Link>
-                        <Link href="/demo" className="up-drawer-subcat-link" onClick={() => setMobileDrawerOpen(false)}>
-                          <span>Book Free 1-on-1 Demo</span>
-                        </Link>
+                  {moreMenuCategories.map((group) => {
+                    const isCatOpen = openDrawerCategory === `more_${group.category}`;
+                    return (
+                      <div key={group.category} className="up-drawer-subacc-item">
+                        <button
+                          type="button"
+                          className={`up-drawer-subacc-trigger ${isCatOpen ? 'active' : ''}`}
+                          onClick={() => toggleDrawerCategory(`more_${group.category}`)}
+                        >
+                          <span>{group.category}</span>
+                          <ChevronDown size={14} className={`up-drawer-subacc-icon ${isCatOpen ? 'rotated' : ''}`} />
+                        </button>
+                        {isCatOpen && (
+                          <div className="up-drawer-subacc-body">
+                            {group.courses.map((item) => (
+                              <Link
+                                key={item.title}
+                                href={item.href}
+                                className="up-drawer-subcat-link"
+                                onClick={() => setMobileDrawerOpen(false)}
+                              >
+                                <span>{item.title}</span>
+                              </Link>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
+                    );
+                  })}
                 </div>
-                <Link href="/about" className="up-drawer-acc-explore" onClick={() => setMobileDrawerOpen(false)}>
-                  <span>Explore About Us</span>
+                <Link href="/blog" className="up-drawer-acc-explore" onClick={() => setMobileDrawerOpen(false)}>
+                  <span>Explore Study Blog &amp; Insights</span>
                   <ArrowRight size={12} />
                 </Link>
               </div>

@@ -118,13 +118,13 @@ export async function initDb() {
 
     // Clean up obsolete course slugs if present
     await client.query(`
-      DELETE FROM courses WHERE slug IN ('digital-marketing-foundation', 'digital-marketing-advanced', 'digital-marketing-mastery');
+      DELETE FROM courses WHERE slug IN ('digital-marketing-foundation', 'digital-marketing-advanced', 'digital-marketing-mastery', 'advanced-digital-marketing-course');
     `);
 
     // 3. Courses Seed & Sync
     const seedCourses = [
         {
-          slug: 'digital-marketing-course',
+          slug: 'foundation-course-in-digital-marketing',
           title: 'Foundation in Digital Marketing',
           category: 'Marketing',
           duration: '4 Months',
@@ -146,7 +146,7 @@ export async function initDb() {
           ])
         },
         {
-          slug: 'advanced-digital-marketing-course',
+          slug: 'digital-marketing-course',
           title: 'Advanced Digital Marketing',
           category: 'Marketing',
           duration: '8 Months',
@@ -319,8 +319,8 @@ export async function initDb() {
     // 6. Materials Seed
     const matCount = await client.query('SELECT COUNT(*) as count FROM materials');
     if (parseInt(matCount.rows[0].count, 10) === 0) {
-      await client.query('INSERT INTO materials (course_slug, title, type, size) VALUES ($1, $2, $3, $4)', ['advanced-digital-marketing-course', 'SEO & Keyword Strategy Guide', 'PDF', '4.2 MB']);
-      await client.query('INSERT INTO materials (course_slug, title, type, size) VALUES ($1, $2, $3, $4)', ['advanced-digital-marketing-course', 'Google Ads Bidding Formulas & Cheatsheet', 'PDF', '2.8 MB']);
+      await client.query('INSERT INTO materials (course_slug, title, type, size) VALUES ($1, $2, $3, $4)', ['digital-marketing-course', 'SEO & Keyword Strategy Guide', 'PDF', '4.2 MB']);
+      await client.query('INSERT INTO materials (course_slug, title, type, size) VALUES ($1, $2, $3, $4)', ['digital-marketing-course', 'Google Ads Bidding Formulas & Cheatsheet', 'PDF', '2.8 MB']);
       await client.query('INSERT INTO materials (course_slug, title, type, size) VALUES ($1, $2, $3, $4)', ['graphic-design', 'Design System & Typography Starter Kit', 'ZIP', '18.5 MB']);
       await client.query('INSERT INTO materials (course_slug, title, type, size) VALUES ($1, $2, $3, $4)', ['french-language', 'DELF A1 Speaking Dialogues & Audio Script', 'PDF', '3.1 MB']);
       console.log('Seeded materials to Neon PostgreSQL');

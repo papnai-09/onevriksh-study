@@ -8,7 +8,7 @@ export const institute = {
 
 export const courses = [
   {
-    slug: 'digital-marketing-course',
+    slug: 'foundation-course-in-digital-marketing',
     title: 'Foundation in Digital Marketing',
     category: 'Marketing',
     duration: '4 Months',
@@ -30,7 +30,7 @@ export const courses = [
     ]
   },
   {
-    slug: 'advanced-digital-marketing-course',
+    slug: 'digital-marketing-course',
     title: 'Advanced Digital Marketing',
     category: 'Marketing',
     duration: '8 Months',

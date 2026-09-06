@@ -36,7 +36,7 @@ const courseCategories = [
     courses: [
       {
         title: 'Foundation in Digital Marketing',
-        href: '/digital-marketing-course',
+        href: '/foundation-course-in-digital-marketing',
         duration: '4 Months',
         badge: 'Beginner',
         tag: 'Live SEO Briefs',
@@ -44,7 +44,7 @@ const courseCategories = [
       },
       {
         title: 'Advanced Digital Marketing',
-        href: '/advanced-digital-marketing-course',
+        href: '/digital-marketing-course',
         duration: '8 Months',
         badge: 'Bestseller',
         tag: 'Google & Meta Ads',
@@ -153,8 +153,8 @@ const certificationCategories = [
   {
     category: 'Digital Marketing',
     courses: [
-      { title: 'Foundation in Digital Marketing Certificate', href: '/digital-marketing-course' },
-      { title: 'Advanced Digital Marketing Certificate', href: '/advanced-digital-marketing-course' },
+      { title: 'Foundation in Digital Marketing Certificate', href: '/foundation-course-in-digital-marketing' },
+      { title: 'Advanced Digital Marketing Certificate', href: '/digital-marketing-course' },
       { title: 'Master in Digital Marketing Certificate', href: '/master-in-digital-marketing-course' },
     ]
   },

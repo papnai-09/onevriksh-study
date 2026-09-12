@@ -210,26 +210,16 @@ const offlineCenterCategories = [
   }
 ];
 
-const moreMenuCategories = [
-  {
-    category: 'Blog',
-    courses: [
-      { title: 'Digital Marketing Course in Connaught Place', href: '/blog/digital-marketing-course-in-connaught-place' },
-    ]
-  }
-];
-
 export function StudyWorldHeader() {
   const router = useRouter();
   const { user, logout, openAuthModal } = useAuth();
   const { selectedLang, selectedCountry, setLanguage, setCountry, languages, countries } = useRegion();
 
-  const [activeMenu, setActiveMenu] = useState(null); // 'courses' | 'cert' | 'abroad' | 'center' | 'more' | null
+  const [activeMenu, setActiveMenu] = useState(null); // 'courses' | 'cert' | 'abroad' | 'center' | null
   const [activeCategory, setActiveCategory] = useState(courseCategories[0]?.category || '');
   const [activeCertCategory, setActiveCertCategory] = useState(certificationCategories[0]?.category || '');
   const [activeAbroadCategory, setActiveAbroadCategory] = useState(studyAbroadCategories[0]?.category || '');
   const [activeCenterCategory, setActiveCenterCategory] = useState(offlineCenterCategories[0]?.category || '');
-  const [activeMoreCategory, setActiveMoreCategory] = useState(moreMenuCategories[0]?.category || '');
 
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
@@ -318,7 +308,6 @@ export function StudyWorldHeader() {
   const activeCertGroup = certificationCategories.find((c) => c.category === activeCertCategory) || certificationCategories[0] || { category: '', courses: [] };
   const activeAbroadGroup = studyAbroadCategories.find((c) => c.category === activeAbroadCategory) || studyAbroadCategories[0] || { category: '', courses: [] };
   const activeCenterGroup = offlineCenterCategories.find((c) => c.category === activeCenterCategory) || offlineCenterCategories[0] || { category: '', courses: [] };
-  const activeMoreGroup = moreMenuCategories.find((c) => c.category === activeMoreCategory) || moreMenuCategories[0] || { category: '', courses: [] };
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -487,23 +476,13 @@ export function StudyWorldHeader() {
               </button>
             </div>
 
-            {/* 5. MORE DROPDOWN TRIGGER */}
-            <div
-              className="up-dropdown-container"
-              onMouseEnter={() => openMenu('more')}
-              onMouseLeave={closeMenu}
+            {/* 5. DIRECT BLOG LINK (NO DROPDOWN) */}
+            <Link
+              href="/blog"
+              className="up-nav-item"
             >
-              <button
-                type="button"
-                className={`up-nav-item up-nav-dropdown-trigger ${activeMenu === 'more' ? 'active' : ''}`}
-                onClick={(e) => toggleMenu(e, 'more')}
-                onMouseEnter={() => openMenu('more')}
-                aria-expanded={activeMenu === 'more'}
-              >
-                <span className="up-nowrap">More</span>
-                <ChevronDown size={13} className={`up-chevron ${activeMenu === 'more' ? 'open' : ''}`} />
-              </button>
-            </div>
+              <span className="up-nowrap">Blog</span>
+            </Link>
           </nav>
         </div>
 
@@ -517,100 +496,145 @@ export function StudyWorldHeader() {
               className={`up-region-btn ${regionDropdownOpen ? 'active' : ''}`}
               onClick={() => {
                 setRegionDropdownOpen(!regionDropdownOpen);
-                setAllCoursesOpen(false);
                 setUserDropdownOpen(false);
               }}
               title="Select Language & Region"
             >
-              <span>{selectedLang.code}</span>
+              <Globe size={13} className="up-region-btn-globe" />
+              <span className="up-region-btn-code">{selectedLang.code}</span>
+              <span className="up-region-btn-dot">•</span>
+              <span className="up-region-btn-flag">{selectedCountry.flag || '🇮🇳'}</span>
               <ChevronDown size={12} className={`up-chevron ${regionDropdownOpen ? 'open' : ''}`} />
             </button>
 
             {regionDropdownOpen && (
-              <div className="up-dropdown-menu up-region-dropdown up-fade-in">
-                {/* MODAL HEADER WITH TABS & CLOSE BUTTON */}
-                <div className="up-region-header-row">
-                  <div className="up-region-tabs">
-                    <button
-                      type="button"
-                      className={`up-region-tab ${regionTab === 'lang' ? 'active' : ''}`}
-                      onClick={() => setRegionTab('lang')}
-                    >
-                      <Globe size={13} />
-                      <span>Language</span>
-                    </button>
-                    <button
-                      type="button"
-                      className={`up-region-tab ${regionTab === 'country' ? 'active' : ''}`}
-                      onClick={() => setRegionTab('country')}
-                    >
-                      <MapPin size={13} />
-                      <span>Country</span>
-                    </button>
+              <div className="up-dropdown-menu up-region-dropdown up-fade-in" role="dialog" aria-modal="true">
+                {/* 1. TOP HEADER & TABS */}
+                <div className="up-region-modal-head">
+                  <div className="up-region-title-wrap">
+                    <h4>Preferences</h4>
+                    <p>Select your language &amp; regional currency</p>
                   </div>
                   <button
                     type="button"
                     className="up-region-close-btn"
                     onClick={() => setRegionDropdownOpen(false)}
-                    aria-label="Close"
+                    aria-label="Close preferences"
                   >
-                    <X size={14} />
+                    <X size={15} />
                   </button>
                 </div>
 
-                {/* TAB 1: LANGUAGES */}
-                {regionTab === 'lang' && (
-                  <div className="up-menu-section">
-                    <div className="up-menu-title">Language</div>
-                    <div className="up-region-list">
-                      {languages.map((l) => (
-                        <button
-                          key={l.code}
-                          type="button"
-                          className={`up-menu-row ${selectedLang.code === l.code ? 'active' : ''}`}
-                          onClick={() => setLanguage(l)}
-                        >
-                          <span className="up-menu-row-label">
-                            <span className="up-menu-native-text">{l.native}</span>
-                            <span className="up-menu-en-text">({l.name})</span>
-                          </span>
-                          {selectedLang.code === l.code && <Check size={14} className="up-check-active" />}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* TAB 2: COUNTRIES */}
-                {regionTab === 'country' && (
-                  <div className="up-menu-section">
-                    <div className="up-menu-title">Country</div>
-                    <div className="up-region-list">
-                      {countries.map((c) => (
-                        <button
-                          key={c.code}
-                          type="button"
-                          className={`up-menu-row ${selectedCountry.code === c.code ? 'active' : ''}`}
-                          onClick={() => setCountry(c)}
-                        >
-                          <span className="up-menu-row-label">
-                            <span className="up-menu-native-text">{c.name}</span>
-                          </span>
-                          {selectedCountry.code === c.code && <Check size={14} className="up-check-active" />}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* FOOTER DONE BUTTON */}
-                <div className="up-region-footer">
+                {/* 2. SEGMENTED PILL SWITCHER */}
+                <div className="up-region-tabs-pill">
                   <button
                     type="button"
-                    className="up-region-apply-btn"
+                    className={`up-region-tab-pill ${regionTab === 'lang' ? 'active' : ''}`}
+                    onClick={() => setRegionTab('lang')}
+                  >
+                    <Globe size={13} />
+                    <span>Language</span>
+                    <span className="up-region-tab-badge">{selectedLang.code}</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`up-region-tab-pill ${regionTab === 'country' ? 'active' : ''}`}
+                    onClick={() => setRegionTab('country')}
+                  >
+                    <MapPin size={13} />
+                    <span>Country &amp; Currency</span>
+                    <span className="up-region-tab-badge">{selectedCountry.currency}</span>
+                  </button>
+                </div>
+
+                {/* 3. TAB CONTENT */}
+                {regionTab === 'lang' && (
+                  <div className="up-region-panel">
+                    <div className="up-region-panel-title">
+                      <span>Available Languages</span>
+                      <small>Select one</small>
+                    </div>
+                    <div className="up-region-cards-list">
+                      {languages.map((l) => {
+                        const isSelected = selectedLang.code === l.code;
+                        return (
+                          <button
+                            key={l.code}
+                            type="button"
+                            className={`up-region-card-row ${isSelected ? 'selected' : ''}`}
+                            onClick={() => setLanguage(l)}
+                          >
+                            <span className="up-region-flag-box">{l.flag || '🌐'}</span>
+                            <div className="up-region-card-text">
+                              <strong className="up-region-native-title">{l.native}</strong>
+                              <span className="up-region-sub-title">{l.name}</span>
+                            </div>
+                            <div className="up-region-select-indicator">
+                              {isSelected ? (
+                                <span className="up-region-check-circle">
+                                  <Check size={13} />
+                                </span>
+                              ) : (
+                                <span className="up-region-radio-circle" />
+                              )}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {regionTab === 'country' && (
+                  <div className="up-region-panel">
+                    <div className="up-region-panel-title">
+                      <span>Country &amp; Currency</span>
+                      <small>Select one</small>
+                    </div>
+                    <div className="up-region-cards-list">
+                      {countries.map((c) => {
+                        const isSelected = selectedCountry.code === c.code;
+                        return (
+                          <button
+                            key={c.code}
+                            type="button"
+                            className={`up-region-card-row ${isSelected ? 'selected' : ''}`}
+                            onClick={() => setCountry(c)}
+                          >
+                            <span className="up-region-flag-box">{c.flag || '📍'}</span>
+                            <div className="up-region-card-text">
+                              <strong className="up-region-native-title">{c.name}</strong>
+                              <span className="up-region-sub-title">{c.currencyCode} ({c.currency})</span>
+                            </div>
+                            <div className="up-region-select-indicator">
+                              {isSelected ? (
+                                <span className="up-region-check-circle">
+                                  <Check size={13} />
+                                </span>
+                              ) : (
+                                <span className="up-region-radio-circle" />
+                              )}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* 4. MODAL FOOTER */}
+                <div className="up-region-modal-footer">
+                  <div className="up-region-summary">
+                    <span>{selectedLang.flag} {selectedLang.code}</span>
+                    <span className="up-region-summary-dot">•</span>
+                    <span>{selectedCountry.flag} {selectedCountry.currencyCode}</span>
+                  </div>
+                  <button
+                    type="button"
+                    className="up-region-done-cta"
                     onClick={() => setRegionDropdownOpen(false)}
                   >
-                    Done
+                    <span>Save &amp; Apply</span>
                   </button>
                 </div>
               </div>
@@ -923,66 +947,6 @@ export function StudyWorldHeader() {
         </div>
       )}
 
-      {/* 5. FULL-SCREEN WIDTH MORE DROPDOWN */}
-      {activeMenu === 'more' && (
-        <div
-          className="up-fullwidth-dropdown up-fade-in"
-          onMouseEnter={cancelMenuClose}
-          onMouseLeave={closeMenu}
-        >
-          <div className="up-fullwidth-inner">
-            {/* LEFT: CATEGORIES SIDEBAR */}
-            <div className="up-fullwidth-cats">
-              {moreMenuCategories.map((group) => {
-                const isActive = activeMoreCategory === group.category;
-                return (
-                  <button
-                    key={group.category}
-                    type="button"
-                    className={`up-fullwidth-cat-btn ${isActive ? 'active' : ''}`}
-                    onMouseEnter={cancelMenuClose}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      cancelMenuClose();
-                      setActiveMoreCategory(group.category);
-                    }}
-                  >
-                    <span>{group.category}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* RIGHT: COURSES GRID */}
-            <div className="up-fullwidth-courses">
-              <div className="up-fullwidth-courses-grid">
-                {activeMoreGroup?.courses?.map((item) => (
-                  <Link
-                    key={item.title}
-                    href={item.href}
-                    className="up-fullwidth-course-link"
-                    onClick={() => setActiveMenu(null)}
-                  >
-                    <span>{item.title}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* FOOTER BAR: EXPLORE BLOG */}
-          <div className="up-fullwidth-footer-bar">
-            <Link
-              href="/blog"
-              className="up-fullwidth-explore-btn"
-              onClick={() => setActiveMenu(null)}
-            >
-              <span>Explore Blog</span>
-              <ArrowRight size={12} />
-            </Link>
-          </div>
-        </div>
-      )}
 
       {/* MOBILE SEARCH BAR OVERLAY */}
       {mobileSearchOpen && (
@@ -1238,55 +1202,16 @@ export function StudyWorldHeader() {
             )}
           </div>
 
-          {/* 5. MORE ACCORDION */}
+          {/* 5. DIRECT BLOG LINK */}
           <div className="up-drawer-acc-group">
-            <button
-              type="button"
-              className={`up-drawer-acc-trigger ${openDrawerSection === 'more' ? 'active' : ''}`}
-              onClick={() => toggleDrawerSection('more')}
+            <Link
+              href="/blog"
+              className="up-drawer-acc-trigger up-drawer-direct-nav"
+              onClick={() => setMobileDrawerOpen(false)}
             >
-              <span>More</span>
-              <ChevronDown size={16} className={`up-drawer-acc-icon ${openDrawerSection === 'more' ? 'rotated' : ''}`} />
-            </button>
-            {openDrawerSection === 'more' && (
-              <div className="up-drawer-acc-body">
-                <div className="up-drawer-nested-cats">
-                  {moreMenuCategories.map((group) => {
-                    const isCatOpen = openDrawerCategory === `more_${group.category}`;
-                    return (
-                      <div key={group.category} className="up-drawer-subacc-item">
-                        <button
-                          type="button"
-                          className={`up-drawer-subacc-trigger ${isCatOpen ? 'active' : ''}`}
-                          onClick={() => toggleDrawerCategory(`more_${group.category}`)}
-                        >
-                          <span>{group.category}</span>
-                          <ChevronDown size={14} className={`up-drawer-subacc-icon ${isCatOpen ? 'rotated' : ''}`} />
-                        </button>
-                        {isCatOpen && (
-                          <div className="up-drawer-subacc-body">
-                            {group.courses.map((item) => (
-                              <Link
-                                key={item.title}
-                                href={item.href}
-                                className="up-drawer-subcat-link"
-                                onClick={() => setMobileDrawerOpen(false)}
-                              >
-                                <span>{item.title}</span>
-                              </Link>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-                <Link href="/blog" className="up-drawer-acc-explore" onClick={() => setMobileDrawerOpen(false)}>
-                  <span>Explore Blog</span>
-                  <ArrowRight size={12} />
-                </Link>
-              </div>
-            )}
+              <span>Blog</span>
+              <ArrowRight size={15} className="up-drawer-direct-arrow" />
+            </Link>
           </div>
 
           <div className="up-drawer-divider" />

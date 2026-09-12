@@ -18,6 +18,12 @@ import {
 } from 'lucide-react';
 import { blogs } from '@/data/blogs';
 
+export async function generateStaticParams() {
+  return blogs.map((b) => ({
+    slug: b.slug
+  }));
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const post = blogs.find((b) => b.slug === slug);
@@ -33,7 +39,7 @@ export default async function BlogPostPage({ params }) {
   const post = blogs.find((b) => b.slug === slug);
   if (!post) notFound();
 
-  const relatedBlogs = blogs.filter((b) => b.slug !== slug).slice(0, 2);
+  const relatedBlogs = blogs.filter((b) => b.slug !== slug).slice(0, 3);
 
   return (
     <>

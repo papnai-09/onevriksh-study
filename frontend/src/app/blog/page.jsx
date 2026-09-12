@@ -6,7 +6,16 @@ import Image from 'next/image';
 import { Search, Calendar, Clock, ArrowRight, User, Tag, Sparkles, BookOpen } from 'lucide-react';
 import { blogs } from '@/data/blogs';
 
-const categories = ['All', 'Digital Marketing', 'Career Guide', 'Languages'];
+const categories = [
+  'All',
+  'Digital Marketing',
+  'German Language',
+  'French Language',
+  'Spanish Language',
+  'Graphic Design',
+  'English Speaking',
+  'Italian Language'
+];
 
 export default function BlogIndexPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -14,7 +23,9 @@ export default function BlogIndexPage() {
 
   const filteredBlogs = useMemo(() => {
     return blogs.filter((b) => {
-      const matchCat = selectedCat === 'All' || b.category.toLowerCase() === selectedCat.toLowerCase();
+      const matchCat =
+        selectedCat === 'All' ||
+        b.category.toLowerCase() === selectedCat.toLowerCase();
       const q = searchQuery.trim().toLowerCase();
       const matchQuery =
         !q ||

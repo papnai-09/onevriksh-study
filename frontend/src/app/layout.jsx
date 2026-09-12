@@ -3,6 +3,14 @@ import { AppChrome } from '@/components/AppChrome';
 import { AuthProvider } from '@/context/AuthContext';
 import { RegionProvider } from '@/context/RegionContext';
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: 'cover',
+  themeColor: '#0F172A'
+};
+
 export const metadata = {
   metadataBase: new URL('https://study.onevriksh.com'),
   title: { default: 'ONEVRIKSH Study | Root Your Skills. Rise Your Future.', template: '%s | ONEVRIKSH Study' },

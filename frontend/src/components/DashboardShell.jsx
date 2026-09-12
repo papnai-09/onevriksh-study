@@ -181,6 +181,8 @@ export function DashboardShell({ role = 'student', children, title, subtitle, ac
         </button>
       </aside>
 
+      {open && <div className="sidebar-scrim" onClick={() => setOpen(false)} aria-hidden="true" />}
+
       <div className="dashboard-main">
         <header className="dashboard-topbar">
           <button className="icon-button dashboard-menu" onClick={() => setOpen(true)} style={{ marginRight: '12px' }}>

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -78,7 +78,7 @@ export function StudentOverview() {
               <div className="current-course">
                 {data.courses?.[0] && (
                   <>
-                    <div className="current-course-image"><Image src={data.courses[0].image} alt="" fill /></div>
+                    <div className="current-course-image"><Image src={data.courses[0].image} alt="" fill sizes="(max-width: 768px) 100vw, 300px" /></div>
                     <div className="current-course-info">
                       <span>Module 4 · Paid Advertising</span>
                       <h3>{data.courses[0].next}</h3>
@@ -219,7 +219,7 @@ export function StudentSection({ section }) {
         {data.courses?.map((c) => (
           <article className="learning-card" key={c.slug}>
             <div className="learning-image">
-              <Image src={c.image} alt={c.title} fill />
+              <Image src={c.image} alt={c.title} fill sizes="(max-width: 768px) 100vw, 360px" />
               <button><CirclePlay fill="currentColor" /></button>
             </div>
             <div>
@@ -308,7 +308,7 @@ export function StudentSection({ section }) {
         ].map(([n, d, img, p], idx) => (
           <article className="lecture-card" key={n + idx}>
             <div>
-              <Image src={img} alt="" fill />
+              <Image src={img} alt="" fill sizes="(max-width: 768px) 100vw, 360px" />
               <button><Play fill="currentColor" /></button>
               <span>{d}</span>
             </div>

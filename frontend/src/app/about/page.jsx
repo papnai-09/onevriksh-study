@@ -18,7 +18,7 @@ export default function AboutPage() {
             <p>ONEVRIKSH Study brings practical education, close mentoring and career direction together under one roof.</p>
           </div>
           <div className="page-hero-image">
-            <Image src="/img2.jpg" alt="Students at ONEVRIKSH Study" fill priority />
+            <Image src="/img2.jpg" alt="Students at ONEVRIKSH Study" fill priority sizes="(max-width: 900px) 100vw, 50vw" />
           </div>
         </div>
       </section>
@@ -26,7 +26,7 @@ export default function AboutPage() {
       <section className="section">
         <div className="container story-grid">
           <div className="story-image">
-            <Image src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=85" alt="Mentor working with students" fill />
+            <Image src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=85" alt="Mentor working with students" fill sizes="(max-width: 900px) 100vw, 50vw" />
           </div>
           <div>
             <SectionHeading eyebrow="Our story" title="A coaching institute built for the gap between theory and work." />
@@ -85,7 +85,7 @@ export default function AboutPage() {
             </div>
           </div>
           <div className="trainer-image">
-            <Image src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1000&q=85" alt="ONEVRIKSH trainer" fill />
+            <Image src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1000&q=85" alt="ONEVRIKSH trainer" fill sizes="(max-width: 900px) 100vw, 50vw" />
           </div>
         </div>
       </section>

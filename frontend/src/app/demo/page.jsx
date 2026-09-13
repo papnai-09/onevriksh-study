@@ -1,4 +1,4 @@
-﻿import Image from 'next/image';
+import Image from 'next/image';
 import { BadgeCheck, Clock, Users } from 'lucide-react';
 import { FormCard } from '@/components/FormCard';
 import { courses } from '@/data/site';
@@ -40,6 +40,7 @@ export default function DemoPage() {
           alt="ONEVRIKSH Demo Session"
           fill
           priority
+          sizes="100vw"
         />
       </div>
       <div className="demo-overlay" />

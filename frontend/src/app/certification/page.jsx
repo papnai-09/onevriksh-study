@@ -32,42 +32,42 @@ const eligibleCourses = [
     title: 'Digital Marketing',
     category: 'Career Skills',
     slug: 'master-in-digital-marketing-course',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
+    image: '/master-digital-marketing.jpg',
     description: 'Learn practical digital marketing skills across SEO, paid advertising, social media, content, analytics, and more.'
   },
   {
     title: 'Graphic Design',
     category: 'Design',
     slug: 'graphic-design',
-    image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
+    image: '/graphic-design.jpg',
     description: 'Develop practical graphic design skills and learn to create professional visual content.'
   },
   {
     title: 'Spanish Language',
     category: 'Language',
     slug: 'spanish-language',
-    image: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=800&q=80',
+    image: '/spanish.jpg',
     description: 'Develop Spanish communication skills across speaking, listening, reading, and writing.'
   },
   {
     title: 'German Language',
     category: 'Language',
     slug: 'german-language',
-    image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=800&q=80',
+    image: '/german.jpg',
     description: 'Build German language skills through structured learning and practical communication practice.'
   },
   {
     title: 'French Language',
     category: 'Language',
     slug: 'french-language',
-    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80',
+    image: '/french-language.jpg',
     description: 'Develop French communication skills through structured language learning and practical practice.'
   },
   {
     title: 'English Speaking',
     category: 'Language',
     slug: 'english-speaking',
-    image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80',
+    image: '/english.jpg',
     description: 'Improve your English communication, speaking confidence, vocabulary, pronunciation, and practical conversation skills.'
   }
 ];

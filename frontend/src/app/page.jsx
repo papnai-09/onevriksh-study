@@ -38,7 +38,7 @@ export default function HomePage() {
       <section className="hero">
         <div className="hero-media">
           <Image
-            src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=2000&q=85"
+            src="/img1.jpg"
             alt="Students learning together at ONEVRIKSH Study"
             fill
             priority
@@ -103,7 +103,7 @@ export default function HomePage() {
           <div className="intro-images">
             <div className="image-main">
               <Image
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=85"
+                src="/img2.jpg"
                 alt="ONEVRIKSH students collaborating"
                 fill
                 sizes="50vw"

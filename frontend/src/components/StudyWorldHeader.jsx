@@ -31,7 +31,7 @@ const courseCategories = [
       tag: '🔥 Placement Track',
       desc: 'Live campaigns with real ad spends & portfolio capstone defense.',
       href: '/master-in-digital-marketing-course',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=400&q=80'
+      image: '/master-digital-marketing.jpg'
     },
     courses: [
       {
@@ -68,7 +68,7 @@ const courseCategories = [
       tag: '🌍 CEFR Certified',
       desc: 'Complete Goethe, DELF, DELE & CILS exam coaching with native speaking labs.',
       href: '/german-language',
-      image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80'
+      image: '/german.jpg'
     },
     courses: [
       {
@@ -113,7 +113,7 @@ const courseCategories = [
       tag: '🎨 Portfolio Defense',
       desc: 'Build client-ready branding kits & Adobe suite mastery.',
       href: '/graphic-design',
-      image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=400&q=80'
+      image: '/graphic-design.jpg'
     },
     courses: [
       {
@@ -134,7 +134,7 @@ const courseCategories = [
       tag: '🎙️ Public Speaking',
       desc: 'Interview simulations, fluency labs & presentation mastery.',
       href: '/english-speaking',
-      image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=400&q=80'
+      image: '/english.jpg'
     },
     courses: [
       {

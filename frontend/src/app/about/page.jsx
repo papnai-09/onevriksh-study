@@ -1,4 +1,4 @@
-﻿import Image from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Award, Eye, HeartHandshake, Lightbulb, Target, Users } from 'lucide-react';
 import { SectionHeading } from '@/components/SectionHeading';
@@ -18,7 +18,7 @@ export default function AboutPage() {
             <p>ONEVRIKSH Study brings practical education, close mentoring and career direction together under one roof.</p>
           </div>
           <div className="page-hero-image">
-            <Image src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=85" alt="Students at ONEVRIKSH Study" fill priority />
+            <Image src="/img2.jpg" alt="Students at ONEVRIKSH Study" fill priority />
           </div>
         </div>
       </section>

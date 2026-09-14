@@ -1,45 +1,83 @@
-﻿import Link from 'next/link';
-import { CTASection } from '@/components/CTASection';
-import { Globe, Plane, GraduationCap, FileCheck, Languages, CheckCircle2, ArrowRight } from 'lucide-react';
+'use client';
 
-export const metadata = {
-  title: 'Study Abroad & Language Exam Prep | ONEVRIKSH Study',
-  description:
-    'Expert preparation for DELF (France), Goethe-Zertifikat (Germany), DELE (Spain), and CILS (Italy) language requirements and international student visa counselling.'
-};
+import { CTASection } from '@/components/CTASection';
+import { ExpandableFeatureCarousel } from '@/components/ExpandableFeatureCarousel';
 
 const examCards = [
   {
-    country: 'France & Francophone Countries',
-    exam: 'DELF / DALF (A1, A2, B1, B2)',
+    country: 'France & Francophone',
     flag: '🇫🇷',
-    desc: 'Official French Ministry of Education certification required for campus France admissions, university courses, and work visas.',
-    prepCourse: 'French Language Program',
-    slug: 'french-language'
+    tag: 'DELF / DALF (A1-B2)',
+    title: 'French DELF Exam Track',
+    shortDesc: 'Official French Ministry of Education certification.',
+    desc: 'Official French Ministry of Education certification mandatory for Campus France university applications, Grandes Écoles admissions, and work visas.',
+    bullets: ['A1-B2 CEFR curriculum', 'Speaking & listening labs', 'Campus France guidance'],
+    linkHref: '/french-language',
+    linkText: 'French Program'
   },
   {
-    country: 'Germany, Austria & Switzerland',
-    exam: 'Goethe-Zertifikat (A1, A2, B1)',
+    country: 'Germany & Austria',
     flag: '🇩🇪',
-    desc: 'Internationally recognized certification for German university applications (APS certificate) and job-seeker visas.',
-    prepCourse: 'German Language Program',
-    slug: 'german-language'
+    tag: 'Goethe-Zertifikat (A1-B1)',
+    title: 'German Goethe Exam Track',
+    shortDesc: 'Globally recognized certification for German universities.',
+    desc: 'Internationally recognized certification required for German public university admissions (APS certificate), student visas, and opportunity cards (Chancenkarte).',
+    bullets: ['Goethe exam mock tests', 'Speaking clubs & pronunciation', 'APS certificate support'],
+    linkHref: '/german-language',
+    linkText: 'German Program'
   },
   {
     country: 'Spain & Latin America',
-    exam: 'DELE / SIELE',
     flag: '🇪🇸',
-    desc: 'Official diplomas granted by the Instituto Cervantes on behalf of the Spanish Ministry of Education.',
-    prepCourse: 'Spanish Language Program',
-    slug: 'spanish-language'
+    tag: 'DELE / SIELE',
+    title: 'Spanish DELE Exam Track',
+    shortDesc: 'Official diplomas granted by Instituto Cervantes.',
+    desc: 'Official diplomas granted by Instituto Cervantes on behalf of the Spanish Ministry of Education for higher studies and international careers.',
+    bullets: ['DELE exam simulations', 'Cultural immersion sessions', 'Conversational fluency'],
+    linkHref: '/spanish-language',
+    linkText: 'Spanish Program'
   },
   {
     country: 'Italy',
-    exam: 'CILS / CELI',
     flag: '🇮🇹',
-    desc: 'Certificates of Italian as a Foreign Language recognized by the Italian Ministry of Foreign Affairs for university enrolment.',
-    prepCourse: 'Italian Language Program',
-    slug: 'italian-language'
+    tag: 'CILS / CELI',
+    title: 'Italian CILS Exam Track',
+    shortDesc: 'Certificates recognized by Italian Ministry of Foreign Affairs.',
+    desc: 'Certificates of Italian as a Foreign Language recognized by the Italian Ministry of Foreign Affairs for university enrolment and visa interviews.',
+    bullets: ['CILS exam format prep', 'Audio-visual labs', 'Visa interview clinics'],
+    linkHref: '/italian-language',
+    linkText: 'Italian Program'
+  }
+];
+
+const roadmapData = [
+  {
+    step: '01',
+    tag: 'Diagnostic',
+    title: 'Language Assessment & Goal Setting',
+    desc: 'Evaluate your current CEFR proficiency baseline and determine your target exam date aligned with university intake deadlines.',
+    bullets: ['CEFR level test', 'Intake timeline mapping', 'Custom study plan']
+  },
+  {
+    step: '02',
+    tag: 'Core Training',
+    title: 'Small-Batch Classroom Training',
+    desc: 'Master listening, reading, writing, and speaking modules with native-certified trainers in our Connaught Place classrooms.',
+    bullets: ['Max 15-20 students', 'Audio-visual listening drills', 'Grammar in real context']
+  },
+  {
+    step: '03',
+    tag: 'Simulation',
+    title: 'Timed Exam Mock Simulations',
+    desc: 'Attempt simulated DELF / Goethe / DELE exam papers under timed exam conditions with line-by-line trainer feedback.',
+    bullets: ['Timed practice tests', '1-on-1 examiner feedback', 'Score improvement strategy']
+  },
+  {
+    step: '04',
+    tag: 'Visa & Admission',
+    title: 'Documentation & Visa Guidance',
+    desc: 'Receive comprehensive assistance on submitting your language certificates for university dossiers, APS certificates, and embassy visa files.',
+    bullets: ['SOP & language profile check', 'Embassy interview guidance', 'Certification authentication']
   }
 ];
 
@@ -56,64 +94,27 @@ export default function StudyAbroadPage() {
         </div>
       </section>
 
+      {/* 1. EXAM TRACKS EXPANDABLE CAROUSEL */}
       <section className="section">
         <div className="container">
-          <div className="section-heading center">
-            <span className="eyebrow">Targeted Exam Tracks</span>
-            <h2>International Language Certifications</h2>
-            <p>We train students specifically according to the Common European Framework of Reference for Languages (CEFR).</p>
-          </div>
-
-          <div className="course-grid">
-            {examCards.map((item) => (
-              <div key={item.exam} className="course-card" style={{ padding: '28px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                    <span style={{ fontSize: '2rem' }}>{item.flag}</span>
-                    <span className="course-level" style={{ position: 'static' }}>{item.country}</span>
-                  </div>
-                  <h3 style={{ fontSize: '1.2rem', marginBottom: '8px' }}>{item.exam}</h3>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--muted)', lineHeight: '1.6', marginBottom: '20px' }}>
-                    {item.desc}
-                  </p>
-                </div>
-                <div style={{ borderTop: '1px solid var(--line)', paddingTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <small style={{ color: 'var(--muted)', fontSize: '0.72rem' }}>Course: <strong>{item.prepCourse}</strong></small>
-                  <Link href={`/${item.slug}`} className="arrow-button icon-button" title="View Syllabus">
-                    <ArrowRight size={16} />
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ExpandableFeatureCarousel
+            items={examCards}
+            eyebrow="Targeted Exam Tracks"
+            title="International Language Gateways & Certifications"
+            text="Hover over any country card to explore official exam requirements, syllabus modules, and prep tracks."
+          />
         </div>
       </section>
 
-      {/* 4-Step Abroad Roadmap */}
+      {/* 2. 4-STEP ROADMAP EXPANDABLE CAROUSEL */}
       <section className="section" style={{ background: 'var(--surface-2)' }}>
         <div className="container">
-          <div className="section-heading center">
-            <span className="eyebrow">Our Support Process</span>
-            <h2>Your Path from Classroom to Campus</h2>
-            <p>Structured methodology to help you clear certification milestones on time.</p>
-          </div>
-
-          <div className="value-grid">
-            {[
-              { step: '01', title: 'Language Assessment', desc: 'Evaluate your current CEFR level and set target certification date.' },
-              { step: '02', title: 'Small-Batch Training', desc: 'Master speaking, listening, reading, and writing modules with exam mocks.' },
-              { step: '03', title: 'Exam Mock Simulations', desc: 'Attempt timed DELF/Goethe mock exams with individual trainer correction.' },
-              { step: '04', title: 'Documentation Guidance', desc: 'Guidance on language certificate submission for university & visa files.' }
-            ].map((s) => (
-              <article key={s.step}>
-                <strong style={{ fontSize: '1.5rem', color: 'var(--blue)', fontFamily: 'var(--font-display)', display: 'block', marginBottom: '10px' }}>
-                  {s.step}
-                </strong>
-                <h3>{s.title}</h3>
-                <p>{s.desc}</p>
-              </article>
-            ))}
-          </div>
+          <ExpandableFeatureCarousel
+            items={roadmapData}
+            eyebrow="Our Support Process"
+            title="Your Path from Classroom to Campus"
+            text="Hover over each milestone to see our structured methodology for passing certification exams and securing overseas visas."
+          />
         </div>
       </section>
 
@@ -126,3 +127,4 @@ export default function StudyAbroadPage() {
     </>
   );
 }
+

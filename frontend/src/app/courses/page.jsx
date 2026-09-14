@@ -3,6 +3,7 @@
 import { Search, SlidersHorizontal } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { CourseCard } from '@/components/CourseCard';
+import { ExpandableCourseCarousel } from '@/components/ExpandableCourseCarousel';
 import { courses } from '@/data/site';
 
 const categories = ['All', 'Marketing', 'Design', 'Languages', 'Communication'];
@@ -29,6 +30,20 @@ export default function CoursesPage() {
           <p>Practical, trainer-led courses with projects, personal guidance and career support.</p>
         </div>
       </section>
+
+      {/* FEATURED EXPANDABLE SPOTLIGHT CAROUSEL */}
+      <section className="section" style={{ background: 'var(--surface)', paddingBottom: '0' }}>
+        <div className="container">
+          <ExpandableCourseCarousel
+            courses={courses}
+            eyebrow="Interactive Spotlight"
+            title="Featured Career Programs"
+            text="Hover over any program card to explore the full syllabus breakdown, fees, and career outcomes."
+            viewAllHref=""
+          />
+        </div>
+      </section>
+
       <section className="section catalog-section">
         <div className="container">
           <div className="catalog-tools">
@@ -50,7 +65,7 @@ export default function CoursesPage() {
             </div>
           </div>
           <div className="catalog-count">
-            <strong>{filtered.length} programs</strong>
+            <strong>{filtered.length} programs found</strong>
             <span>Offline classes in Connaught Place, New Delhi</span>
           </div>
           <div className="course-grid">
@@ -70,3 +85,4 @@ export default function CoursesPage() {
     </>
   );
 }
+

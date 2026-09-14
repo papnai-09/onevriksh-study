@@ -26,6 +26,7 @@ import {
   ArrowRight,
   AlertCircle
 } from 'lucide-react';
+import { ExpandableCourseCarousel } from '@/components/ExpandableCourseCarousel';
 
 const eligibleCourses = [
   {
@@ -180,108 +181,16 @@ export default function CertificationPage() {
         </div>
       </section>
 
-      {/* SECTION 3 — COURSES WITH CERTIFICATION */}
+      {/* SECTION 3 — COURSES WITH CERTIFICATION EXPANDABLE CAROUSEL */}
       <section className="section" style={{ background: 'var(--surface-2)', padding: '52px 0' }}>
         <div className="container">
-          <div className="section-heading" style={{ maxWidth: '720px', marginBottom: '32px' }}>
-            <span className="eyebrow">Certification Programs</span>
-            <h2 style={{ fontSize: 'clamp(1.6rem, 2.6vw, 2.1rem)', margin: '6px 0 10px', color: 'var(--ink)', fontWeight: 700 }}>
-              Get Certified in Your Chosen Course
-            </h2>
-            <p style={{ fontSize: '0.98rem', color: 'var(--muted)' }}>
-              Choose from our certification-eligible programs and build practical skills while working toward your OneVriksh Course Completion Certificate.
-            </p>
-          </div>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(310px, 1fr))',
-            gap: '24px'
-          }}>
-            {eligibleCourses.map((course) => (
-              <div
-                key={course.title}
-                style={{
-                  background: 'var(--surface)',
-                  border: '1px solid var(--line)',
-                  borderRadius: '10px',
-                  overflow: 'hidden',
-                  boxShadow: 'var(--shadow-sm)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease'
-                }}
-              >
-                <div style={{ height: '180px', position: 'relative', width: '100%' }}>
-                  <Image
-                    src={course.image}
-                    alt={course.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    style={{ objectFit: 'cover' }}
-                  />
-                  <span style={{
-                    position: 'absolute',
-                    top: '12px',
-                    left: '12px',
-                    background: 'rgba(255, 255, 255, 0.95)',
-                    color: '#0F172A',
-                    padding: '4px 8px',
-                    borderRadius: '6px',
-                    fontSize: '0.68rem',
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.05em',
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.08)'
-                  }}>
-                    {course.category}
-                  </span>
-                </div>
-
-                <div style={{ padding: '22px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                  <h3 style={{ fontSize: '1.14rem', margin: '0 0 10px', color: 'var(--ink)', fontWeight: 700 }}>
-                    {course.title}
-                  </h3>
-                  <p style={{ fontSize: '0.88rem', color: 'var(--muted)', lineHeight: 1.6, flex: 1, margin: '0 0 16px' }}>
-                    {course.description}
-                  </p>
-
-                  <div style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    background: '#FDF2F4',
-                    color: '#EE2C3C',
-                    padding: '5px 10px',
-                    borderRadius: '6px',
-                    fontSize: '0.74rem',
-                    fontWeight: 650,
-                    marginBottom: '16px',
-                    alignSelf: 'flex-start'
-                  }}>
-                    <BadgeCheck size={15} style={{ color: '#EE2C3C' }} />
-                    <span>Course Completion Certificate</span>
-                  </div>
-
-                  <Link
-                    href={`/${course.slug}`}
-                    className="button button-ghost"
-                    style={{
-                      width: '100%',
-                      height: '42px',
-                      fontSize: '0.84rem',
-                      fontWeight: 600,
-                      justifyContent: 'space-between',
-                      borderColor: 'var(--line)'
-                    }}
-                  >
-                    <span>View Course</span>
-                    <ArrowRight size={15} />
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ExpandableCourseCarousel
+            courses={eligibleCourses}
+            eyebrow="Certification Programs"
+            title="Get Certified in Your Chosen Course"
+            text="Hover over any program to explore its curriculum, practical prerequisites, and course completion certificate details."
+            viewAllHref="/courses"
+          />
         </div>
       </section>
 

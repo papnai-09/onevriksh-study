@@ -1,13 +1,72 @@
-﻿import Image from 'next/image';
+'use client';
+
+import Image from 'next/image';
 import Link from 'next/link';
 import { institute } from '@/data/site';
-import { MapPin, Users, Monitor, Wifi, Coffee, Clock3, Navigation } from 'lucide-react';
+import { Users, Monitor, Wifi, Coffee } from 'lucide-react';
+import { ExpandableFeatureCarousel } from '@/components/ExpandableFeatureCarousel';
 
-export const metadata = {
-  title: 'Offline Training Centre in Connaught Place | ONEVRIKSH Study',
-  description:
-    'Visit our modern classroom studio in Connaught Place, New Delhi. Air-conditioned classrooms, dedicated student workstations, high-speed Wi-Fi, and small batch sizes.'
-};
+const facilitiesData = [
+  {
+    step: '01',
+    tag: 'Focus Batches',
+    title: 'Small Cohorts (15–20 Learners)',
+    desc: 'Never get lost in an overcrowded lecture hall. Our studio classrooms cap every cohort at 15–20 learners so you get direct trainer attention.',
+    bullets: ['Dedicated trainer time', 'Personal assignment grading', 'Interactive speaking environment']
+  },
+  {
+    step: '02',
+    tag: 'Tech Setup',
+    title: 'Dual-Monitor Lab Displays',
+    desc: 'Modern lab displays, projector rigs, and dedicated student workstation plugs for seamless live campaign execution and code sprints.',
+    bullets: ['High-res display mirrors', 'Comfortable workstation desks', 'Ergonomic seating']
+  },
+  {
+    step: '03',
+    tag: 'Connectivity',
+    title: 'High-Speed Student Wi-Fi',
+    desc: 'Gigabit fiber optic internet throughout the studio for smooth software installs, Google Ads campaigns, and live data streaming.',
+    bullets: ['Unrestricted gigabit Wi-Fi', 'Power backups in all labs', 'Dedicated cloud sandboxes']
+  },
+  {
+    step: '04',
+    tag: 'Collaboration',
+    title: 'Student Lounge & Resource Library',
+    desc: 'Comfortable breakout spaces with reference textbooks, international language exam archives, and tea/coffee stations for group discussions.',
+    bullets: ['DELF / Goethe exam library', 'Peer discussion tables', 'Quiet revision pods']
+  }
+];
+
+const connectivityData = [
+  {
+    step: '01',
+    tag: 'Yellow & Blue Lines',
+    title: 'Rajiv Chowk Metro (5 Min Walk)',
+    desc: 'Exit via Gate No. 6 at Rajiv Chowk Metro station. A short 5-minute walk brings you right to our Connaught Place studio entrance.',
+    bullets: ['Major interchange station', 'Gate No. 6 direct access', '500m walking distance']
+  },
+  {
+    step: '02',
+    tag: 'Blue Line Direct',
+    title: 'Barakhamba Road Metro (4 Min Walk)',
+    desc: 'Convenient access from the Blue Line with a brisk 4-minute walk from Barakhamba Road station.',
+    bullets: ['Less crowded exit', 'Direct street connectivity', '400m walking distance']
+  },
+  {
+    step: '03',
+    tag: 'Central Address',
+    title: 'Connaught Place Heritage Hub',
+    desc: `${institute.address}, situated right opposite Palika Bazaar / Regal Building area in Central Delhi.`,
+    bullets: ['Central landmark location', 'Safe and well-lit area', 'Ample public parking nearby']
+  },
+  {
+    step: '04',
+    tag: 'Timings & Access',
+    title: 'Operating Hours & Studio Access',
+    desc: 'Open Monday through Saturday from 9:00 AM to 7:00 PM. Demo batches and career counselling available on Sundays by appointment.',
+    bullets: ['Mon–Sat: 9 AM – 7 PM', 'Sunday demo slots', 'Flexible weekday & weekend batches']
+  }
+];
 
 export default function OfflineCenterPage() {
   return (
@@ -25,7 +84,7 @@ export default function OfflineCenterPage() {
       {/* Facilities & Infrastructure Showcase */}
       <section className="section">
         <div className="container">
-          <div className="intro-grid">
+          <div className="intro-grid" style={{ marginBottom: '44px' }}>
             <div style={{ position: 'relative', height: '380px', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--line)' }}>
               <Image
                 src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=85"
@@ -58,45 +117,28 @@ export default function OfflineCenterPage() {
               </div>
             </div>
           </div>
+
+          <ExpandableFeatureCarousel
+            items={facilitiesData}
+            eyebrow="Studio Infrastructure"
+            title="Classroom & Lab Amenities"
+            text="Hover over any amenity card to explore the physical infrastructure built for your learning comfort."
+          />
         </div>
       </section>
 
       {/* Transit & Directions */}
       <section className="section" style={{ background: 'var(--surface-2)' }}>
         <div className="container">
-          <div className="section-heading center">
-            <span className="eyebrow">Easy Metro Connectivity</span>
-            <h2>How to Reach Our Centre</h2>
-            <p>Centrally located in Connaught Place with instant access to multiple metro stations.</p>
-          </div>
-
-          <div className="feature-grid">
-            <div className="feature-item">
-              <h3 style={{ fontSize: '1.08rem', margin: '0 0 10px', color: 'var(--ink)', fontWeight: 700 }}>By Delhi Metro</h3>
-              <p style={{ fontSize: '0.88rem', color: 'var(--muted)', lineHeight: 1.6 }}>
-                <strong style={{ color: 'var(--ink)' }}>Rajiv Chowk Metro (Yellow & Blue Lines):</strong> Take Gate No. 6. 5-minute walk to NDMC Market.<br />
-                <strong style={{ color: 'var(--ink)' }}>Barakhamba Road Metro:</strong> 4-minute walk.
-              </p>
-            </div>
-
-            <div className="feature-item">
-              <h3 style={{ fontSize: '1.08rem', margin: '0 0 10px', color: 'var(--ink)', fontWeight: 700 }}>Physical Address</h3>
-              <p style={{ fontSize: '0.88rem', color: 'var(--muted)', lineHeight: 1.6 }}>
-                {institute.address}<br />
-                Opposite Palika Bazaar / Regal Building area.
-              </p>
-            </div>
-
-            <div className="feature-item">
-              <h3 style={{ fontSize: '1.08rem', margin: '0 0 10px', color: 'var(--ink)', fontWeight: 700 }}>Operating Hours</h3>
-              <p style={{ fontSize: '0.88rem', color: 'var(--muted)', lineHeight: 1.6 }}>
-                Monday – Saturday: 9:00 AM – 7:00 PM<br />
-                Sunday: Demo batches & counselling by appointment.
-              </p>
-            </div>
-          </div>
+          <ExpandableFeatureCarousel
+            items={connectivityData}
+            eyebrow="Easy Metro Connectivity"
+            title="How to Reach Our Connaught Place Centre"
+            text="Centrally located in Connaught Place with effortless walking access from multiple metro lines."
+          />
         </div>
       </section>
     </>
   );
 }
+

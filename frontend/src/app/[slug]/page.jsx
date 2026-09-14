@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Award, BadgeCheck, Check, ChevronDown, Clock, Languages, Star, Users } from 'lucide-react';
+import { ExpandableCourseCarousel } from '@/components/ExpandableCourseCarousel';
 import { courses } from '@/data/site';
 
 export async function generateMetadata({ params }) {
@@ -14,6 +15,8 @@ export default async function CourseDetailPage({ params }) {
   const { slug } = await params;
   const course = courses.find((item) => item.slug === slug);
   if (!course) notFound();
+
+  const relatedCourses = courses.filter((c) => c.slug !== slug);
 
   return (
     <>
@@ -127,6 +130,20 @@ export default async function CourseDetailPage({ params }) {
           </aside>
         </div>
       </section>
+
+      {/* EXPLORE OTHER COURSES EXPANDABLE CAROUSEL */}
+      <section className="section" style={{ background: 'var(--surface-2)', borderTop: '1px solid var(--line)' }}>
+        <div className="container">
+          <ExpandableCourseCarousel
+            courses={relatedCourses}
+            eyebrow="Explore More Opportunities"
+            title="Other Recommended Programs"
+            text="Enhance your career portfolio by discovering our other industry and language courses."
+            viewAllHref="/courses"
+          />
+        </div>
+      </section>
     </>
   );
 }
+

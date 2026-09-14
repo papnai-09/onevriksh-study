@@ -5,9 +5,42 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, CirclePlay, Check, Search } from 'lucide-react';
-import { CourseCard } from '@/components/CourseCard';
+import { ExpandableCourseCarousel } from '@/components/ExpandableCourseCarousel';
+import { ExpandableFeatureCarousel } from '@/components/ExpandableFeatureCarousel';
+import { ExpandableTestimonialCarousel } from '@/components/ExpandableTestimonialCarousel';
 import { SectionHeading } from '@/components/SectionHeading';
-import { courses, stats } from '@/data/site';
+import { courses, stats, testimonials } from '@/data/site';
+
+const outcomesData = [
+  {
+    step: '01',
+    tag: 'Hands-on practice',
+    title: 'Learn by Doing on Live Briefs',
+    desc: 'Work on live briefs, Google Ads campaigns, SEO audits, and creative design suites that become concrete proof in your job portfolio.',
+    bullets: ['Live ad budget simulations', 'Real-world SEO & technical site audits', 'Industry project defense']
+  },
+  {
+    step: '02',
+    tag: 'Personal guidance',
+    title: 'Mentors Who Know Your Strengths',
+    desc: 'Small batch sizes (15–20 learners) ensure dedicated 1-on-1 feedback, doubt resolution, and tailored instruction at every milestone.',
+    bullets: ['Max 20 students per batch', 'Daily interactive Q&A labs', 'Personalized assignment reviews']
+  },
+  {
+    step: '03',
+    tag: 'Career readiness',
+    title: 'Placement Support & Mock Interviews',
+    desc: 'Get end-to-end career guidance with resume teardowns, portfolio building, and technical mock interviews conducted by industry leaders.',
+    bullets: ['Resume & LinkedIn optimization', '1-on-1 mock interviews', 'Direct hiring partner network']
+  },
+  {
+    step: '04',
+    tag: 'Global recognition',
+    title: 'Recognized Certifications',
+    desc: 'Earn verifiable course completion credentials and prepare for international benchmarks like DELF, Goethe-Zertifikat, and Google Certifications.',
+    bullets: ['Verifiable certificate ID', 'CEFR European framework aligned', 'Lifetime credential verification']
+  }
+];
 
 export default function HomePage() {
   const router = useRouter();
@@ -110,7 +143,7 @@ export default function HomePage() {
               />
             </div>
             <div className="experience-card">
-              <strong>8+</strong>
+              <strong>2+</strong>
               <span>Years of training excellence</span>
             </div>
           </div>
@@ -133,24 +166,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. POPULAR COURSES SECTION */}
+      {/* 3. POPULAR COURSES EXPANDABLE CAROUSEL */}
       <section className="section courses-section">
         <div className="container">
-          <div className="section-row">
-            <SectionHeading
-              eyebrow="Career-focused programs"
-              title="Popular courses"
-              text="Choose a practical program designed around the skills employers and global opportunities demand."
-            />
-            <Link className="button button-ghost desktop-only" href="/courses">
-              View all courses <ArrowRight size={17} />
-            </Link>
-          </div>
-          <div className="course-grid">
-            {courses.slice(0, 3).map((course) => (
-              <CourseCard key={course.slug} course={course} />
-            ))}
-          </div>
+          <ExpandableCourseCarousel
+            courses={courses}
+            eyebrow="Career-focused programs"
+            title="Popular Programs & Specializations"
+            text="Hover over any program to reveal full curriculum highlights, duration, fees, and syllabus details."
+            viewAllHref="/courses"
+          />
         </div>
       </section>
 
@@ -166,32 +191,27 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. OUTCOMES SECTION */}
+      {/* 5. OUTCOMES EXPANDABLE CAROUSEL */}
       <section className="section outcomes-section">
         <div className="container">
-          <SectionHeading
-            align="center"
+          <ExpandableFeatureCarousel
+            items={outcomesData}
             eyebrow="Built around your outcome"
-            title="More than classroom learning"
-            text="Every part of the experience is designed to turn understanding into capability."
+            title="More Than Classroom Learning"
+            text="Hover over each pillar to explore how our teaching model turns understanding into verified industry capability."
           />
-          <div className="feature-grid">
-            <article className="feature-item">
-              <span className="feature-number">01</span>
-              <h3>Learn by doing</h3>
-              <p>Practice on live briefs, assignments and projects that become proof of your skills.</p>
-            </article>
-            <article className="feature-item">
-              <span className="feature-number">02</span>
-              <h3>Mentors who know you</h3>
-              <p>Small batches create room for questions, feedback and individual attention.</p>
-            </article>
-            <article className="feature-item">
-              <span className="feature-number">03</span>
-              <h3>Become career ready</h3>
-              <p>Get portfolio reviews, interview practice and placement guidance that stays practical.</p>
-            </article>
-          </div>
+        </div>
+      </section>
+
+      {/* 6. STUDENT TESTIMONIALS EXPANDABLE CAROUSEL */}
+      <section className="section" style={{ background: 'var(--surface-2)' }}>
+        <div className="container">
+          <ExpandableTestimonialCarousel
+            testimonials={testimonials}
+            eyebrow="Success Stories"
+            title="What Our Students Say"
+            text="Explore verified reviews from learners who trained at our Connaught Place classroom studio."
+          />
         </div>
       </section>
     </>

@@ -5,79 +5,71 @@ import { ExpandableFeatureCarousel } from '@/components/ExpandableFeatureCarouse
 
 const examCards = [
   {
-    country: 'France & Francophone',
+    country: 'France',
     flag: '🇫🇷',
-    tag: 'DELF / DALF (A1-B2)',
-    title: 'French DELF Exam Track',
-    shortDesc: 'Official French Ministry of Education certification.',
-    desc: 'Official French Ministry of Education certification mandatory for Campus France university applications, Grandes Écoles admissions, and work visas.',
-    bullets: ['A1-B2 CEFR curriculum', 'Speaking & listening labs', 'Campus France guidance'],
+    tag: 'DELF A1–B2',
+    title: 'French Language & DELF Preparation',
+    shortDesc: 'Classroom lessons and DELF exam practice.',
+    desc: 'Learn French from basics to intermediate level with structured classroom lessons and preparation for DELF A1–B2 examinations.',
     linkHref: '/french-language',
-    linkText: 'French Program'
+    linkText: 'View French Course'
   },
   {
-    country: 'Germany & Austria',
+    country: 'Germany',
     flag: '🇩🇪',
-    tag: 'Goethe-Zertifikat (A1-B1)',
-    title: 'German Goethe Exam Track',
-    shortDesc: 'Globally recognized certification for German universities.',
-    desc: 'Internationally recognized certification required for German public university admissions (APS certificate), student visas, and opportunity cards (Chancenkarte).',
-    bullets: ['Goethe exam mock tests', 'Speaking clubs & pronunciation', 'APS certificate support'],
+    tag: 'Goethe A1–B1',
+    title: 'German Language & Goethe Exam Preparation',
+    shortDesc: 'Classroom lessons and Goethe exam practice.',
+    desc: 'Learn German with structured grammar, speaking practice and preparation for Goethe-Zertifikat examinations.',
     linkHref: '/german-language',
-    linkText: 'German Program'
+    linkText: 'View German Course'
   },
   {
-    country: 'Spain & Latin America',
+    country: 'Spain',
     flag: '🇪🇸',
     tag: 'DELE / SIELE',
-    title: 'Spanish DELE Exam Track',
-    shortDesc: 'Official diplomas granted by Instituto Cervantes.',
-    desc: 'Official diplomas granted by Instituto Cervantes on behalf of the Spanish Ministry of Education for higher studies and international careers.',
-    bullets: ['DELE exam simulations', 'Cultural immersion sessions', 'Conversational fluency'],
+    title: 'Spanish Language & DELE / SIELE Preparation',
+    shortDesc: 'Classroom lessons and DELE exam practice.',
+    desc: 'Learn Spanish through conversational practice, grammar foundations and preparation for DELE and SIELE exams.',
     linkHref: '/spanish-language',
-    linkText: 'Spanish Program'
+    linkText: 'View Spanish Course'
   },
   {
     country: 'Italy',
     flag: '🇮🇹',
-    tag: 'CILS / CELI',
-    title: 'Italian CILS Exam Track',
-    shortDesc: 'Certificates recognized by Italian Ministry of Foreign Affairs.',
-    desc: 'Certificates of Italian as a Foreign Language recognized by the Italian Ministry of Foreign Affairs for university enrolment and visa interviews.',
-    bullets: ['CILS exam format prep', 'Audio-visual labs', 'Visa interview clinics'],
+    tag: 'CILS Exam',
+    title: 'Italian Language & CILS Preparation',
+    shortDesc: 'Classroom lessons and CILS exam practice.',
+    desc: 'Learn Italian language skills with classroom lessons, conversation drills and preparation for CILS examinations.',
     linkHref: '/italian-language',
-    linkText: 'Italian Program'
+    linkText: 'View Italian Course'
   }
 ];
 
 const roadmapData = [
   {
     step: '01',
-    tag: 'Diagnostic',
-    title: 'Language Assessment & Goal Setting',
-    desc: 'Evaluate your current CEFR proficiency baseline and determine your target exam date aligned with university intake deadlines.',
-    bullets: ['CEFR level test', 'Intake timeline mapping', 'Custom study plan']
+    tag: 'Level check',
+    title: 'Level Assessment & Goal Setting',
+    desc: 'Assess your current language level and plan your course timeline according to your study or career goals.'
   },
   {
     step: '02',
-    tag: 'Core Training',
+    tag: 'Classroom',
     title: 'Small-Batch Classroom Training',
-    desc: 'Master listening, reading, writing, and speaking modules with native-certified trainers in our Connaught Place classrooms.',
-    bullets: ['Max 15-20 students', 'Audio-visual listening drills', 'Grammar in real context']
+    desc: 'Learn grammar, vocabulary, pronunciation, listening and speaking with experienced trainers in Connaught Place.'
   },
   {
     step: '03',
-    tag: 'Simulation',
-    title: 'Timed Exam Mock Simulations',
-    desc: 'Attempt simulated DELF / Goethe / DELE exam papers under timed exam conditions with line-by-line trainer feedback.',
-    bullets: ['Timed practice tests', '1-on-1 examiner feedback', 'Score improvement strategy']
+    tag: 'Mock tests',
+    title: 'Exam Practice & Mock Tests',
+    desc: 'Practice with previous exam patterns, sample questions and get personal feedback to improve your score.'
   },
   {
     step: '04',
-    tag: 'Visa & Admission',
-    title: 'Documentation & Visa Guidance',
-    desc: 'Receive comprehensive assistance on submitting your language certificates for university dossiers, APS certificates, and embassy visa files.',
-    bullets: ['SOP & language profile check', 'Embassy interview guidance', 'Certification authentication']
+    tag: 'Next steps',
+    title: 'Certification & Guidance',
+    desc: 'Receive guidance on registering for official examinations and preparing your language certificates.'
   }
 ];
 
@@ -86,10 +78,10 @@ export default function StudyAbroadPage() {
     <>
       <section className="simple-hero">
         <div className="container">
-          <span className="eyebrow">International Language Gateways</span>
-          <h1>Global Education & Language Exam Preparation</h1>
+          <span className="eyebrow">LANGUAGE COURSES</span>
+          <h1>Learn a New Language</h1>
           <p>
-            Prepare for mandatory European language proficiency tests (DELF, Goethe, DELE, CILS) with certified trainers at our Connaught Place centre.
+            Learn European languages with structured classroom training and preparation for internationally recognized language examinations.
           </p>
         </div>
       </section>
@@ -99,9 +91,9 @@ export default function StudyAbroadPage() {
         <div className="container">
           <ExpandableFeatureCarousel
             items={examCards}
-            eyebrow="Targeted Exam Tracks"
-            title="International Language Gateways & Certifications"
-            text="Hover over any country card to explore official exam requirements, syllabus modules, and prep tracks."
+            eyebrow="LANGUAGE PROGRAMS"
+            title="Available Language Courses"
+            text="Explore our language courses designed with classroom practice, listening drills and exam preparation."
           />
         </div>
       </section>
@@ -111,20 +103,23 @@ export default function StudyAbroadPage() {
         <div className="container">
           <ExpandableFeatureCarousel
             items={roadmapData}
-            eyebrow="Our Support Process"
-            title="Your Path from Classroom to Campus"
-            text="Hover over each milestone to see our structured methodology for passing certification exams and securing overseas visas."
+            eyebrow="LEARNING PATHWAY"
+            title="How We Help You Learn"
+            text="A step-by-step approach to help you build language confidence from your first day."
           />
         </div>
       </section>
 
       <CTASection
-        title="Need Advice on Language Exams or University Requirements?"
-        subtitle="Book a free consultation session with our international language counsellor at Connaught Place."
-        primaryCtaLabel="Book Free Demo & Counselling"
+        title="Want to Learn a Language?"
+        subtitle="Book a free demo class at our Connaught Place centre to see how our classes work."
+        primaryCtaLabel="Book a Free Demo"
         primaryCtaHref="/demo"
+        secondaryCtaLabel="View All Courses"
+        secondaryCtaHref="/courses"
       />
     </>
   );
 }
+
 

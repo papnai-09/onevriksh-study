@@ -171,7 +171,7 @@ export default function CertificationPage() {
       {/* SECTION 2 — INTRODUCTION */}
       <section className="section" style={{ background: 'var(--surface)', padding: '52px 0' }}>
         <div className="container">
-          <span className="eyebrow">Academic Recognition</span>
+          <span className="eyebrow">COURSE CERTIFICATES</span>
           <h2 style={{ fontSize: 'clamp(1.4rem, 2.4vw, 1.85rem)', margin: '6px 0 14px', color: 'var(--ink)', maxWidth: '820px', fontWeight: 700 }}>
             Certification That Recognizes Your Learning
           </h2>
@@ -186,9 +186,9 @@ export default function CertificationPage() {
         <div className="container">
           <ExpandableCourseCarousel
             courses={eligibleCourses}
-            eyebrow="Certification Programs"
+            eyebrow="CERTIFICATION COURSES"
             title="Get Certified in Your Chosen Course"
-            text="Hover over any program to explore its curriculum, practical prerequisites, and course completion certificate details."
+            text="Explore the courses offering a course completion certificate after completing assignments and assessments."
             viewAllHref="/courses"
           />
         </div>
@@ -198,7 +198,7 @@ export default function CertificationPage() {
       <section className="section" style={{ background: 'var(--surface)', padding: '36px 0' }}>
         <div className="container">
           <div className="section-heading" style={{ maxWidth: '680px', marginBottom: '32px' }}>
-            <span className="eyebrow">Credential Value</span>
+            <span className="eyebrow">WHAT IT REPRESENTS</span>
             <h2 style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2rem)', color: 'var(--ink)', margin: '6px 0 10px' }}>
               More Than Just a Certificate
             </h2>
@@ -267,7 +267,7 @@ export default function CertificationPage() {
       <section className="section" style={{ background: 'var(--surface-2)', padding: '52px 0' }}>
         <div className="container">
           <div className="section-heading" style={{ maxWidth: '680px', marginBottom: '32px' }}>
-            <span className="eyebrow">Clear Pathway</span>
+            <span className="eyebrow">PROCESS</span>
             <h2 style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2rem)', color: 'var(--ink)', margin: '6px 0 10px' }}>
               How You Get Certified
             </h2>
@@ -288,7 +288,7 @@ export default function CertificationPage() {
               <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#EE2C3C', display: 'block', marginBottom: '12px', fontFamily: 'var(--font-display)' }}>01</span>
               <h3 style={{ fontSize: '1.05rem', margin: '0 0 8px', color: 'var(--ink)', fontWeight: 700 }}>Choose Your Course</h3>
               <p style={{ fontSize: '0.88rem', color: 'var(--muted)', lineHeight: 1.6, margin: 0 }}>
-                Select the OneVriksh program you want to pursue.
+                Select the OneVriksh course you want to learn.
               </p>
             </div>
 
@@ -302,7 +302,7 @@ export default function CertificationPage() {
               <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#EE2C3C', display: 'block', marginBottom: '12px', fontFamily: 'var(--font-display)' }}>02</span>
               <h3 style={{ fontSize: '1.05rem', margin: '0 0 8px', color: 'var(--ink)', fontWeight: 700 }}>Complete Your Learning</h3>
               <p style={{ fontSize: '0.88rem', color: 'var(--muted)', lineHeight: 1.6, margin: 0 }}>
-                Attend your sessions and complete the required coursework.
+                Attend your sessions and complete the course topics.
               </p>
             </div>
 
@@ -316,7 +316,7 @@ export default function CertificationPage() {
               <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#EE2C3C', display: 'block', marginBottom: '12px', fontFamily: 'var(--font-display)' }}>03</span>
               <h3 style={{ fontSize: '1.05rem', margin: '0 0 8px', color: 'var(--ink)', fontWeight: 700 }}>Complete Requirements</h3>
               <p style={{ fontSize: '0.88rem', color: 'var(--muted)', lineHeight: 1.6, margin: 0 }}>
-                Complete applicable assignments, assessments, and practical work.
+                Complete assignments, assessments, and practical exercises.
               </p>
             </div>
 
@@ -330,7 +330,7 @@ export default function CertificationPage() {
               <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#EE2C3C', display: 'block', marginBottom: '12px', fontFamily: 'var(--font-display)' }}>04</span>
               <h3 style={{ fontSize: '1.05rem', margin: '0 0 8px', color: 'var(--ink)', fontWeight: 700 }}>Get Certified</h3>
               <p style={{ fontSize: '0.88rem', color: 'var(--muted)', lineHeight: 1.6, margin: 0 }}>
-                Meet the requirements and receive your OneVriksh Course Completion Certificate.
+                Receive your OneVriksh Course Completion Certificate.
               </p>
             </div>
           </div>
@@ -341,7 +341,7 @@ export default function CertificationPage() {
       <section className="section" style={{ background: 'var(--surface)', padding: '52px 0' }}>
         <div className="container">
           <div className="section-heading" style={{ maxWidth: '680px', marginBottom: '32px' }}>
-            <span className="eyebrow">Academic Standards</span>
+            <span className="eyebrow">REQUIREMENTS</span>
             <h2 style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2rem)', color: 'var(--ink)', margin: '6px 0 10px' }}>
               What Does It Take to Get Certified?
             </h2>
@@ -361,7 +361,7 @@ export default function CertificationPage() {
             }}>
               <h3 style={{ fontSize: '1.02rem', margin: '0 0 6px', color: 'var(--ink)', fontWeight: 700 }}>Attendance</h3>
               <p style={{ fontSize: '0.86rem', color: 'var(--muted)', lineHeight: 1.6, margin: 0 }}>
-                Maintain the required attendance throughout your program.
+                Maintain regular attendance throughout your classes.
               </p>
             </div>
 
@@ -373,7 +373,7 @@ export default function CertificationPage() {
             }}>
               <h3 style={{ fontSize: '1.02rem', margin: '0 0 6px', color: 'var(--ink)', fontWeight: 700 }}>Practical Assignments</h3>
               <p style={{ fontSize: '0.86rem', color: 'var(--muted)', lineHeight: 1.6, margin: 0 }}>
-                Complete the required hands-on assignments and learning activities.
+                Complete the practical assignments and exercises.
               </p>
             </div>
 
@@ -385,7 +385,7 @@ export default function CertificationPage() {
             }}>
               <h3 style={{ fontSize: '1.02rem', margin: '0 0 6px', color: 'var(--ink)', fontWeight: 700 }}>Assessment</h3>
               <p style={{ fontSize: '0.86rem', color: 'var(--muted)', lineHeight: 1.6, margin: 0 }}>
-                Successfully complete the applicable course assessments.
+                Pass the course assessments and quizzes.
               </p>
             </div>
 
@@ -397,7 +397,7 @@ export default function CertificationPage() {
             }}>
               <h3 style={{ fontSize: '1.02rem', margin: '0 0 6px', color: 'var(--ink)', fontWeight: 700 }}>Final Project</h3>
               <p style={{ fontSize: '0.86rem', color: 'var(--muted)', lineHeight: 1.6, margin: 0 }}>
-                Complete the required final project or capstone where applicable.
+                Complete the final project where applicable.
               </p>
             </div>
           </div>
@@ -412,12 +412,12 @@ export default function CertificationPage() {
       <section className="section" style={{ background: 'var(--surface-2)', padding: '36px 0' }}>
         <div className="container">
           <div className="section-heading" style={{ maxWidth: '680px', marginBottom: '28px' }}>
-            <span className="eyebrow">Credential Layout</span>
+            <span className="eyebrow">CERTIFICATE PREVIEW</span>
             <h2 style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2rem)', color: '#000000', margin: '6px 0 10px' }}>
               Your OneVriksh Course Completion Certificate
             </h2>
             <p style={{ fontSize: '0.94rem', color: '#111827' }}>
-              After successfully completing the applicable requirements of your program, you receive a professionally designed OneVriksh Course Completion Certificate.
+              After successfully completing the requirements of your program, you receive a OneVriksh Course Completion Certificate.
             </p>
           </div>
 

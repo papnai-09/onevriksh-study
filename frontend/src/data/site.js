@@ -1,6 +1,6 @@
 export const institute = {
   name: 'ONEVRIKSH Study',
-  tagline: 'Root Your Skills. Rise Your Future.',
+  tagline: 'Learn Skills. Build Your Career.',
   phone: '+91 87005 36553',
   email: 'study@onevriksh.com',
   address: 'B-14, Connaught Place, New Delhi, 110001'
@@ -9,7 +9,7 @@ export const institute = {
 export const courses = [
   {
     slug: 'foundation-course-in-digital-marketing',
-    title: 'Foundation in Digital Marketing & Growth',
+    title: 'Digital Marketing Course',
     category: 'Digital Marketing',
     duration: '4 Months',
     fee: 27000,
@@ -17,192 +17,198 @@ export const courses = [
     students: 340,
     level: 'Beginner to Intermediate',
     image: '/digital-marketting-foundation.jpg',
-    description: 'Master core digital marketing architecture, high-intent SEO ranking frameworks, Google Search Ads campaign bidding, and organic customer acquisition funnels.',
+    description: 'Learn the fundamentals of Digital Marketing through classroom training, practical assignments and real campaign-based projects.',
     trainer: 'Rohit Sharma',
-    trainerRole: 'Chief Marketing Consultant & Growth Lead',
-    benefits: ['Live search campaign simulations', 'Hands-on SEO & SEM keyword tools', 'Verifiable Industry Foundation Certificate'],
+    trainerRole: 'Digital Marketing Trainer',
+    benefits: ['Practical campaign assignments', 'SEO & Google Ads tools', 'Course completion certificate'],
     curriculum: [
-      'Digital Marketing Ecosystem & Modern Consumer Psychology',
-      'Technical SEO, Keyword Intent & On-Page Architecture',
-      'Google Search & Display Advertising Infrastructure',
-      'Content Marketing Systems & Social Channel Acquisition',
-      'Web Analytics, Search Console & Performance Metrics'
+      'SEO (Search Engine Optimization)',
+      'Google Ads & Search Marketing',
+      'Social Media Marketing',
+      'Content Marketing',
+      'Google Analytics',
+      'Lead Generation',
+      'Email Marketing',
+      'Digital Marketing Strategy'
     ]
   },
   {
     slug: 'digital-marketing-course',
-    title: 'Advanced Performance Marketing & ROAS Strategy',
+    title: 'Advanced Performance Marketing',
     category: 'Performance Marketing',
     duration: '8 Months',
     fee: 54000,
     rating: 4.9,
     students: 420,
-    level: 'Professional',
+    level: 'Intermediate to Advanced',
     image: '/advanced-digital-marketing.jpg',
-    description: 'Deep-dive into multi-channel paid acquisition, Meta Business Suite scaling, programmatic bidding algorithms, GA4 custom event tracking, and data-backed CRO workflows.',
+    description: 'Build advanced skills in paid advertising, campaign optimization, analytics and performance marketing. Work on practical campaigns and learn how to measure and improve results.',
     trainer: 'Rohit Sharma',
-    trainerRole: 'Performance Marketing Lead',
-    benefits: ['Meta & Google Ads Manager multi-lakh budget labs', 'GA4 measurement protocol & GTM integration', 'Dedicated placement mentoring & capstone defense'],
+    trainerRole: 'Performance Marketing Trainer',
+    benefits: ['Hands-on ad campaign practice', 'Google Ads & Meta Ads tracking', 'Placement and interview assistance'],
     curriculum: [
-      'Advanced Multi-Tier Google Ads Bidding & Audience Segments',
-      'Meta Performance Scaling (CBO, Lookalikes & Creative Testing)',
-      'Enterprise SEO Audits, Core Web Vitals & Link Architecture',
-      'GA4 Custom Dimensions, Funnel Explorations & Server-Side GTM',
-      'Automated Lifecycle Lead Nurturing & Email Marketing Funnels'
+      'Google Search & Display Advertising',
+      'Meta Ads & Campaign Scaling',
+      'Conversion Tracking & Google Analytics 4',
+      'Landing Page Optimization',
+      'Lead Generation & Campaign Budget Optimization'
     ]
   },
   {
     slug: 'master-in-digital-marketing-course',
-    title: 'Master in Full-Stack Digital Marketing & Agency Ops',
-    category: 'Executive Master',
+    title: 'Master in Full-Stack Digital Marketing',
+    category: 'Digital Marketing',
     duration: '12 Months',
     fee: 81000,
     rating: 4.9,
     students: 510,
-    level: 'Executive Master',
+    level: 'Comprehensive Program',
     image: '/master-digital-marketing.jpg',
-    description: 'Our flagship 360° leadership program. Master growth hacking, conversion rate optimization (CRO), agency client acquisition, omnichannel automation, and live project defense.',
+    description: 'A complete digital marketing program covering strategy, SEO, paid advertising, social media, analytics, lead generation and agency-level work.',
     trainer: 'Rohit Sharma',
-    trainerRole: 'Chief Marketing Consultant',
-    benefits: ['Full-stack marketing executive leadership', 'Live client capstone defense with industry jury', '100% Dedicated placement cell & executive mentoring'],
+    trainerRole: 'Senior Digital Marketing Trainer',
+    benefits: ['Complete digital marketing training', 'Real projects and practical assignments', 'Dedicated placement support and interview preparation'],
     curriculum: [
-      'Full-Funnel Growth Strategy & Unit Economics Modeling',
-      'Performance Marketing, Programmatic Media & Advanced CRO',
-      'Marketing Automation & Enterprise CRM Lifecycle Architecture',
-      'Agency Workflows, Client Pitches & Freelance Scalability',
-      'Comprehensive Live Capstone Portfolio & Boardroom Defense'
+      'Search Engine Optimization (SEO)',
+      'Google Ads & Paid Search Strategy',
+      'Social Media Marketing & Meta Ads',
+      'Content Marketing & Email Automation',
+      'Google Analytics 4 & Performance Reporting',
+      'Agency Workflows & Client Projects'
     ]
   },
   {
     slug: 'graphic-design',
-    title: 'Graphic Design & Brand Visual Identity',
-    category: 'Visual Design',
+    title: 'Graphic Design & Brand Design',
+    category: 'Graphic Design',
     duration: '5 Months',
     fee: 24999,
     rating: 4.8,
     students: 286,
-    level: 'Studio Portfolio Track',
+    level: 'Beginner to Intermediate',
     image: '/graphic-design.jpg',
-    description: 'Master commercial visual communication, corporate brand identity systems, typography hierarchies, and studio-grade Adobe Creative Cloud workflows.',
+    description: 'Learn how to create professional designs for brands, social media and marketing. Build your design skills through practical projects and portfolio work.',
     trainer: 'Meera Kapoor',
-    trainerRole: 'Brand & Visual Design Director',
-    benefits: ['Comprehensive Adobe CC suite mastery', 'Studio-ready corporate brand portfolio', 'Agency workflow simulations & client critique'],
+    trainerRole: 'Graphic Design Trainer',
+    benefits: ['Hands-on practice on Photoshop & Illustrator', 'Build a professional design portfolio', 'Feedback on creative assignments'],
     curriculum: [
-      'Design Theory, Visual Balance, Grid Systems & Typography',
-      'Adobe Photoshop: High-End Raster Art, Compositing & Retouching',
-      'Adobe Illustrator: Vector Branding, Logotypes & Visual Identity',
-      'Editorial Layouts, Commercial Print & Digital Media Collateral',
-      'Professional Behance / Dribbble Portfolio Curation'
+      'Adobe Photoshop',
+      'Adobe Illustrator',
+      'Brand Design & Logos',
+      'Social Media Design',
+      'Typography & Layout',
+      'Creative Design Principles',
+      'Portfolio Development'
     ]
   },
   {
     slug: 'french-language',
-    title: 'French Language & DELF Examination Track',
-    category: 'International Languages',
+    title: 'French Language & DELF Preparation',
+    category: 'French Language',
     duration: '4 Months',
     fee: 84000,
     rating: 4.9,
     students: 198,
-    level: 'CEFR A1–B2 Aligned',
+    level: 'CEFR A1–B2 Levels',
     image: '/french-language.jpg',
-    description: 'Gain natural French fluency through conversational immersion, interactive audio-visual labs, and structured preparation for official DELF / DALF certification.',
+    description: 'Learn French with structured classroom training and preparation for DELF A1–B2 international exams.',
     trainer: 'Ananya Verma',
-    trainerRole: 'DELF Certified French Linguist',
-    benefits: ['Official DELF exam mock simulations', 'Daily interactive conversation clinics', 'Campus France university application guidance'],
+    trainerRole: 'French Language Trainer',
+    benefits: ['Daily speaking and listening practice', 'DELF exam practice tests', 'Study abroad and visa guidance'],
     curriculum: [
-      'CEFR A1–A2 Foundations: Phonetics, Grammar & Sentence Building',
-      'Real-Life Conversation Labs, Listening Comprehension & Accent',
-      'Intermediate B1–B2 Communication, Essays & Formal Discourse',
-      'Cultural Nuances, Workplace French & European Etiquette',
-      'Timed DELF Exam Mock Papers & Individual Evaluation'
+      'French Pronunciation, Grammar & Vocabulary',
+      'Everyday Conversation & Listening Practice',
+      'Reading Comprehension & Writing Skills',
+      'Workplace & Travel French',
+      'DELF Exam Format & Practice Tests'
     ]
   },
   {
     slug: 'german-language',
-    title: 'German Language & Goethe-Zertifikat Track',
-    category: 'International Languages',
+    title: 'German Language & Goethe Exam Preparation',
+    category: 'German Language',
     duration: '4 Months',
     fee: 84000,
     rating: 4.8,
     students: 174,
-    level: 'CEFR A1–B1 Aligned',
+    level: 'CEFR A1–B1 Levels',
     image: '/german.jpg',
-    description: 'Master conversational and technical German with Goethe-aligned pedagogy, structured grammar drills, and comprehensive APS certificate preparation.',
+    description: 'Learn German from basics to intermediate level with structured classroom training and Goethe-Zertifikat preparation.',
     trainer: 'Nikhil Arora',
-    trainerRole: 'Goethe Certified German Faculty',
-    benefits: ['Goethe-Zertifikat aligned test series', 'Weekly native speaking club sessions', 'German public university SOP & visa guidance'],
+    trainerRole: 'German Language Trainer',
+    benefits: ['Speaking, listening, reading & writing practice', 'Goethe exam practice tests', 'Guidance for German university admissions'],
     curriculum: [
-      'A1–A2 Structural Grammar, Vocabulary & Phonetic Mastery',
-      'Auditory Comprehension Drills & Dialogue Roleplays',
-      'B1 Professional Vocabulary, Technical Articles & Letter Writing',
-      'German Corporate Culture & University Living Preparation',
-      'Full-Length Goethe-Zertifikat Simulated Examinations'
+      'German Alphabet, Pronunciation & Basic Grammar',
+      'Sentence Structure & Daily Communication',
+      'Listening Comprehension & Conversation Practice',
+      'Formal Writing & Reading German Texts',
+      'Goethe Exam Preparation & Mock Tests'
     ]
   },
   {
     slug: 'spanish-language',
-    title: 'Spanish Language & DELE / SIELE Track',
-    category: 'International Languages',
+    title: 'Spanish Language & DELE / SIELE Preparation',
+    category: 'Spanish Language',
     duration: '4 Months',
     fee: 84000,
     rating: 4.7,
     students: 152,
-    level: 'CEFR A1–B2 Aligned',
+    level: 'CEFR A1–B2 Levels',
     image: '/spanish.jpg',
-    description: 'A dynamic, conversation-led Spanish curriculum designed for global business communication, international travel, and Cervantes Institute certification.',
+    description: 'Learn Spanish with interactive classroom sessions and preparation for DELE and SIELE certifications.',
     trainer: 'Aarav Mehta',
-    trainerRole: 'DELE Certified Spanish Educator',
-    benefits: ['Conversation-first immersive method', 'Cultural immersion & business Spanish', 'Flexible weekend and weekday batch slots'],
+    trainerRole: 'Spanish Language Trainer',
+    benefits: ['Conversational Spanish practice', 'Structured grammar and vocabulary exercises', 'DELE & SIELE exam practice'],
     curriculum: [
-      'Spanish Phonetics, Essential Conjugations & Daily Dialogue',
-      'Contextual Grammar & Intermediate Listening Mastery',
-      'Workplace Spanish, Business Negotiations & Formal Writing',
-      'Latin American & Iberian Dialect Nuances',
-      'DELE / SIELE Exam Preparation & Timed Mock Sessions'
+      'Spanish Pronunciation & Basic Vocabulary',
+      'Essential Grammar & Conversational Phrases',
+      'Listening & Speaking Practice in Class',
+      'Reading & Writing for Everyday Situations',
+      'DELE / SIELE Exam Preparation'
     ]
   },
   {
     slug: 'english-speaking',
-    title: 'Executive English & Leadership Communication',
-    category: 'Executive Communication',
+    title: 'English & Communication Skills',
+    category: 'English & Communication',
     duration: '3 Months',
     fee: 48000,
     rating: 4.9,
     students: 510,
-    level: 'Professional Fluency',
+    level: 'Basic to Fluent',
     image: '/english.jpg',
-    description: 'Transform your professional presence, verbal clarity, stage confidence, corporate group discussion mastery, and executive interview techniques in small cohorts.',
+    description: 'Improve your English speaking, vocabulary, pronunciation, public speaking and interview communication skills.',
     trainer: 'Priya Malhotra',
-    trainerRole: 'Executive Communication & Soft Skills Coach',
-    benefits: ['Daily live impromptu speaking drills', 'Mock corporate interview simulations', '1-on-1 personalized voice & diction feedback'],
+    trainerRole: 'Communication Skills Trainer',
+    benefits: ['Daily speaking practice and group discussions', 'Personal feedback on pronunciation and fluency', 'Interview preparation and resume guidance'],
     curriculum: [
-      'Fluency Architecture, Vocabulary Expansion & Pronunciation',
-      'Corporate Public Speaking, Storytelling & Stage Presence',
-      'High-Stakes Group Discussions & Boardroom Debate Tactics',
-      'Executive Resume Structuring & Placement Interview Mastery',
-      'Impromptu Speaking Drills & Video Performance Review'
+      'English Grammar Foundations & Sentence Building',
+      'Vocabulary Expansion & Daily Conversation',
+      'Public Speaking & Presentation Skills',
+      'Group Discussions & Professional Communication',
+      'Interview Preparation & Resume Review'
     ]
   },
   {
     slug: 'italian-language',
-    title: 'Italian Language & CILS Certification Track',
-    category: 'International Languages',
+    title: 'Italian Language & CILS Preparation',
+    category: 'Italian Language',
     duration: '4 Months',
     fee: 17999,
     rating: 4.8,
     students: 120,
-    level: 'CEFR A1–B1 Aligned',
+    level: 'CEFR A1–B1 Levels',
     image: '/italian.jpg',
-    description: 'Master conversational Italian, cultural nuances, and CILS certification requirements under native-certified linguists in Central Delhi.',
+    description: 'Learn conversational Italian and prepare for CILS certification with structured classroom lessons.',
     trainer: 'Elena Rossi',
-    trainerRole: 'CILS Certified Italian Linguist',
-    benefits: ['CILS examination format workshops', 'Interactive audio-visual listening drills', 'Italian university admission consultation'],
+    trainerRole: 'Italian Language Trainer',
+    benefits: ['Interactive speaking practice', 'Grammar & vocabulary foundations', 'CILS exam preparation'],
     curriculum: [
-      'Italian Fundamentals, Pronunciation & Essential Vocabulary',
-      'Interactive Daily Dialogue, Situational Roleplays & Travel Nuances',
-      'Grammar Mastery, Written Composition & Reading Comprehension',
-      'Italian Art, Business Culture & University Application Prep',
-      'CILS Mock Examination with Individual Scoring'
+      'Italian Pronunciation & Basic Vocabulary',
+      'Everyday Conversation & Listening Practice',
+      'Grammar Rules & Sentence Formation',
+      'Italian for Travel & Study Abroad',
+      'CILS Exam Format & Practice Papers'
     ]
   }
 ];
@@ -210,43 +216,44 @@ export const courses = [
 export const testimonials = [
   {
     name: 'Sakshi Jain',
-    course: 'Master in Digital Marketing & Agency Ops',
-    quote: 'The live ad-spend projects and GA4 auditing labs made all the difference. I walked into interviews with concrete campaign results and secured a Performance Marketing Lead role within 3 weeks of graduation.',
+    course: 'Digital Marketing Course',
+    quote: 'The trainers explain everything clearly and give us practical assignments to understand the concepts. The classroom environment is very helpful for learning.',
     initials: 'SJ',
     rating: 5,
-    outcome: 'Placed as Performance Marketing Lead'
+    outcome: 'Verified Student'
   },
   {
     name: 'Aditya Singh',
-    course: 'German Language (Goethe-Zertifikat B1)',
-    quote: 'Small batch sizes (only 16 students) meant I spoke German in every single class session. The Goethe mock evaluations prepared me thoroughly — I cleared my B1 exam on the first attempt with 92% marks.',
+    course: 'German Language (Goethe Exam Track)',
+    quote: 'Small batches make a huge difference. Everyone gets a chance to speak and practice German in class. The exam practice tests were also very useful.',
     initials: 'AS',
     rating: 5,
-    outcome: 'Cleared Goethe B1 Exam with 92%'
+    outcome: 'Verified Student'
   },
   {
     name: 'Riya Mehta',
-    course: 'Graphic Design & Brand Visual Identity',
-    quote: 'My portfolio went from amateur sketches to executive-level agency branding projects. The trainer feedback was direct, deeply technical, and helped me build an award-worthy Behance profile.',
+    course: 'Graphic Design & Brand Design',
+    quote: 'I learned Photoshop and Illustrator through real design projects. The trainer gave me feedback on my assignments, which helped me build a solid portfolio.',
     initials: 'RM',
     rating: 5,
-    outcome: 'Hired as Brand Designer at Studio 4'
+    outcome: 'Verified Student'
   },
   {
     name: 'Kabir Joshi',
-    course: 'French Language (DELF B2 Track)',
-    quote: 'From basic phonetics to complex essay arguments, the personalized feedback at ONEVRIKSH gave me the confidence to ace my Campus France visa interview without hesitation.',
+    course: 'French Language (DELF Exam Track)',
+    quote: 'The classes are interactive and focused on speaking and listening. The trainer was patient and helped me prepare well for my French exam.',
     initials: 'KJ',
     rating: 5,
-    outcome: 'Secured French University Admission'
+    outcome: 'Verified Student'
   }
 ];
 
 export const stats = [
-  { value: '2,500+', label: 'Students trained' },
-  { value: '12+', label: 'Career courses' },
-  { value: '91%', label: 'Placement rate' },
-  { value: '4.9/5', label: 'Student rating' }
+  { value: '2+', label: 'Years of Teaching' },
+  { value: '2,500+', label: 'Students Trained' },
+  { value: '12+', label: 'Courses' },
+  { value: '91%', label: 'Placement Rate' },
+  { value: '4.9/5', label: 'Student Rating' }
 ];
 
 export const notices = [

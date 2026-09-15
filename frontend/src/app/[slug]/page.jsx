@@ -39,10 +39,10 @@ export default async function CourseDetailPage({ params }) {
             </div>
             <div className="detail-actions">
               <Link href="/demo" className="button button-primary button-large">
-                Book free demo
+                Book a Free Demo
               </Link>
               <a href="#curriculum" className="button button-light button-large">
-                View curriculum
+                View Curriculum
               </a>
             </div>
           </div>
@@ -55,11 +55,11 @@ export default async function CourseDetailPage({ params }) {
       <section id="overview" className="section detail-section">
         <div className="container detail-layout">
           <div className="detail-content">
-            <span className="eyebrow">Course overview</span>
-            <h2>Turn learning into a real-world skill.</h2>
+            <span className="eyebrow">COURSE OVERVIEW</span>
+            <h2>Learn the Subject. Practice the Skills.</h2>
             <p className="lead">{course.description}</p>
             <p>
-              This program combines guided classroom instruction with practical exercises and mentor feedback. You will leave with stronger fundamentals, proof of your ability and a clear next step.
+              This course combines structured classroom lessons with practical assignments and regular feedback. You will learn the concepts step by step, work on exercises and build confidence in your skills.
             </p>
             <div className="benefit-grid">
               {course.benefits?.map((item) => (
@@ -71,8 +71,8 @@ export default async function CourseDetailPage({ params }) {
             </div>
 
             <div id="curriculum" className="curriculum-block">
-              <span className="eyebrow">What you will learn</span>
-              <h2>Course curriculum</h2>
+              <span className="eyebrow">WHAT YOU WILL LEARN</span>
+              <h2>Course Syllabus</h2>
               {course.curriculum?.map((item, index) => (
                 <div className="curriculum-item" key={item}>
                   <span>0{index + 1}</span>
@@ -87,16 +87,16 @@ export default async function CourseDetailPage({ params }) {
                 {course.trainer ? course.trainer.split(' ').map((n) => n[0]).join('') : 'OV'}
               </div>
               <div>
-                <span className="eyebrow">Your trainer</span>
+                <span className="eyebrow">COURSE TRAINER</span>
                 <h2>{course.trainer}</h2>
                 <strong>{course.trainerRole}</strong>
-                <p>Experienced practitioner and classroom mentor focused on clear explanation, practical feedback and confident application.</p>
+                <p>Experienced classroom trainer focused on clear explanations, practical exercises and personal feedback for every student.</p>
                 <div className="trainer-badges">
                   <span>
-                    <BadgeCheck size={16} /> Verified trainer
+                    <BadgeCheck size={16} /> Verified Trainer
                   </span>
                   <span>
-                    <Award size={16} /> Industry expert
+                    <Award size={16} /> Experienced Faculty
                   </span>
                 </div>
               </div>
@@ -104,11 +104,11 @@ export default async function CourseDetailPage({ params }) {
           </div>
 
           <aside className="enroll-card">
-            <small>Complete program fee</small>
+            <small>Course Fee</small>
             <strong>₹{course.fee?.toLocaleString('en-IN')}</strong>
             <span>Easy installments available</span>
             <Link href="/demo" className="button button-primary button-wide">
-              Enroll now
+              Book a Free Demo
             </Link>
             <ul>
               <li>
@@ -118,14 +118,14 @@ export default async function CourseDetailPage({ params }) {
                 <Languages size={16} /> Hindi and English
               </li>
               <li>
-                <Award size={16} /> Completion certificate
+                <Award size={16} /> Course Completion Certificate
               </li>
               <li>
-                <Users size={16} /> Small batch mentoring
+                <Users size={16} /> Small batch sizes
               </li>
             </ul>
             <p>
-              Need help? Call <a href="tel:+918700536553">+91 87005 36553</a>
+              Have questions? Call <a href="tel:+918700536553">+91 87005 36553</a>
             </p>
           </aside>
         </div>
@@ -136,9 +136,9 @@ export default async function CourseDetailPage({ params }) {
         <div className="container">
           <ExpandableCourseCarousel
             courses={relatedCourses}
-            eyebrow="Explore More Opportunities"
-            title="Other Recommended Programs"
-            text="Enhance your career portfolio by discovering our other industry and language courses."
+            eyebrow="MORE COURSES"
+            title="Other Courses You Might Like"
+            text="Explore our other practical and language courses in Connaught Place."
             viewAllHref="/courses"
           />
         </div>

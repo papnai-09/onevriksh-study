@@ -6,7 +6,7 @@ import { CourseCard } from '@/components/CourseCard';
 import { ExpandableCourseCarousel } from '@/components/ExpandableCourseCarousel';
 import { courses } from '@/data/site';
 
-const categories = ['All', 'Marketing', 'Design', 'Languages', 'Communication'];
+const categories = ['All', 'Digital Marketing', 'Graphic Design', 'German Language', 'French Language', 'Spanish Language', 'Italian Language', 'English & Communication'];
 
 export default function CoursesPage() {
   const [query, setQuery] = useState('');
@@ -25,20 +25,20 @@ export default function CoursesPage() {
     <>
       <section className="catalog-hero">
         <div className="container">
-          <span className="eyebrow light">Explore programs</span>
-          <h1>Find the skill that moves you forward.</h1>
-          <p>Practical, trainer-led courses with projects, personal guidance and career support.</p>
+          <span className="eyebrow light">OUR COURSES</span>
+          <h1>Choose the Right Course for You</h1>
+          <p>Explore our professional and language courses designed for students, working professionals and anyone looking to develop a new skill.</p>
         </div>
       </section>
 
-      {/* FEATURED EXPANDABLE SPOTLIGHT CAROUSEL */}
+      {/* FEATURED SPOTLIGHT CAROUSEL */}
       <section className="section" style={{ background: 'var(--surface)', paddingBottom: '0' }}>
         <div className="container">
           <ExpandableCourseCarousel
             courses={courses}
-            eyebrow="Interactive Spotlight"
-            title="Featured Career Programs"
-            text="Hover over any program card to explore the full syllabus breakdown, fees, and career outcomes."
+            eyebrow="OUR COURSES"
+            title="Featured Courses"
+            text="Explore our courses designed with practical assignments, personal mentoring and classroom learning in Connaught Place."
             viewAllHref=""
           />
         </div>

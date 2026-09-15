@@ -21,129 +21,128 @@ import { useRegion } from '@/context/RegionContext';
 import { Brand } from './Brand';
 import { courses } from '@/data/site';
 
-// Categorized Courses for upGrad-Style 3-Column Mega Dropdown
 const courseCategories = [
   {
     category: 'Digital Marketing',
-    description: 'Master SEO, Performance Ads, GA4 Analytics & CRO',
+    description: 'Learn SEO, Google Ads, Social Media & Analytics',
     featured: {
-      title: 'Performance Marketing Mastery',
-      tag: '🔥 Placement Track',
-      desc: 'Live campaigns with real ad spends & portfolio capstone defense.',
-      href: '/master-in-digital-marketing-course',
+      title: 'Digital Marketing Training',
+      tag: '⭐ Popular',
+      desc: 'Hands-on training with real campaign assignments and mentor feedback.',
+      href: '/digital-marketing-course',
       image: '/master-digital-marketing.jpg'
     },
     courses: [
       {
-        title: 'Foundation in Digital Marketing',
+        title: 'Digital Marketing Course',
         href: '/foundation-course-in-digital-marketing',
         duration: '4 Months',
         badge: 'Beginner',
-        tag: 'Live SEO Briefs',
-        partner: 'ONEVRIKSH Studio'
+        tag: 'SEO & Ads',
+        partner: 'ONEVRIKSH Study'
       },
       {
-        title: 'Advanced Digital Marketing',
+        title: 'Advanced Performance Marketing',
         href: '/digital-marketing-course',
         duration: '8 Months',
-        badge: 'Bestseller',
+        badge: 'Intermediate',
         tag: 'Google & Meta Ads',
-        partner: 'Performance Lab'
+        partner: 'ONEVRIKSH Study'
       },
       {
-        title: 'Master in Digital Marketing',
+        title: 'Master in Full-Stack Digital Marketing',
         href: '/master-in-digital-marketing-course',
         duration: '12 Months',
-        badge: '100% Placement*',
-        tag: 'Full-Stack CRO & Capstone',
-        partner: 'Industry Defense'
+        badge: 'Career Track',
+        tag: 'Complete Syllabus',
+        partner: 'ONEVRIKSH Study'
       }
     ]
   },
   {
-    category: 'Global Languages',
-    description: 'CEFR-Aligned European Language & Exam Preparation',
+    category: 'Foreign Languages',
+    description: 'European Language Learning & Exam Preparation',
     featured: {
-      title: 'German & European Fluency Track',
-      tag: '🌍 CEFR Certified',
-      desc: 'Complete Goethe, DELF, DELE & CILS exam coaching with native speaking labs.',
+      title: 'German & European Languages',
+      tag: '🌍 Language Track',
+      desc: 'Structured classroom lessons and preparation for Goethe, DELF, DELE and CILS exams.',
       href: '/german-language',
       image: '/german.jpg'
     },
     courses: [
       {
-        title: 'German Language',
+        title: 'German Language & Goethe Exam',
         href: '/german-language',
         duration: '4 Months',
-        badge: 'Goethe Aligned',
-        tag: 'Speaking Club',
-        partner: 'Goethe Prep'
+        badge: 'Goethe Exam',
+        tag: 'Speaking Practice',
+        partner: 'ONEVRIKSH Study'
       },
       {
-        title: 'French Language',
+        title: 'French Language & DELF Preparation',
         href: '/french-language',
         duration: '4 Months',
-        badge: 'DELF Aligned',
-        tag: 'Conversation Labs',
-        partner: 'DELF Paris'
+        badge: 'DELF Exam',
+        tag: 'Conversation Drills',
+        partner: 'ONEVRIKSH Study'
       },
       {
-        title: 'Spanish Language',
+        title: 'Spanish Language & DELE / SIELE',
         href: '/spanish-language',
         duration: '4 Months',
-        badge: 'DELE Prep',
-        tag: 'Cultural Immersion',
-        partner: 'Cervantes Standard'
+        badge: 'DELE Exam',
+        tag: 'Conversational',
+        partner: 'ONEVRIKSH Study'
       },
       {
-        title: 'Italian Language',
+        title: 'Italian Language & CILS Preparation',
         href: '/italian-language',
         duration: '4 Months',
-        badge: 'CILS Prep',
-        tag: 'Native Certified',
-        partner: 'CILS Siena'
+        badge: 'CILS Exam',
+        tag: 'Classroom Lessons',
+        partner: 'ONEVRIKSH Study'
       }
     ]
   },
   {
-    category: 'Design & Creative',
-    description: 'UI/UX, Visual Branding & Portfolio Studio',
+    category: 'Graphic Design',
+    description: 'Design Principles, Brand Design & Creative Tools',
     featured: {
-      title: 'Graphic Design Studio Track',
-      tag: '🎨 Portfolio Defense',
-      desc: 'Build client-ready branding kits & Adobe suite mastery.',
+      title: 'Graphic Design & Brand Design',
+      tag: '🎨 Practical Projects',
+      desc: 'Learn Photoshop, Illustrator and build a design portfolio.',
       href: '/graphic-design',
       image: '/graphic-design.jpg'
     },
     courses: [
       {
-        title: 'Graphic Design Mastery',
+        title: 'Graphic Design & Brand Design',
         href: '/graphic-design',
         duration: '5 Months',
-        badge: 'Bestseller',
-        tag: 'Adobe Suite + Portfolio',
-        partner: 'Creative Studio'
+        badge: 'Design Track',
+        tag: 'Photoshop + Illustrator',
+        partner: 'ONEVRIKSH Study'
       }
     ]
   },
   {
-    category: 'Communication',
-    description: 'Spoken English, Fluency & Corporate Personality',
+    category: 'English & Communication',
+    description: 'Spoken English, Fluency & Interview Skills',
     featured: {
-      title: 'Executive English & Personality',
-      tag: '🎙️ Public Speaking',
-      desc: 'Interview simulations, fluency labs & presentation mastery.',
+      title: 'English & Communication Skills',
+      tag: '🎙️ Speaking Practice',
+      desc: 'Interview preparation, spoken fluency and presentation skills in small batches.',
       href: '/english-speaking',
       image: '/english.jpg'
     },
     courses: [
       {
-        title: 'English Speaking & Personality',
+        title: 'English & Communication Skills',
         href: '/english-speaking',
         duration: '3 Months',
-        badge: 'Popular',
-        tag: 'Daily Speaking Labs',
-        partner: 'Fluency Hub'
+        badge: 'Speaking Track',
+        tag: 'Daily Speaking Practice',
+        partner: 'ONEVRIKSH Study'
       }
     ]
   }
@@ -153,30 +152,30 @@ const certificationCategories = [
   {
     category: 'Digital Marketing',
     courses: [
-      { title: 'Foundation in Digital Marketing Certificate', href: '/foundation-course-in-digital-marketing' },
-      { title: 'Advanced Digital Marketing Certificate', href: '/digital-marketing-course' },
-      { title: 'Master in Digital Marketing Certificate', href: '/master-in-digital-marketing-course' },
+      { title: 'Digital Marketing Certificate', href: '/foundation-course-in-digital-marketing' },
+      { title: 'Performance Marketing Certificate', href: '/digital-marketing-course' },
+      { title: 'Full-Stack Digital Marketing Certificate', href: '/master-in-digital-marketing-course' },
     ]
   },
   {
-    category: 'Global Languages',
+    category: 'Foreign Languages',
     courses: [
-      { title: 'German Language (Goethe CEFR Certificate)', href: '/german-language' },
-      { title: 'French Language (DELF Certified Program)', href: '/french-language' },
-      { title: 'Spanish Language (DELE Standard Certificate)', href: '/spanish-language' },
-      { title: 'Italian Language (CILS Preparation Certificate)', href: '/italian-language' },
+      { title: 'German Language Course Certificate', href: '/german-language' },
+      { title: 'French Language Course Certificate', href: '/french-language' },
+      { title: 'Spanish Language Course Certificate', href: '/spanish-language' },
+      { title: 'Italian Language Course Certificate', href: '/italian-language' },
     ]
   },
   {
-    category: 'Design & Creative',
+    category: 'Graphic Design',
     courses: [
-      { title: 'Graphic Design Mastery Certificate', href: '/graphic-design' },
+      { title: 'Graphic Design Course Certificate', href: '/graphic-design' },
     ]
   },
   {
-    category: 'Communication',
+    category: 'English & Communication',
     courses: [
-      { title: 'English Speaking & Personality Certificate', href: '/english-speaking' },
+      { title: 'English & Communication Certificate', href: '/english-speaking' },
     ]
   }
 ];

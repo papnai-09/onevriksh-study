@@ -4,41 +4,49 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowRight, CirclePlay, Check, Search } from 'lucide-react';
+import { ArrowRight, Check, Search, MapPin } from 'lucide-react';
 import { ExpandableCourseCarousel } from '@/components/ExpandableCourseCarousel';
 import { ExpandableFeatureCarousel } from '@/components/ExpandableFeatureCarousel';
 import { ExpandableTestimonialCarousel } from '@/components/ExpandableTestimonialCarousel';
 import { SectionHeading } from '@/components/SectionHeading';
 import { courses, stats, testimonials } from '@/data/site';
 
-const outcomesData = [
+const whyChooseData = [
   {
     step: '01',
-    tag: 'Live Capstone Projects',
-    title: 'Simulation-First Practical Pedagogy',
-    desc: 'Execute real-world briefs, manage live Google Ads budgets, conduct technical enterprise SEO audits, and defend professional design portfolios verified by industry hiring managers.',
-    bullets: ['Live ad budget simulations', 'Technical enterprise SEO audits', 'Industry capstone defense']
+    tag: 'Hands-on practice',
+    title: 'Practical Learning',
+    desc: 'Learn concepts in class and apply them through assignments and projects.'
   },
   {
     step: '02',
-    tag: 'Small Cohorts (Max 15–20)',
-    title: 'Direct Master Practitioner Mentorship',
-    desc: 'Learn in focused, small cohorts where certified industry directors provide line-by-line project critiques, personal doubt resolution, and tailored skill roadmaps.',
-    bullets: ['Strict 15–20 student batch cap', 'Daily interactive Q&A labs', '1-on-1 personalized project feedback']
+    tag: 'Individual attention',
+    title: 'Small Batches',
+    desc: 'Learn in smaller groups so trainers can give students individual attention.'
   },
   {
     step: '03',
-    tag: 'Career Acceleration Cell',
-    title: 'End-to-End Placement & Interview Mastery',
-    desc: 'Accelerate your career through executive resume teardowns, Behance/LinkedIn curation, technical mock interviews, and direct referrals to hiring partner networks.',
-    bullets: ['Executive resume & portfolio polish', 'Rigorous 1-on-1 mock interviews', 'Direct corporate hiring referrals']
+    tag: 'Mentor feedback',
+    title: 'Personal Guidance',
+    desc: 'Get feedback and guidance throughout your course.'
   },
   {
     step: '04',
-    tag: 'Global Standards Aligned',
-    title: 'Recognized & Verifiable Credentials',
-    desc: 'Graduate with verifiable course completion credentials aligned with European CEFR linguistic frameworks, Google, and Meta corporate standards.',
-    bullets: ['Instant Certificate ID verification', 'CEFR European benchmark aligned', 'Lifetime credential authenticity']
+    tag: 'Placement help',
+    title: 'Career Support',
+    desc: 'Get help with interview preparation, resume building and placement opportunities.'
+  },
+  {
+    step: '05',
+    tag: 'Connaught Place',
+    title: 'Offline Classroom Learning',
+    desc: 'Learn face-to-face at our Connaught Place centre with a focused classroom environment.'
+  },
+  {
+    step: '06',
+    tag: 'Certificate',
+    title: 'Course Certification',
+    desc: 'Receive a course certificate after completing the required training and assessments.'
   }
 ];
 
@@ -67,12 +75,12 @@ export default function HomePage() {
 
   return (
     <>
-      {/* 1. HERO SECTION WITH BACKGROUND IMAGE & EMBEDDED SEARCH BAR */}
+      {/* 1. HERO SECTION */}
       <section className="hero">
         <div className="hero-media">
           <Image
             src="/img1.jpg"
-            alt="Students collaborating at ONEVRIKSH Study Connaught Place"
+            alt="Students at ONEVRIKSH Study Connaught Place"
             fill
             priority
             sizes="100vw"
@@ -81,12 +89,12 @@ export default function HomePage() {
         <div className="hero-overlay" />
         <div className="container hero-content">
           <div className="hero-copy">
-            <span className="hero-kicker">Premier Offline Coaching Hub • Connaught Place</span>
+            <span className="hero-kicker">OFFLINE COACHING IN CONNAUGHT PLACE</span>
             <h1>
-              Launch Your Dream Career with <em>Confidence & Practical Mastery.</em>
+              Learn Skills. Build Your Career.
             </h1>
             <p>
-              New Delhi’s offline-first institute for Performance Marketing, Brand Visual Design, Leadership Communication, and European Language Gateways (DELF, Goethe, DELE, CILS).
+              Practical offline courses in Digital Marketing, Graphic Design, German, French, Spanish, Italian and English. Learn from experienced trainers, work on practical projects and build skills that you can use in your career.
             </p>
 
             {/* HERO SEARCH BAR */}
@@ -95,7 +103,7 @@ export default function HomePage() {
                 <Search size={20} className="hero-search-pill-icon" />
                 <input
                   type="text"
-                  placeholder="Search digital marketing, graphic design, German, French..."
+                  placeholder="Search courses..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="hero-search-pill-input"
@@ -124,66 +132,72 @@ export default function HomePage() {
             {/* HERO ACTION BUTTONS */}
             <div className="hero-actions">
               <Link href="/demo" className="button button-primary button-large hero-btn-red">
-                Reserve Free Demo Seat <ArrowRight size={18} />
+                Book a Free Demo <ArrowRight size={18} />
               </Link>
               <Link href="/courses" className="button button-light button-large">
-                <CirclePlay size={19} /> Explore All Programs
+                View All Courses
               </Link>
             </div>
+
+            <p style={{ marginTop: '16px', fontSize: '0.88rem', color: '#CBD5E1' }}>
+              Learn in small batches with personal guidance, practical assignments and career support.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* 2. ABOUT ONEVRIKSH INTRO SECTION */}
+      {/* 2. ABOUT / INTRO SECTION */}
       <section className="section intro-section">
         <div className="container intro-grid">
           <div className="intro-images">
             <div className="image-main">
               <Image
                 src="/img2.jpg"
-                alt="ONEVRIKSH students collaborating in studio"
+                alt="Students learning at ONEVRIKSH"
                 fill
                 sizes="50vw"
               />
             </div>
             <div className="experience-card">
               <strong>2+</strong>
-              <span>Years of training excellence</span>
+              <span>Years of Teaching</span>
             </div>
           </div>
           <div>
             <SectionHeading
-              eyebrow="Academic Excellence & Pedagogy"
-              title="Empowering Ambitious Minds with Real-World Industry Mastery."
-              text="At ONEVRIKSH Study, we bridge the divide between theoretical education and real-world executive capability. Located at New Delhi’s premier Connaught Place business hub, our offline-first studio combines master practitioner mentoring, live capstone simulations, and high-impact career placement pathways."
+              eyebrow="ABOUT ONEVRIKSH"
+              title="Learn From the Classroom. Practice in the Real World."
+              text="ONEVRIKSH Study is an offline coaching institute in Connaught Place, New Delhi. We provide career-focused courses that combine classroom learning with practical work. Our goal is simple — help students understand the subject, practice their skills and become confident enough to use them in real work."
             />
             <div className="check-list">
-              <span><Check /> Live, practitioner-led interactive classes</span>
-              <span><Check /> Real-budget campaigns & portfolio capstones</span>
-              <span><Check /> 1-on-1 personalized feedback in small cohorts</span>
-              <span><Check /> Verifiable certifications & placement support</span>
+              <span><Check /> Experienced trainers</span>
+              <span><Check /> Practical classroom learning</span>
+              <span><Check /> Small batch sizes</span>
+              <span><Check /> Real projects and assignments</span>
+              <span><Check /> Personal feedback</span>
+              <span><Check /> Career and placement support</span>
             </div>
             <Link href="/about" className="text-link">
-              Discover our story & methodology <ArrowRight size={17} />
+              Know More About Us <ArrowRight size={17} />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 3. POPULAR COURSES EXPANDABLE CAROUSEL */}
+      {/* 3. COURSES SECTION */}
       <section className="section courses-section">
         <div className="container">
           <ExpandableCourseCarousel
             courses={courses}
-            eyebrow="Executive Career Tracks"
-            title="Flagship Professional Programs"
-            text="Hover over any program to explore full curriculum modules, real-world capstone briefs, duration, and tuition details."
+            eyebrow="OUR COURSES"
+            title="Choose the Right Course for You"
+            text="Explore our professional and language courses designed for students, working professionals and anyone looking to develop a new skill."
             viewAllHref="/courses"
           />
         </div>
       </section>
 
-      {/* 4. STATS BAND */}
+      {/* 4. STATS SECTION */}
       <section className="stats-band">
         <div className="container stats-grid">
           {stats.map((stat) => (
@@ -195,29 +209,57 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. OUTCOMES EXPANDABLE CAROUSEL */}
+      {/* 5. WHY CHOOSE US SECTION */}
       <section className="section outcomes-section">
         <div className="container">
           <ExpandableFeatureCarousel
-            items={outcomesData}
-            eyebrow="The ONEVRIKSH Advantage"
-            title="Engineered for Tangible Career Outcomes"
-            text="Hover over each pillar to explore how our immersive studio model turns foundational concepts into verified executive capability."
+            items={whyChooseData}
+            eyebrow="WHY CHOOSE US"
+            title="Why Choose ONEVRIKSH?"
+            text="We focus on helping students learn properly, practice regularly and build confidence in their skills."
           />
         </div>
       </section>
 
-      {/* 6. STUDENT TESTIMONIALS EXPANDABLE CAROUSEL */}
+      {/* 6. STUDENT REVIEWS SECTION */}
       <section className="section" style={{ background: 'var(--surface-2)' }}>
         <div className="container">
           <ExpandableTestimonialCarousel
             testimonials={testimonials}
-            eyebrow="Alumni Impact & Social Proof"
-            title="What Our Certified Graduates Say"
-            text="Explore verified reviews and placement outcomes from alumni who accelerated their careers at our Connaught Place studio."
+            eyebrow="STUDENT REVIEWS"
+            title="What Our Students Say"
+            text="Hear from students who have learned with us and experienced our classroom training."
           />
+        </div>
+      </section>
+
+      {/* 7. FINAL CTA SECTION */}
+      <section className="cta-band">
+        <div className="container cta-inner">
+          <div>
+            <span className="eyebrow light">START LEARNING</span>
+            <h2>Ready to Start Learning?</h2>
+            <p>Book a free demo class and see how our courses work before you decide.</p>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: '#E2E8F0', marginTop: '8px' }}>
+              <MapPin size={15} /> ONEVRIKSH Study, Connaught Place, New Delhi
+            </span>
+          </div>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+            <Link href="/demo" className="button button-light">
+              <span>Book a Free Demo</span>
+              <ArrowRight size={16} />
+            </Link>
+            <Link
+              href="/courses"
+              className="button button-ghost"
+              style={{ color: '#ffffff', borderColor: 'rgba(255,255,255,0.45)' }}
+            >
+              <span>View All Courses</span>
+            </Link>
+          </div>
         </div>
       </section>
     </>
   );
 }
+

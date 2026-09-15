@@ -3,37 +3,34 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { institute } from '@/data/site';
-import { Users, Monitor, Wifi, Coffee } from 'lucide-react';
+import { Users, Monitor, Wifi, Coffee, ArrowRight } from 'lucide-react';
 import { ExpandableFeatureCarousel } from '@/components/ExpandableFeatureCarousel';
+import { CTASection } from '@/components/CTASection';
 
 const facilitiesData = [
   {
     step: '01',
-    tag: 'Focus Batches',
-    title: 'Small Cohorts (15–20 Learners)',
-    desc: 'Never get lost in an overcrowded lecture hall. Our studio classrooms cap every cohort at 15–20 learners so you get direct trainer attention.',
-    bullets: ['Dedicated trainer time', 'Personal assignment grading', 'Interactive speaking environment']
+    tag: 'Batch size',
+    title: 'Small Batches (15–20 Students)',
+    desc: 'Learn in smaller groups so trainers can give students individual attention and answer doubts patiently.'
   },
   {
     step: '02',
-    tag: 'Tech Setup',
-    title: 'Dual-Monitor Lab Displays',
-    desc: 'Modern lab displays, projector rigs, and dedicated student workstation plugs for seamless live campaign execution and code sprints.',
-    bullets: ['High-res display mirrors', 'Comfortable workstation desks', 'Ergonomic seating']
+    tag: 'Classrooms',
+    title: 'Modern Lab & Classroom Setup',
+    desc: 'Classrooms equipped with displays, projectors and comfortable desks for practical assignments and exercises.'
   },
   {
     step: '03',
-    tag: 'Connectivity',
+    tag: 'Internet',
     title: 'High-Speed Student Wi-Fi',
-    desc: 'Gigabit fiber optic internet throughout the studio for smooth software installs, Google Ads campaigns, and live data streaming.',
-    bullets: ['Unrestricted gigabit Wi-Fi', 'Power backups in all labs', 'Dedicated cloud sandboxes']
+    desc: 'Fast internet access throughout the centre for practical exercises, research and campaign practice.'
   },
   {
     step: '04',
-    tag: 'Collaboration',
-    title: 'Student Lounge & Resource Library',
-    desc: 'Comfortable breakout spaces with reference textbooks, international language exam archives, and tea/coffee stations for group discussions.',
-    bullets: ['DELF / Goethe exam library', 'Peer discussion tables', 'Quiet revision pods']
+    tag: 'Study space',
+    title: 'Student Area & Reference Materials',
+    desc: 'Quiet reading space with textbooks, foreign language exam practice papers and areas for peer discussions.'
   }
 ];
 
@@ -42,29 +39,25 @@ const connectivityData = [
     step: '01',
     tag: 'Yellow & Blue Lines',
     title: 'Rajiv Chowk Metro (5 Min Walk)',
-    desc: 'Exit via Gate No. 6 at Rajiv Chowk Metro station. A short 5-minute walk brings you right to our Connaught Place studio entrance.',
-    bullets: ['Major interchange station', 'Gate No. 6 direct access', '500m walking distance']
+    desc: 'Exit from Gate No. 6 at Rajiv Chowk Metro Station for an easy 5-minute walk to our centre.'
   },
   {
     step: '02',
-    tag: 'Blue Line Direct',
+    tag: 'Blue Line',
     title: 'Barakhamba Road Metro (4 Min Walk)',
-    desc: 'Convenient access from the Blue Line with a brisk 4-minute walk from Barakhamba Road station.',
-    bullets: ['Less crowded exit', 'Direct street connectivity', '400m walking distance']
+    desc: 'Quick 4-minute walking distance from Barakhamba Road Metro Station.'
   },
   {
     step: '03',
-    tag: 'Central Address',
-    title: 'Connaught Place Heritage Hub',
-    desc: `${institute.address}, situated right opposite Palika Bazaar / Regal Building area in Central Delhi.`,
-    bullets: ['Central landmark location', 'Safe and well-lit area', 'Ample public parking nearby']
+    tag: 'Central Delhi',
+    title: 'Connaught Place Location',
+    desc: `${institute.address}, centrally located and easy to reach from all parts of Delhi NCR.`
   },
   {
     step: '04',
-    tag: 'Timings & Access',
-    title: 'Operating Hours & Studio Access',
-    desc: 'Open Monday through Saturday from 9:00 AM to 7:00 PM. Demo batches and career counselling available on Sundays by appointment.',
-    bullets: ['Mon–Sat: 9 AM – 7 PM', 'Sunday demo slots', 'Flexible weekday & weekend batches']
+    tag: 'Hours',
+    title: 'Centre Timings',
+    desc: 'Open Monday to Saturday from 9:00 AM to 7:00 PM. Sunday demo sessions available by appointment.'
   }
 ];
 
@@ -73,10 +66,10 @@ export default function OfflineCenterPage() {
     <>
       <section className="simple-hero">
         <div className="container">
-          <span className="eyebrow light">Central Delhi Training Hub</span>
-          <h1>Our Connaught Place Classroom Studio</h1>
+          <span className="eyebrow light">OFFLINE TRAINING CENTRE</span>
+          <h1>Our Connaught Place Centre</h1>
           <p>
-            An offline-first learning space engineered for focused collaboration, hands-on lab workstations, and direct mentor-led skill building in Central Delhi.
+            A dedicated classroom learning space in Connaught Place, New Delhi, designed for small batches, hands-on practice and personal guidance.
           </p>
         </div>
       </section>
@@ -88,31 +81,31 @@ export default function OfflineCenterPage() {
             <div style={{ position: 'relative', height: '380px', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--line)' }}>
               <Image
                 src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=85"
-                alt="OneVriksh Classroom in Connaught Place"
+                alt="ONEVRIKSH Classroom in Connaught Place"
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
             <div>
-              <span className="eyebrow">Classroom Experience</span>
-              <h2>Built for Small Batches & Close Mentoring</h2>
+              <span className="eyebrow">CLASSROOM EXPERIENCE</span>
+              <h2>Small Batches. Personal Guidance.</h2>
               <p style={{ marginBottom: '24px' }}>
-                We believe practical skills cannot be absorbed in overcrowded lecture halls. Our Connaught Place centre limits every batch to 15-20 students, giving you dedicated trainer time and personal feedback on every assignment.
+                We believe practical skills are best learned in small groups with active participation. Our Connaught Place centre limits every batch to 15–20 students, giving you direct time with your trainer and regular feedback on your work.
               </p>
 
               <div className="check-list">
                 <span>
-                  <Users size={16} /> Max 15-20 Students/Batch
+                  <Users size={16} /> Max 15–20 Students per Batch
                 </span>
                 <span>
-                  <Monitor size={16} /> Modern Lab Displays
+                  <Monitor size={16} /> Practical Lab Displays
                 </span>
                 <span>
-                  <Wifi size={16} /> High-Speed Student Wi-Fi
+                  <Wifi size={16} /> High-Speed Wi-Fi
                 </span>
                 <span>
-                  <Coffee size={16} /> Student Lounge & Library
+                  <Coffee size={16} /> Student Study Space
                 </span>
               </div>
             </div>
@@ -120,9 +113,9 @@ export default function OfflineCenterPage() {
 
           <ExpandableFeatureCarousel
             items={facilitiesData}
-            eyebrow="Studio Infrastructure"
-            title="Classroom & Lab Amenities"
-            text="Hover over any amenity card to explore the physical infrastructure built for your learning comfort."
+            eyebrow="CENTRE AMENITIES"
+            title="Classroom & Lab Facilities"
+            text="Explore the classroom amenities built for your learning comfort."
           />
         </div>
       </section>
@@ -132,13 +125,23 @@ export default function OfflineCenterPage() {
         <div className="container">
           <ExpandableFeatureCarousel
             items={connectivityData}
-            eyebrow="Easy Metro Connectivity"
-            title="How to Reach Our Connaught Place Centre"
-            text="Centrally located in Connaught Place with effortless walking access from multiple metro lines."
+            eyebrow="METRO CONNECTIVITY"
+            title="How to Reach Our Centre"
+            text="Centrally located in Connaught Place with easy walking access from nearby metro stations."
           />
         </div>
       </section>
+
+      <CTASection
+        title="Visit Our Connaught Place Centre"
+        subtitle="Book a free demo class and visit our classrooms before you decide."
+        primaryCtaLabel="Book a Free Demo"
+        primaryCtaHref="/demo"
+        secondaryCtaLabel="Contact Us"
+        secondaryCtaHref="/contact"
+      />
     </>
   );
 }
+
 

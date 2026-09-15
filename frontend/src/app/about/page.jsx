@@ -10,76 +10,72 @@ export const metadata = { title: 'About Us | ONEVRIKSH Study' };
 const trainersData = [
   {
     name: 'Rohit Sharma',
-    role: 'Digital Marketing & Performance Lead',
-    experience: '9+ Years Industry Experience',
-    bio: 'Chief Marketing Consultant having managed ₹5Cr+ in ad spends across Google Ads, Meta, and high-converting performance funnels.',
-    expertise: ['Google Ads', 'GA4 Analytics', 'Technical SEO', 'Lead Funnels']
+    role: 'Digital Marketing Trainer',
+    experience: '9+ Years Experience',
+    bio: 'Experienced digital marketing trainer helping students understand SEO, Google Ads, social media and analytics through practical campaigns.',
+    expertise: ['Google Ads', 'Google Analytics', 'SEO', 'Social Media']
   },
   {
     name: 'Meera Kapoor',
-    role: 'Brand & Visual Design Director',
-    experience: '7+ Years Studio Experience',
-    bio: 'Lead visual designer specializing in brand identity systems, typography, UI principles, and Adobe Creative Suite studio practice.',
-    expertise: ['Photoshop', 'Illustrator', 'Brand Identity', 'UI/UX Basics']
+    role: 'Graphic Design Trainer',
+    experience: '7+ Years Experience',
+    bio: 'Graphic design trainer focusing on Adobe Photoshop, Illustrator, typography and building practical student design portfolios.',
+    expertise: ['Photoshop', 'Illustrator', 'Brand Design', 'Layout Design']
   },
   {
     name: 'Ananya Verma',
-    role: 'DELF Certified French Educator',
-    experience: '6+ Years Language Training',
-    bio: 'Certified French linguist specializing in CEFR A1-B2 exam readiness, DELF test strategies, and immersive speaking clinics.',
-    expertise: ['DELF A1-B2', 'Campus France Prep', 'Spoken French', 'Grammar Labs']
+    role: 'French Language Trainer',
+    experience: '6+ Years Experience',
+    bio: 'Certified French educator helping learners develop daily conversation fluency and prepare for DELF examinations.',
+    expertise: ['DELF Preparation', 'French Grammar', 'Conversation', 'Listening Practice']
   },
   {
     name: 'Nikhil Arora',
-    role: 'Goethe Certified German Trainer',
-    experience: '8+ Years German Faculty',
-    bio: 'Goethe-Institut certified faculty guiding students through Goethe-Zertifikat exams, APS requirements, and German university SOPs.',
-    expertise: ['Goethe A1-B1', 'German Grammar', 'Speaking Clubs', 'Study Abroad SOPs']
+    role: 'German Language Trainer',
+    experience: '8+ Years Experience',
+    bio: 'German language faculty guiding students through Goethe-Zertifikat preparation, sentence structure and speaking practice.',
+    expertise: ['Goethe Exams', 'German Grammar', 'Spoken German', 'Study in Germany']
   },
   {
     name: 'Elena Rossi',
-    role: 'CILS Certified Italian Trainer',
-    experience: '5+ Years Italian Coaching',
-    bio: 'Specialist in Italian language pedagogy, CILS exam modules, and visa interview preparation for students heading to Italy.',
-    expertise: ['CILS Certification', 'Conversational Italian', 'Italian Culture', 'Visa Labs']
+    role: 'Italian Language Trainer',
+    experience: '5+ Years Experience',
+    bio: 'Italian language instructor helping students master everyday conversation and prepare for CILS certifications.',
+    expertise: ['CILS Exam', 'Conversational Italian', 'Grammar', 'Italian Culture']
   },
   {
     name: 'Priya Malhotra',
-    role: 'Soft Skills & Corporate Communication Coach',
-    experience: '10+ Years Leadership Coach',
-    bio: 'Corporate communications trainer helping students conquer stage fear, master public speaking, and excel in campus placement rounds.',
-    expertise: ['Public Speaking', 'GD Mastery', 'Interview Coaching', 'Voice Modulation']
+    role: 'English & Communication Trainer',
+    experience: '10+ Years Experience',
+    bio: 'Communication trainer helping students overcome hesitation, improve public speaking and prepare for job interviews.',
+    expertise: ['Public Speaking', 'Group Discussions', 'Interview Skills', 'Spoken English']
   }
 ];
 
 const valuesData = [
   {
     step: '01',
-    tag: 'Hands-on pedagogy',
-    title: 'Practical First',
-    desc: 'Students learn through actual application, live campaign execution, and portfolio creation, never through passive memorisation.',
-    bullets: ['Live briefs over slides', 'Direct feedback loops', 'Real results as portfolio proof']
+    tag: 'Hands-on practice',
+    title: 'Practical Learning',
+    desc: 'Students learn by doing — working on real assignments, practice exercises and projects rather than passive lectures.'
   },
   {
     step: '02',
-    tag: 'Student-centric',
-    title: 'Care Deeply',
-    desc: 'Individual progress and confidence matter infinitely more than batch completion speeds. We stay by your side until concepts are crystal clear.',
-    bullets: ['1-on-1 mentoring slots', 'Patient doubt resolution', 'Personalized career roadmap']
+    tag: 'Individual attention',
+    title: 'Small Batches',
+    desc: 'We keep batch sizes small so every student gets individual attention, feedback and time to clear their doubts.'
   },
   {
     step: '03',
-    tag: 'Academic excellence',
-    title: 'Raise the Bar',
-    desc: 'Our teaching, curriculum, and placement outcomes must continuously earn the trust of ambitious learners and global recruiters.',
-    bullets: ['Updated 2026 industry frameworks', 'Rigorous capstone reviews', 'Employer-aligned rubrics']
+    tag: 'Clear fundamentals',
+    title: 'Quality Teaching',
+    desc: 'Our trainers explain concepts clearly from basics to advanced levels, making sure students understand the core ideas.'
   },
   {
     step: '04',
-    tag: 'Community',
-    title: 'Grow Together',
-    desc: 'A thriving learning community in our Connaught Place studio creates lifelong professional networks and peer learning.',
-    bullets: ['Alumni network access', 'Study groups and speaking clubs', 'Collaborative project sprints']
+    tag: 'Student community',
+    title: 'Supportive Environment',
+    desc: 'A friendly and focused classroom environment in Connaught Place where students can collaborate, practice and grow.'
   }
 ];
 
@@ -89,11 +85,13 @@ export default function AboutPage() {
       <section className="page-hero">
         <div className="container page-hero-inner">
           <div>
-            <span className="eyebrow">Our institute</span>
+            <span className="eyebrow">ABOUT ONEVRIKSH</span>
             <h1>
-              We help ambition become <em>ability.</em>
+              Learn From the Classroom. <em>Practice in the Real World.</em>
             </h1>
-            <p>ONEVRIKSH Study brings practical education, close mentoring and career direction together under one roof in Connaught Place.</p>
+            <p>
+              ONEVRIKSH Study is an offline coaching institute in Connaught Place, New Delhi. We provide practical courses designed to build skills and confidence for your career.
+            </p>
           </div>
           <div className="page-hero-image">
             <Image src="/img2.jpg" alt="Students at ONEVRIKSH Study" fill priority sizes="(max-width: 900px) 100vw, 50vw" />
@@ -104,14 +102,14 @@ export default function AboutPage() {
       <section className="section">
         <div className="container story-grid">
           <div className="story-image">
-            <Image src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=85" alt="Mentor working with students" fill sizes="(max-width: 900px) 100vw, 50vw" />
+            <Image src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=85" alt="Trainer working with students" fill sizes="(max-width: 900px) 100vw, 50vw" />
           </div>
           <div>
-            <SectionHeading eyebrow="Our story" title="A coaching institute built for the gap between theory and work." />
-            <p className="lead">ONEVRIKSH began with a simple observation: students did not need more passive lectures. They needed practice, patient mentors and a place where questions were welcome.</p>
-            <p>From our Connaught Place centre, we now train learners across digital skills, design, communication and international languages. Our classrooms stay small, our curriculum stays current, and our focus stays personal.</p>
+            <SectionHeading eyebrow="OUR STORY" title="Built for Practical Learning & Career Growth" />
+            <p className="lead">ONEVRIKSH Study started with a simple thought: learning works best when students practice what they learn, receive direct feedback and have patient mentors to guide them.</p>
+            <p>From our centre in Connaught Place, New Delhi, we teach Digital Marketing, Graphic Design, Communication and Foreign Languages (German, French, Spanish, Italian). Our classes stay small, our trainers are experienced and our focus is on helping each student progress.</p>
             <Link href="/demo" className="button button-primary">
-              Meet us in a free demo <ArrowRight size={18} />
+              Book a Free Demo <ArrowRight size={18} />
             </Link>
           </div>
         </div>
@@ -123,21 +121,21 @@ export default function AboutPage() {
           <div className="mission-grid" style={{ marginBottom: '36px' }}>
             <article>
               <span><Target /></span>
-              <h2>Our mission</h2>
-              <p>Make career-relevant learning practical, personal and accessible to every serious learner.</p>
+              <h2>Our Mission</h2>
+              <p>To provide accessible, practical and high-quality classroom coaching that helps students build usable career skills.</p>
             </article>
             <article>
               <span><Eye /></span>
-              <h2>Our vision</h2>
-              <p>Build a trusted skills institute where education creates visible confidence and opportunity.</p>
+              <h2>Our Vision</h2>
+              <p>To be a trusted coaching institute known for quality teaching, individual student care and genuine skill building.</p>
             </article>
           </div>
 
           <ExpandableFeatureCarousel
             items={valuesData}
-            eyebrow="Our Guiding Principles"
-            title="Core Values That Drive ONEVRIKSH"
-            text="Hover over each principle to explore the standards that govern our teaching and student mentorship."
+            eyebrow="OUR VALUES"
+            title="What We Believe In"
+            text="How we design our classes, support our students and deliver quality coaching every day."
           />
         </div>
       </section>
@@ -147,13 +145,14 @@ export default function AboutPage() {
         <div className="container">
           <ExpandableTrainerCarousel
             trainers={trainersData}
-            eyebrow="Faculty & Mentorship"
-            title="Learn from Certified Practitioners"
-            text="Hover over any mentor card to see their credentials, experience, and core domains of expertise."
+            eyebrow="OUR FACULTY"
+            title="Learn from Experienced Trainers"
+            text="Our trainers bring practical knowledge, structured lesson plans and personal mentoring into every classroom session."
           />
         </div>
       </section>
     </>
   );
 }
+
 

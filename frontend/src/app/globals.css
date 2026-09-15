@@ -5838,26 +5838,611 @@ img, video, iframe {
 }
 
 /* ==========================================================================
-   CLEAN MINIMAL UI STYLES FOR ONEVRIKSH STUDY
+   COMPLETE AUDITED RESPONSIVE LAYOUT SYSTEM FOR ONEVRIKSH STUDY
    ========================================================================== */
 
+/* 1. Global Viewport & Container Safety */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden !important;
+  width: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden !important;
+  width: 100%;
+  max-width: 100vw;
+  position: relative;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.container {
+  width: min(calc(100% - 32px), 1200px) !important;
+  margin-inline: auto !important;
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: min(calc(100% - 24px), 1200px) !important;
+  }
+}
+
+/* 2. Responsive Typography */
+h1, h2, h3, h4, h5, h6, p, span, a, small {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+h1 {
+  font-size: clamp(1.85rem, 4vw + 0.5rem, 2.75rem);
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  font-size: clamp(1.35rem, 2.5vw + 0.3rem, 1.95rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: clamp(1.05rem, 1.5vw + 0.2rem, 1.25rem);
+  line-height: 1.35;
+}
+
+p {
+  font-size: clamp(0.92rem, 0.4vw + 0.8rem, 1.02rem);
+  line-height: 1.65;
+}
+
+/* 3. Site Header & Responsive Navigation */
+.site-header {
+  height: 72px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-wrap {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.main-nav {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  margin: 0;
+}
+
+.main-nav a {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 6px 0;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color: #0F172A;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-desktop-cta {
+  display: inline-flex;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  padding: 9px;
+  border-radius: 8px;
+  color: var(--ink);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+@media (max-width: 860px) {
+  .main-nav {
+    display: none !important;
+  }
+  .header-desktop-cta {
+    display: none !important;
+  }
+  .mobile-menu-btn {
+    display: inline-flex !important;
+  }
+}
+
+.mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  top: 72px;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 90;
+}
+
+.mobile-nav-drawer {
+  position: absolute;
+  top: 72px;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  padding: 16px 20px 24px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15);
+  z-index: 95;
+  max-height: calc(100vh - 72px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--surface-2);
+  text-decoration: none;
+  min-height: 48px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.mobile-nav-item.active,
+.mobile-nav-item:hover {
+  background: #FDF2F4;
+  color: #EE2C3C;
+}
+
+.mobile-nav-cta {
+  padding-top: 6px;
+}
+
+.mobile-nav-cta .button {
+  min-height: 48px;
+}
+
+/* 4. Hero Section */
+.hero {
+  position: relative;
+  color: #FFFFFF;
+  overflow: hidden;
+  min-height: calc(100vh - 72px);
+  max-height: 760px;
+  display: flex;
+  align-items: center;
+  padding: 56px 0;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: auto;
+    max-height: none;
+    padding: 40px 0 48px;
+  }
+}
+
+.hero-copy {
+  max-width: 680px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #EE2C3C;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
 .hero-subhead {
-  font-size: 1.15rem;
+  font-size: clamp(1rem, 2vw, 1.18rem);
   font-weight: 500;
   color: #F8FAFC !important;
-  margin-top: 16px;
-  margin-bottom: 8px;
-  line-height: 1.5;
+  margin: 16px 0 8px;
+  line-height: 1.55;
 }
 
 .hero-supporting {
-  font-size: 0.95rem;
+  font-size: clamp(0.88rem, 1.5vw, 0.98rem);
   color: #CBD5E1 !important;
   margin-bottom: 24px;
   line-height: 1.6;
 }
 
-/* WHY ONEVRIKSH 4-COLUMN GRID */
+.hero-search-container {
+  margin: 20px 0 24px;
+  max-width: 520px;
+  width: 100%;
+}
+
+.hero-search-pill-form {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 9999px;
+  padding: 4px 6px 4px 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+.hero-search-pill-icon {
+  color: #64748B;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+.hero-search-pill-input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 0.9rem;
+  color: #0F172A;
+  min-width: 0;
+  padding: 8px 0;
+}
+
+.hero-search-clear-btn {
+  background: none;
+  border: 0;
+  color: #94A3B8;
+  padding: 6px 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.hero-search-pill-btn {
+  background: #0F172A;
+  color: #FFFFFF;
+  border: 0;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease;
+}
+
+.hero-search-pill-btn:hover {
+  background: #1E293B;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+@media (max-width: 480px) {
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero-actions .button {
+    width: 100%;
+    min-height: 48px;
+  }
+  .hero-kicker {
+    font-size: 0.65rem;
+    padding: 5px 10px;
+  }
+}
+
+/* 5. Introduction & About Section */
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.intro-images {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  aspect-ratio: 4/3;
+  max-height: 440px;
+}
+
+.image-main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.check-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 20px 0 24px;
+}
+
+@media (max-width: 860px) {
+  .intro-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .intro-images {
+    max-height: 360px;
+  }
+}
+
+@media (max-width: 560px) {
+  .check-list {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+/* 6. Courses Grid & Expandable Carousel System */
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .course-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .course-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+.course-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  border-color: #CBD5E1;
+}
+
+.course-image {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.course-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.course-body h3 {
+  font-size: 1.12rem;
+  line-height: 1.35;
+  margin: 8px 0 10px;
+}
+
+.course-card-desc {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.course-meta {
+  display: flex;
+  gap: 14px;
+  font-size: 0.76rem;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  margin-top: auto;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.course-footer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.button-small {
+  min-height: 38px;
+  padding: 0 16px;
+  font-size: 0.82rem;
+}
+
+@media (max-width: 480px) {
+  .course-footer {
+    flex-direction: column;
+    width: 100%;
+  }
+  .course-footer .button {
+    width: 100%;
+    min-height: 44px;
+  }
+}
+
+/* Expandable Carousel Track & Cards */
+.expand-carousel-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.expand-carousel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .expand-carousel-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .expand-carousel-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+.expand-carousel-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.expand-carousel-arrows {
+  display: flex;
+  gap: 8px;
+}
+
+.expand-carousel-track-container {
+  overflow-x: auto;
+  padding: 4px 0 16px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.expand-carousel-track-container::-webkit-scrollbar {
+  display: none;
+}
+
+.expand-carousel-track {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+}
+
+@media (max-width: 768px) {
+  .expand-carousel-track-container {
+    scroll-snap-type: x mandatory;
+  }
+  .expand-course-card {
+    flex: 0 0 calc(100vw - 48px) !important;
+    max-width: 400px;
+    width: 100% !important;
+    scroll-snap-align: center;
+    height: 490px !important;
+  }
+  .expand-card-collapsed-content {
+    display: none !important;
+  }
+  .expand-card-expanded-content {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    position: relative !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    padding: 20px !important;
+  }
+  .expand-expanded-footer {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+    padding-top: 12px !important;
+    margin-top: auto !important;
+  }
+  .expand-action-group {
+    display: flex !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+  .expand-action-btn,
+  .expand-demo-btn {
+    flex: 1 !important;
+    min-height: 42px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 440px) {
+  .expand-course-card {
+    flex: 0 0 calc(100vw - 32px) !important;
+    height: 520px !important;
+  }
+  .expand-action-group {
+    flex-direction: column !important;
+  }
+}
+
+/* 7. Why ONEVRIKSH 4-Card Grid */
 .why-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -5905,23 +6490,53 @@ img, video, iframe {
   margin: 0;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .why-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
   }
 }
 
-@media (max-width: 550px) {
+@media (max-width: 580px) {
   .why-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .why-card {
+    padding: 22px 20px;
   }
 }
 
-/* CLEAN FOOTER */
+/* 8. Final CTA Band */
+.cta-band {
+  background: #0F172A;
+  padding: 48px 0 !important;
+  color: #FFFFFF;
+}
+
+.cta-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .cta-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .cta-inner .button {
+    width: 100%;
+  }
+}
+
+/* 9. Minimal Clean Footer */
 .footer-grid-simple {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr;
-  gap: 40px;
+  gap: 48px;
   padding-bottom: 36px;
 }
 
@@ -5945,10 +6560,12 @@ img, video, iframe {
   font-size: 0.84rem;
   color: #94A3B8 !important;
   transition: color 0.2s ease;
+  text-decoration: none;
 }
 
 .footer-contact-item svg {
   color: #EE2C3C !important;
+  flex-shrink: 0;
 }
 
 a.footer-contact-item:hover {
@@ -5972,6 +6589,7 @@ a.footer-contact-item:hover {
 .footer-nav a {
   font-size: 0.86rem;
   color: #94A3B8 !important;
+  text-decoration: none;
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
@@ -6005,16 +6623,24 @@ a.footer-contact-item:hover {
 
 .footer-legal-links a {
   color: #94A3B8 !important;
+  text-decoration: none;
 }
 
 .footer-legal-links a:hover {
   color: #FFFFFF !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 860px) {
+  .footer-grid-simple {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 600px) {
   .footer-grid-simple {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 28px;
   }
   .footer-bottom-simple {
     flex-direction: column;
@@ -6023,73 +6649,121 @@ a.footer-contact-item:hover {
   }
 }
 
-/* HEADER MOBILE DRAWER */
-.mobile-menu-btn {
-  display: none;
-  background: none;
-  border: 1px solid var(--line);
-  padding: 8px;
-  border-radius: 8px;
-  color: var(--ink);
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
+/* 10. Inner Pages Responsive Layouts */
 
-@media (max-width: 820px) {
-  .main-nav {
-    display: none;
+/* Course Detail Page */
+@media (max-width: 860px) {
+  .detail-hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
   }
-  .mobile-menu-btn {
-    display: inline-flex;
-  }
-  .nav-actions .button {
-    display: none;
+  .detail-image {
+    height: 260px !important;
+    width: 100% !important;
   }
 }
 
-.mobile-nav-drawer {
-  position: absolute;
-  top: 76px;
-  left: 0;
-  right: 0;
-  background: var(--surface);
-  border-bottom: 1px solid var(--line);
-  padding: 20px 24px;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
-  z-index: 50;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+@media (max-width: 1024px) {
+  .detail-layout {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+  .enroll-card {
+    position: static !important;
+    width: 100% !important;
+  }
 }
 
-.mobile-nav-links {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+@media (max-width: 560px) {
+  .detail-meta {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  .detail-actions {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+  .detail-actions .button {
+    width: 100% !important;
+  }
+  .benefit-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
 }
 
-.mobile-nav-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 14px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--ink);
-  background: var(--surface-2);
-  transition: all 0.2s ease;
+/* Catalog Page Filters */
+@media (max-width: 768px) {
+  .catalog-tools {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+  }
+  .search-box {
+    width: 100% !important;
+  }
+  .category-tabs {
+    overflow-x: auto !important;
+    padding-bottom: 6px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .category-tabs button {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+  }
 }
 
-.mobile-nav-item.active,
-.mobile-nav-item:hover {
-  background: #F1F5F9;
-  color: #EE2C3C;
+/* Contact Page */
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
 }
 
-.mobile-nav-cta {
-  padding-top: 8px;
+@media (max-width: 560px) {
+  .contact-list {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .form-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
+
+/* Demo Page */
+@media (max-width: 992px) {
+  .demo-layout {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+    padding: 24px 0 !important;
+  }
+}
+
+/* About Page */
+@media (max-width: 860px) {
+  .page-hero-inner {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .page-hero-image {
+    height: 280px !important;
+    border-radius: 10px !important;
+  }
+  .story-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .story-image {
+    height: 280px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .mission-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 
 

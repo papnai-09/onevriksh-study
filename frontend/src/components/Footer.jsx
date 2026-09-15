@@ -1,59 +1,60 @@
 import Link from 'next/link';
-import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Youtube } from 'lucide-react';
+import { Mail, MapPin, Phone } from 'lucide-react';
 import { Brand } from './Brand';
 import { institute } from '@/data/site';
 
 export function Footer() {
   return (
     <footer className="footer">
-      <div className="container footer-grid">
-        <div className="footer-about">
+      <div className="container footer-grid-simple">
+        <div className="footer-brand-col">
           <Brand dark />
-          <p>Practical, mentor-led training that helps students build real skills, stronger confidence and better careers.</p>
-          <div className="social-links">
-            <a href="#" aria-label="Instagram"><Instagram size={18} /></a>
-            <a href="#" aria-label="Facebook"><Facebook size={18} /></a>
-            <a href="#" aria-label="LinkedIn"><Linkedin size={18} /></a>
-            <a href="#" aria-label="YouTube"><Youtube size={18} /></a>
+          <p className="footer-tagline">
+            Practical offline coaching in Connaught Place, New Delhi.
+          </p>
+          <div className="footer-contact-items">
+            <a href={'tel:' + institute.phone.replace(/\s+/g, '')} className="footer-contact-item">
+              <Phone size={15} /> {institute.phone}
+            </a>
+            <a href={'mailto:' + institute.email} className="footer-contact-item">
+              <Mail size={15} /> {institute.email}
+            </a>
+            <span className="footer-contact-item">
+              <MapPin size={15} /> {institute.address}
+            </span>
           </div>
         </div>
-        <div>
-          <h3>Explore</h3>
-          <Link href="/about">About us</Link>
-          <Link href="/courses">All courses</Link>
-          <Link href="/blog">Blog &amp; Insights</Link>
-          <Link href="/certification">Certification</Link>
-          <Link href="/study-abroad">Study abroad</Link>
-          <Link href="/offline-center">Offline centers</Link>
-          <Link href="/demo">Free demo</Link>
-          <Link href="/contact">Contact</Link>
+
+        <div className="footer-links-col">
+          <h3>Quick Links</h3>
+          <nav className="footer-nav" aria-label="Footer Navigation">
+            <Link href="/">Home</Link>
+            <Link href="/courses">Courses</Link>
+            <Link href="/about">About</Link>
+            <Link href="/contact">Contact</Link>
+            <Link href="/privacy">Privacy Policy</Link>
+            <Link href="/terms">Terms</Link>
+          </nav>
         </div>
-        <div>
-          <h3>Popular courses</h3>
-          <Link href="/digital-marketing-course">Digital Marketing</Link>
-          <Link href="/graphic-design">Graphic Design</Link>
-          <Link href="/spanish-language">Spanish Language</Link>
-          <Link href="/german-language">German Language</Link>
-          <Link href="/french-language">French Language</Link>
-          <Link href="/english-speaking">English Speaking</Link>
-        </div>
-        <div className="footer-contact">
-          <h3>Reach us</h3>
-          <Link href="/contact">
-            <Mail size={17} /> {institute.email || 'study@onevriksh.com'}
+
+        <div className="footer-cta-col">
+          <h3>Start Learning</h3>
+          <p>Book a free demo class to experience our classroom training.</p>
+          <Link href="/demo" className="button button-primary">
+            Book Free Demo
           </Link>
-          <span>
-            <MapPin size={18} /> New Delhi Training Centre
-          </span>
         </div>
       </div>
-      <div className="container footer-bottom">
-        <span>© 2026 ONEVRIKSH Study. All rights reserved.</span>
-        <div>
-          <Link href="/privacy">Privacy</Link>
+
+      <div className="container footer-bottom-simple">
+        <span>© {new Date().getFullYear()} ONEVRIKSH Study. All rights reserved.</span>
+        <div className="footer-legal-links">
+          <Link href="/privacy">Privacy Policy</Link>
+          <span>•</span>
           <Link href="/terms">Terms</Link>
         </div>
       </div>
     </footer>
   );
 }
+

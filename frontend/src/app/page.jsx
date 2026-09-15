@@ -4,49 +4,31 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowRight, Check, Search, MapPin } from 'lucide-react';
+import { ArrowRight, Check, Search, MapPin, Briefcase, Users, FileText, Award } from 'lucide-react';
 import { ExpandableCourseCarousel } from '@/components/ExpandableCourseCarousel';
-import { ExpandableFeatureCarousel } from '@/components/ExpandableFeatureCarousel';
-import { ExpandableTestimonialCarousel } from '@/components/ExpandableTestimonialCarousel';
 import { SectionHeading } from '@/components/SectionHeading';
-import { courses, stats, testimonials } from '@/data/site';
+import { courses } from '@/data/site';
 
 const whyChooseData = [
   {
     step: '01',
-    tag: 'Hands-on practice',
-    title: 'Practical Learning',
-    desc: 'Learn concepts in class and apply them through assignments and projects.'
+    title: 'Live Capstone Projects',
+    desc: 'Work on practical briefs, assignments and projects related to your course.'
   },
   {
     step: '02',
-    tag: 'Individual attention',
-    title: 'Small Batches',
-    desc: 'Learn in smaller groups so trainers can give students individual attention.'
+    title: 'Small Cohorts',
+    desc: 'Learn in small groups with more opportunities to ask questions and receive feedback.'
   },
   {
     step: '03',
-    tag: 'Mentor feedback',
-    title: 'Personal Guidance',
-    desc: 'Get feedback and guidance throughout your course.'
+    title: 'Career Support',
+    desc: 'Get support with practical career preparation and interviews.'
   },
   {
     step: '04',
-    tag: 'Placement help',
-    title: 'Career Support',
-    desc: 'Get help with interview preparation, resume building and placement opportunities.'
-  },
-  {
-    step: '05',
-    tag: 'Connaught Place',
-    title: 'Offline Classroom Learning',
-    desc: 'Learn face-to-face at our Connaught Place centre with a focused classroom environment.'
-  },
-  {
-    step: '06',
-    tag: 'Certificate',
-    title: 'Course Certification',
-    desc: 'Receive a course certificate after completing the required training and assessments.'
+    title: 'Certifications',
+    desc: 'Complete your course and receive the relevant course certification.'
   }
 ];
 
@@ -80,7 +62,7 @@ export default function HomePage() {
         <div className="hero-media">
           <Image
             src="/img1.jpg"
-            alt="Students at ONEVRIKSH Study Connaught Place"
+            alt="ONEVRIKSH Study classroom in Connaught Place"
             fill
             priority
             sizes="100vw"
@@ -89,12 +71,15 @@ export default function HomePage() {
         <div className="hero-overlay" />
         <div className="container hero-content">
           <div className="hero-copy">
-            <span className="hero-kicker">OFFLINE COACHING IN CONNAUGHT PLACE</span>
+            <span className="hero-kicker">OFFLINE COACHING • CONNAUGHT PLACE, NEW DELHI</span>
             <h1>
-              Learn Skills. Build Your Career.
+              Learn Skills. Build Your Future.
             </h1>
-            <p>
-              Practical offline courses in Digital Marketing, Graphic Design, German, French, Spanish, Italian and English. Learn from experienced trainers, work on practical projects and build skills that you can use in your career.
+            <p className="hero-subhead">
+              Offline courses in Digital Marketing, Graphic Design, German, French, Spanish, Italian and English.
+            </p>
+            <p className="hero-supporting">
+              Learn through classroom training, practical assignments and personal guidance.
             </p>
 
             {/* HERO SEARCH BAR */}
@@ -103,7 +88,7 @@ export default function HomePage() {
                 <Search size={20} className="hero-search-pill-icon" />
                 <input
                   type="text"
-                  placeholder="Search courses..."
+                  placeholder="Search courses or languages..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="hero-search-pill-input"
@@ -135,50 +120,44 @@ export default function HomePage() {
                 Book a Free Demo <ArrowRight size={18} />
               </Link>
               <Link href="/courses" className="button button-light button-large">
-                View All Courses
+                Explore Courses
               </Link>
             </div>
-
-            <p style={{ marginTop: '16px', fontSize: '0.88rem', color: '#CBD5E1' }}>
-              Learn in small batches with personal guidance, practical assignments and career support.
-            </p>
           </div>
         </div>
       </section>
 
-      {/* 2. ABOUT / INTRO SECTION */}
+      {/* 2. INTRODUCTION SECTION */}
       <section className="section intro-section">
         <div className="container intro-grid">
           <div className="intro-images">
             <div className="image-main">
               <Image
                 src="/img2.jpg"
-                alt="Students learning at ONEVRIKSH"
+                alt="Classroom learning at ONEVRIKSH Study"
                 fill
-                sizes="50vw"
+                sizes="(max-width: 900px) 100vw, 50vw"
               />
-            </div>
-            <div className="experience-card">
-              <strong>2+</strong>
-              <span>Years of Teaching</span>
             </div>
           </div>
           <div>
             <SectionHeading
-              eyebrow="ABOUT ONEVRIKSH"
-              title="Learn From the Classroom. Practice in the Real World."
-              text="ONEVRIKSH Study is an offline coaching institute in Connaught Place, New Delhi. We provide career-focused courses that combine classroom learning with practical work. Our goal is simple — help students understand the subject, practice their skills and become confident enough to use them in real work."
+              eyebrow="ABOUT ONEVRIKSH STUDY"
+              title="Practical Learning in the Classroom"
+              text="ONEVRIKSH Study is an offline coaching institute in Connaught Place, New Delhi. We offer courses in Digital Marketing, Graphic Design, European Languages and English Communication."
             />
+            <p style={{ color: 'var(--muted)', marginTop: '-12px', marginBottom: '20px', fontSize: '0.95rem' }}>
+              Our courses are designed to provide classroom learning, practical work and personal guidance.
+            </p>
             <div className="check-list">
-              <span><Check /> Experienced trainers</span>
-              <span><Check /> Practical classroom learning</span>
-              <span><Check /> Small batch sizes</span>
-              <span><Check /> Real projects and assignments</span>
+              <span><Check /> Live trainer-led classes</span>
+              <span><Check /> Practical assignments and projects</span>
+              <span><Check /> Small batch learning</span>
               <span><Check /> Personal feedback</span>
-              <span><Check /> Career and placement support</span>
+              <span><Check /> Career support</span>
             </div>
-            <Link href="/about" className="text-link">
-              Know More About Us <ArrowRight size={17} />
+            <Link href="/about" className="button button-ghost" style={{ marginTop: '16px' }}>
+              About ONEVRIKSH <ArrowRight size={16} />
             </Link>
           </div>
         </div>
@@ -190,71 +169,50 @@ export default function HomePage() {
           <ExpandableCourseCarousel
             courses={courses}
             eyebrow="OUR COURSES"
-            title="Choose the Right Course for You"
-            text="Explore our professional and language courses designed for students, working professionals and anyone looking to develop a new skill."
+            title="Courses We Offer"
+            text="Choose a course based on the skill you want to learn or the goal you want to work towards."
             viewAllHref="/courses"
           />
         </div>
       </section>
 
-      {/* 4. STATS SECTION */}
-      <section className="stats-band">
-        <div className="container stats-grid">
-          {stats.map((stat) => (
-            <div key={stat.label}>
-              <strong>{stat.value}</strong>
-              <span>{stat.label}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 5. WHY CHOOSE US SECTION */}
-      <section className="section outcomes-section">
+      {/* 4. WHY ONEVRIKSH SECTION */}
+      <section className="section why-section" style={{ background: 'var(--surface)' }}>
         <div className="container">
-          <ExpandableFeatureCarousel
-            items={whyChooseData}
-            eyebrow="WHY CHOOSE US"
-            title="Why Choose ONEVRIKSH?"
-            text="We focus on helping students learn properly, practice regularly and build confidence in their skills."
+          <SectionHeading
+            eyebrow="WHY ONEVRIKSH"
+            title="A Practical Way to Learn"
+            text="Our focus is on classroom training, practical assignments and personal guidance."
           />
+          <div className="why-grid">
+            {whyChooseData.map((item) => (
+              <div key={item.step} className="why-card">
+                <span className="why-step">{item.step}</span>
+                <h3>{item.title}</h3>
+                <p>{item.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* 6. STUDENT REVIEWS SECTION */}
-      <section className="section" style={{ background: 'var(--surface-2)' }}>
-        <div className="container">
-          <ExpandableTestimonialCarousel
-            testimonials={testimonials}
-            eyebrow="STUDENT REVIEWS"
-            title="What Our Students Say"
-            text="Hear from students who have learned with us and experienced our classroom training."
-          />
-        </div>
-      </section>
-
-      {/* 7. FINAL CTA SECTION */}
+      {/* 5. FINAL CTA SECTION */}
       <section className="cta-band">
         <div className="container cta-inner">
           <div>
-            <span className="eyebrow light">START LEARNING</span>
+            <span className="eyebrow light">GET STARTED</span>
             <h2>Ready to Start Learning?</h2>
-            <p>Book a free demo class and see how our courses work before you decide.</p>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: '#E2E8F0', marginTop: '8px' }}>
-              <MapPin size={15} /> ONEVRIKSH Study, Connaught Place, New Delhi
+            <p>Book a free demo class and explore the course that suits you.</p>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: '#CBD5E1', marginTop: '10px' }}>
+              <MapPin size={15} /> Connaught Place, New Delhi
             </span>
           </div>
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
-            <Link href="/demo" className="button button-light">
-              <span>Book a Free Demo</span>
-              <ArrowRight size={16} />
+            <Link href="/demo" className="button button-primary button-large hero-btn-red">
+              Book Free Demo <ArrowRight size={16} />
             </Link>
-            <Link
-              href="/courses"
-              className="button button-ghost"
-              style={{ color: '#ffffff', borderColor: 'rgba(255,255,255,0.45)' }}
-            >
-              <span>View All Courses</span>
+            <Link href="/courses" className="button button-light button-large">
+              View All Courses
             </Link>
           </div>
         </div>
@@ -262,4 +220,3 @@ export default function HomePage() {
     </>
   );
 }
-

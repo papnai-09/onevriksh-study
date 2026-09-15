@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight, Clock, Star, Users } from 'lucide-react';
+import { ArrowUpRight, Clock } from 'lucide-react';
 
 export function CourseCard({ course }) {
   return (
@@ -14,27 +14,27 @@ export function CourseCard({ course }) {
         <h3>
           <Link href={'/' + course.slug}>{course.title}</Link>
         </h3>
+        <p className="course-card-desc">{course.description}</p>
         <div className="course-meta">
           <span>
             <Clock size={15} /> {course.duration}
           </span>
-          <span>
-            <Users size={15} /> {course.students}
-          </span>
-          <span>
-            <Star size={15} fill="currentColor" /> {course.rating}
-          </span>
+          {course.fee && (
+            <span className="course-meta-fee">
+              Fee: ₹{course.fee?.toLocaleString('en-IN')}
+            </span>
+          )}
         </div>
         <div className="course-footer">
-          <div>
-            <small>Course fee</small>
-            <strong>₹{course.fee?.toLocaleString('en-IN')}</strong>
-          </div>
-          <Link href={'/' + course.slug} className="icon-button arrow-button" aria-label={'View ' + course.title}>
-            <ArrowUpRight size={20} />
+          <Link href={'/' + course.slug} className="button button-primary button-small">
+            View Details
+          </Link>
+          <Link href="/demo" className="button button-light button-small">
+            Free Demo
           </Link>
         </div>
       </div>
     </article>
   );
 }
+

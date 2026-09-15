@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Award, BadgeCheck, Check, ChevronDown, Clock, Languages, Star, Users } from 'lucide-react';
+import { Award, Check, ChevronDown, Clock, Languages, Users, MapPin } from 'lucide-react';
 import { ExpandableCourseCarousel } from '@/components/ExpandableCourseCarousel';
 import { courses } from '@/data/site';
 
@@ -28,13 +28,13 @@ export default async function CourseDetailPage({ params }) {
             <p>{course.description}</p>
             <div className="detail-meta">
               <span>
-                <Star fill="currentColor" size={16} /> {course.rating} rating
-              </span>
-              <span>
-                <Users size={16} /> {course.students}+ learners
-              </span>
-              <span>
                 <Clock size={16} /> {course.duration}
+              </span>
+              <span>
+                <MapPin size={16} /> Offline Classroom (Connaught Place)
+              </span>
+              <span>
+                <Award size={16} /> {course.level || 'Certificate Course'}
               </span>
             </div>
             <div className="detail-actions">
@@ -56,10 +56,10 @@ export default async function CourseDetailPage({ params }) {
         <div className="container detail-layout">
           <div className="detail-content">
             <span className="eyebrow">COURSE OVERVIEW</span>
-            <h2>Learn the Subject. Practice the Skills.</h2>
+            <h2>Practical Learning in the Classroom</h2>
             <p className="lead">{course.description}</p>
             <p>
-              This course combines structured classroom lessons with practical assignments and regular feedback. You will learn the concepts step by step, work on exercises and build confidence in your skills.
+              This course combines structured classroom lessons with practical assignments, small batch learning and personal feedback. You will learn the concepts step by step and work on exercises to build confidence in your skills.
             </p>
             <div className="benefit-grid">
               {course.benefits?.map((item) => (
@@ -81,32 +81,12 @@ export default async function CourseDetailPage({ params }) {
                 </div>
               ))}
             </div>
-
-            <div id="trainer" className="trainer-card">
-              <div className="trainer-avatar">
-                {course.trainer ? course.trainer.split(' ').map((n) => n[0]).join('') : 'OV'}
-              </div>
-              <div>
-                <span className="eyebrow">COURSE TRAINER</span>
-                <h2>{course.trainer}</h2>
-                <strong>{course.trainerRole}</strong>
-                <p>Experienced classroom trainer focused on clear explanations, practical exercises and personal feedback for every student.</p>
-                <div className="trainer-badges">
-                  <span>
-                    <BadgeCheck size={16} /> Verified Trainer
-                  </span>
-                  <span>
-                    <Award size={16} /> Experienced Faculty
-                  </span>
-                </div>
-              </div>
-            </div>
           </div>
 
           <aside className="enroll-card">
             <small>Course Fee</small>
             <strong>₹{course.fee?.toLocaleString('en-IN')}</strong>
-            <span>Easy installments available</span>
+            <span>Installment options available</span>
             <Link href="/demo" className="button button-primary button-wide">
               Book a Free Demo
             </Link>
@@ -121,7 +101,7 @@ export default async function CourseDetailPage({ params }) {
                 <Award size={16} /> Course Completion Certificate
               </li>
               <li>
-                <Users size={16} /> Small batch sizes
+                <Users size={16} /> Small batch learning
               </li>
             </ul>
             <p>
@@ -131,14 +111,14 @@ export default async function CourseDetailPage({ params }) {
         </div>
       </section>
 
-      {/* EXPLORE OTHER COURSES EXPANDABLE CAROUSEL */}
+      {/* EXPLORE OTHER COURSES */}
       <section className="section" style={{ background: 'var(--surface-2)', borderTop: '1px solid var(--line)' }}>
         <div className="container">
           <ExpandableCourseCarousel
             courses={relatedCourses}
-            eyebrow="MORE COURSES"
+            eyebrow="OUR COURSES"
             title="Other Courses You Might Like"
-            text="Explore our other practical and language courses in Connaught Place."
+            text="Explore other practical courses offered at our Connaught Place center."
             viewAllHref="/courses"
           />
         </div>
@@ -146,4 +126,3 @@ export default async function CourseDetailPage({ params }) {
     </>
   );
 }
-

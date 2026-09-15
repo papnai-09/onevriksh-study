@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Clock, Star } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Clock } from 'lucide-react';
 
 export function ExpandableCourseCarousel({ courses = [], title = '', eyebrow = '', text = '', viewAllHref = '/courses' }) {
   const [hoveredIndex, setHoveredIndex] = useState(0);
@@ -88,29 +88,23 @@ export function ExpandableCourseCarousel({ courses = [], title = '', eyebrow = '
                   <div className="expand-card-overlay" />
                 </div>
 
-                {/* COLLAPSED / HALF CARD VIEW ("ADHA CARD") */}
+                {/* COLLAPSED / HALF CARD VIEW */}
                 <div className="expand-card-collapsed-content">
                   <span className="expand-card-badge">{course.category || 'Program'}</span>
                   <div className="expand-collapsed-bottom">
                     <h3 className="expand-collapsed-title">{course.title}</h3>
                     <div className="expand-collapsed-meta">
                       <span><Clock size={13} /> {course.duration}</span>
-                      <span><Star size={13} fill="currentColor" /> {course.rating}</span>
                     </div>
                   </div>
                 </div>
 
-                {/* EXPANDED / FULL CARD VIEW ("PURA KHULE") */}
+                {/* EXPANDED / FULL CARD VIEW */}
                 <div className="expand-card-expanded-content">
                   <div className="expand-expanded-top">
                     <div className="expand-tag-row">
                       <span className="expand-category-pill">{course.category}</span>
-                      <span className="expand-level-pill">{course.level || 'Certificate'}</span>
-                    </div>
-                    <div className="expand-rating-badge">
-                      <Star size={14} fill="#F59E0B" color="#F59E0B" />
-                      <strong>{course.rating || 4.9}</strong>
-                      <small>({course.students || 350}+ learners)</small>
+                      <span className="expand-level-pill">{course.level || 'Offline Course'}</span>
                     </div>
                   </div>
 
@@ -120,8 +114,14 @@ export function ExpandableCourseCarousel({ courses = [], title = '', eyebrow = '
                   {/* FOOTER WITH DURATION, FEE & ACTION BUTTONS */}
                   <div className="expand-expanded-footer">
                     <div className="expand-price-block">
-                      <small>Course Fee</small>
-                      <strong>₹{course.fee?.toLocaleString('en-IN')}</strong>
+                      {course.fee ? (
+                        <>
+                          <small>Course Fee</small>
+                          <strong>₹{course.fee?.toLocaleString('en-IN')}</strong>
+                        </>
+                      ) : (
+                        <small>Classroom Program</small>
+                      )}
                       <span><Clock size={12} /> {course.duration}</span>
                     </div>
                     <div className="expand-action-group">
@@ -142,4 +142,5 @@ export function ExpandableCourseCarousel({ courses = [], title = '', eyebrow = '
     </div>
   );
 }
+
 

@@ -14,31 +14,31 @@ import { courses, stats, testimonials } from '@/data/site';
 const outcomesData = [
   {
     step: '01',
-    tag: 'Hands-on practice',
-    title: 'Learn by Doing on Live Briefs',
-    desc: 'Work on live briefs, Google Ads campaigns, SEO audits, and creative design suites that become concrete proof in your job portfolio.',
-    bullets: ['Live ad budget simulations', 'Real-world SEO & technical site audits', 'Industry project defense']
+    tag: 'Live Capstone Projects',
+    title: 'Simulation-First Practical Pedagogy',
+    desc: 'Execute real-world briefs, manage live Google Ads budgets, conduct technical enterprise SEO audits, and defend professional design portfolios verified by industry hiring managers.',
+    bullets: ['Live ad budget simulations', 'Technical enterprise SEO audits', 'Industry capstone defense']
   },
   {
     step: '02',
-    tag: 'Personal guidance',
-    title: 'Mentors Who Know Your Strengths',
-    desc: 'Small batch sizes (15–20 learners) ensure dedicated 1-on-1 feedback, doubt resolution, and tailored instruction at every milestone.',
-    bullets: ['Max 20 students per batch', 'Daily interactive Q&A labs', 'Personalized assignment reviews']
+    tag: 'Small Cohorts (Max 15–20)',
+    title: 'Direct Master Practitioner Mentorship',
+    desc: 'Learn in focused, small cohorts where certified industry directors provide line-by-line project critiques, personal doubt resolution, and tailored skill roadmaps.',
+    bullets: ['Strict 15–20 student batch cap', 'Daily interactive Q&A labs', '1-on-1 personalized project feedback']
   },
   {
     step: '03',
-    tag: 'Career readiness',
-    title: 'Placement Support & Mock Interviews',
-    desc: 'Get end-to-end career guidance with resume teardowns, portfolio building, and technical mock interviews conducted by industry leaders.',
-    bullets: ['Resume & LinkedIn optimization', '1-on-1 mock interviews', 'Direct hiring partner network']
+    tag: 'Career Acceleration Cell',
+    title: 'End-to-End Placement & Interview Mastery',
+    desc: 'Accelerate your career through executive resume teardowns, Behance/LinkedIn curation, technical mock interviews, and direct referrals to hiring partner networks.',
+    bullets: ['Executive resume & portfolio polish', 'Rigorous 1-on-1 mock interviews', 'Direct corporate hiring referrals']
   },
   {
     step: '04',
-    tag: 'Global recognition',
-    title: 'Recognized Certifications',
-    desc: 'Earn verifiable course completion credentials and prepare for international benchmarks like DELF, Goethe-Zertifikat, and Google Certifications.',
-    bullets: ['Verifiable certificate ID', 'CEFR European framework aligned', 'Lifetime credential verification']
+    tag: 'Global Standards Aligned',
+    title: 'Recognized & Verifiable Credentials',
+    desc: 'Graduate with verifiable course completion credentials aligned with European CEFR linguistic frameworks, Google, and Meta corporate standards.',
+    bullets: ['Instant Certificate ID verification', 'CEFR European benchmark aligned', 'Lifetime credential authenticity']
   }
 ];
 
@@ -72,7 +72,7 @@ export default function HomePage() {
         <div className="hero-media">
           <Image
             src="/img1.jpg"
-            alt="Students learning together at ONEVRIKSH Study"
+            alt="Students collaborating at ONEVRIKSH Study Connaught Place"
             fill
             priority
             sizes="100vw"
@@ -81,9 +81,13 @@ export default function HomePage() {
         <div className="hero-overlay" />
         <div className="container hero-content">
           <div className="hero-copy">
+            <span className="hero-kicker">Premier Offline Coaching Hub • Connaught Place</span>
             <h1>
-              Launch Your Dream Career with <em>Confidence.</em>
+              Launch Your Dream Career with <em>Confidence & Practical Mastery.</em>
             </h1>
+            <p>
+              New Delhi’s offline-first institute for Performance Marketing, Brand Visual Design, Leadership Communication, and European Language Gateways (DELF, Goethe, DELE, CILS).
+            </p>
 
             {/* HERO SEARCH BAR */}
             <div className="hero-search-container">
@@ -91,7 +95,7 @@ export default function HomePage() {
                 <Search size={20} className="hero-search-pill-icon" />
                 <input
                   type="text"
-                  placeholder="Search courses"
+                  placeholder="Search digital marketing, graphic design, German, French..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="hero-search-pill-input"
@@ -120,10 +124,10 @@ export default function HomePage() {
             {/* HERO ACTION BUTTONS */}
             <div className="hero-actions">
               <Link href="/demo" className="button button-primary button-large hero-btn-red">
-                Reserve Your Seat <ArrowRight size={18} />
+                Reserve Free Demo Seat <ArrowRight size={18} />
               </Link>
               <Link href="/courses" className="button button-light button-large">
-                <CirclePlay size={19} /> Explore Learning
+                <CirclePlay size={19} /> Explore All Programs
               </Link>
             </div>
           </div>
@@ -137,7 +141,7 @@ export default function HomePage() {
             <div className="image-main">
               <Image
                 src="/img2.jpg"
-                alt="ONEVRIKSH students collaborating"
+                alt="ONEVRIKSH students collaborating in studio"
                 fill
                 sizes="50vw"
               />
@@ -149,18 +153,18 @@ export default function HomePage() {
           </div>
           <div>
             <SectionHeading
-              eyebrow="About ONEVRIKSH"
-              title="Learning feels different when it connects to real life."
-              text="We are an offline-first coaching institute in the heart of New Delhi, built for students who want practical skills, close mentoring and a clear path to opportunity."
+              eyebrow="Academic Excellence & Pedagogy"
+              title="Empowering Ambitious Minds with Real-World Industry Mastery."
+              text="At ONEVRIKSH Study, we bridge the divide between theoretical education and real-world executive capability. Located at New Delhi’s premier Connaught Place business hub, our offline-first studio combines master practitioner mentoring, live capstone simulations, and high-impact career placement pathways."
             />
             <div className="check-list">
-              <span><Check /> Live, trainer-led classes</span>
-              <span><Check /> Hands-on assignments and projects</span>
-              <span><Check /> Personal feedback in small batches</span>
-              <span><Check /> Career and certification guidance</span>
+              <span><Check /> Live, practitioner-led interactive classes</span>
+              <span><Check /> Real-budget campaigns & portfolio capstones</span>
+              <span><Check /> 1-on-1 personalized feedback in small cohorts</span>
+              <span><Check /> Verifiable certifications & placement support</span>
             </div>
             <Link href="/about" className="text-link">
-              Discover our story <ArrowRight size={17} />
+              Discover our story & methodology <ArrowRight size={17} />
             </Link>
           </div>
         </div>
@@ -171,9 +175,9 @@ export default function HomePage() {
         <div className="container">
           <ExpandableCourseCarousel
             courses={courses}
-            eyebrow="Career-focused programs"
-            title="Popular Programs & Specializations"
-            text="Hover over any program to reveal full curriculum highlights, duration, fees, and syllabus details."
+            eyebrow="Executive Career Tracks"
+            title="Flagship Professional Programs"
+            text="Hover over any program to explore full curriculum modules, real-world capstone briefs, duration, and tuition details."
             viewAllHref="/courses"
           />
         </div>
@@ -196,9 +200,9 @@ export default function HomePage() {
         <div className="container">
           <ExpandableFeatureCarousel
             items={outcomesData}
-            eyebrow="Built around your outcome"
-            title="More Than Classroom Learning"
-            text="Hover over each pillar to explore how our teaching model turns understanding into verified industry capability."
+            eyebrow="The ONEVRIKSH Advantage"
+            title="Engineered for Tangible Career Outcomes"
+            text="Hover over each pillar to explore how our immersive studio model turns foundational concepts into verified executive capability."
           />
         </div>
       </section>
@@ -208,9 +212,9 @@ export default function HomePage() {
         <div className="container">
           <ExpandableTestimonialCarousel
             testimonials={testimonials}
-            eyebrow="Success Stories"
-            title="What Our Students Say"
-            text="Explore verified reviews from learners who trained at our Connaught Place classroom studio."
+            eyebrow="Alumni Impact & Social Proof"
+            title="What Our Certified Graduates Say"
+            text="Explore verified reviews and placement outcomes from alumni who accelerated their careers at our Connaught Place studio."
           />
         </div>
       </section>

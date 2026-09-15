@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Clock, Star, Users, CheckCircle2, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Clock, Star } from 'lucide-react';
 
 export function ExpandableCourseCarousel({ courses = [], title = '', eyebrow = '', text = '', viewAllHref = '/courses' }) {
   const [hoveredIndex, setHoveredIndex] = useState(0);
@@ -97,7 +97,6 @@ export function ExpandableCourseCarousel({ courses = [], title = '', eyebrow = '
                       <span><Clock size={13} /> {course.duration}</span>
                       <span><Star size={13} fill="currentColor" /> {course.rating}</span>
                     </div>
-                    <span className="expand-hint-pill">Hover to expand &rarr;</span>
                   </div>
                 </div>
 
@@ -106,7 +105,7 @@ export function ExpandableCourseCarousel({ courses = [], title = '', eyebrow = '
                   <div className="expand-expanded-top">
                     <div className="expand-tag-row">
                       <span className="expand-category-pill">{course.category}</span>
-                      <span className="expand-level-pill">{course.level || 'Beginner to Pro'}</span>
+                      <span className="expand-level-pill">{course.level || 'Certificate'}</span>
                     </div>
                     <div className="expand-rating-badge">
                       <Star size={14} fill="#F59E0B" color="#F59E0B" />
@@ -118,23 +117,6 @@ export function ExpandableCourseCarousel({ courses = [], title = '', eyebrow = '
                   <h3 className="expand-expanded-title">{course.title}</h3>
                   <p className="expand-expanded-desc">{course.description}</p>
 
-                  {/* KEY CURRICULUM HIGHLIGHTS */}
-                  {course.curriculum && course.curriculum.length > 0 && (
-                    <div className="expand-highlights-box">
-                      <span className="expand-highlights-label">
-                        <Sparkles size={13} /> Key Modules Included:
-                      </span>
-                      <ul className="expand-highlights-list">
-                        {course.curriculum.slice(0, 3).map((item, i) => (
-                          <li key={i}>
-                            <CheckCircle2 size={13} className="expand-check-icon" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
                   {/* FOOTER WITH DURATION, FEE & ACTION BUTTONS */}
                   <div className="expand-expanded-footer">
                     <div className="expand-price-block">
@@ -144,7 +126,7 @@ export function ExpandableCourseCarousel({ courses = [], title = '', eyebrow = '
                     </div>
                     <div className="expand-action-group">
                       <Link href={`/${course.slug}`} className="button button-primary expand-action-btn">
-                        View Details <ArrowUpRight size={16} />
+                        View Details <ArrowUpRight size={15} />
                       </Link>
                       <Link href="/demo" className="button button-light expand-demo-btn">
                         Free Demo
@@ -160,3 +142,4 @@ export function ExpandableCourseCarousel({ courses = [], title = '', eyebrow = '
     </div>
   );
 }
+

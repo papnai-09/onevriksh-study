@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { ArrowLeft, ArrowRight, Quote, Star, CheckCircle, Award } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Quote, Star, CheckCircle } from 'lucide-react';
 
 export function ExpandableTestimonialCarousel({
   testimonials = [],
@@ -86,7 +86,6 @@ export function ExpandableTestimonialCarousel({
                         <Star key={i} size={12} fill="#F59E0B" color="#F59E0B" />
                       ))}
                     </div>
-                    <span className="expand-hint-pill">Hover to expand &rarr;</span>
                   </div>
                 </div>
 
@@ -102,13 +101,13 @@ export function ExpandableTestimonialCarousel({
                         <span className="expand-testimonial-course-sub">{item.course}</span>
                       </div>
                     </div>
-                    <Quote size={28} className="expand-testimonial-quote-icon" />
+                    <Quote size={24} className="expand-testimonial-quote-icon" />
                   </div>
 
                   <div className="expand-rating-row">
                     <div style={{ display: 'flex', gap: '3px' }}>
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} size={15} fill="#F59E0B" color="#F59E0B" />
+                        <Star key={i} size={14} fill="#F59E0B" color="#F59E0B" />
                       ))}
                     </div>
                     <span className="expand-verified-badge">
@@ -117,12 +116,6 @@ export function ExpandableTestimonialCarousel({
                   </div>
 
                   <p className="expand-testimonial-quote">“{item.quote}”</p>
-
-                  <div className="expand-testimonial-footer">
-                    <div className="expand-testimonial-meta-badge">
-                      <Award size={14} /> Classroom Studio Batch
-                    </div>
-                  </div>
                 </div>
               </div>
             );

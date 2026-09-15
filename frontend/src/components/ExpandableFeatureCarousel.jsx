@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 
 export function ExpandableFeatureCarousel({
   items = [],
@@ -95,7 +95,6 @@ export function ExpandableFeatureCarousel({
                   <div className="expand-collapsed-bottom">
                     <h3 className="expand-collapsed-title">{item.title}</h3>
                     {item.shortDesc && <p className="expand-collapsed-subtitle">{item.shortDesc}</p>}
-                    <span className="expand-hint-pill">Hover to expand &rarr;</span>
                   </div>
                 </div>
 
@@ -112,23 +111,11 @@ export function ExpandableFeatureCarousel({
                   <h3 className="expand-expanded-title">{item.title}</h3>
                   <p className="expand-expanded-desc">{item.desc || item.description}</p>
 
-                  {/* BULLET POINTS / PERKS IF PRESENT */}
-                  {item.bullets && item.bullets.length > 0 && (
-                    <ul className="expand-feature-bullets">
-                      {item.bullets.map((b, i) => (
-                        <li key={i}>
-                          <CheckCircle2 size={14} className="expand-check-icon" />
-                          <span>{b}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-
                   {/* ACTION LINK */}
                   {item.linkHref && (
                     <div className="expand-feature-footer">
                       <Link href={item.linkHref} className="button button-primary expand-action-btn">
-                        {item.linkText || 'Explore Details'} <ArrowUpRight size={16} />
+                        {item.linkText || 'Explore Details'} <ArrowUpRight size={15} />
                       </Link>
                     </div>
                   )}

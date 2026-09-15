@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, Award, BadgeCheck, CheckCircle2, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Award, BadgeCheck } from 'lucide-react';
 
 export function ExpandableTrainerCarousel({
   trainers = [],
@@ -82,7 +82,6 @@ export function ExpandableTrainerCarousel({
                   <div className="expand-collapsed-bottom">
                     <h3 className="expand-collapsed-title">{item.name}</h3>
                     <span className="expand-trainer-role-pill">{item.role}</span>
-                    <span className="expand-hint-pill">Hover to expand &rarr;</span>
                   </div>
                 </div>
 
@@ -107,24 +106,9 @@ export function ExpandableTrainerCarousel({
                     {item.bio || 'Dedicated classroom mentor committed to hands-on project reviews, interview simulations, and individual student progress.'}
                   </p>
 
-                  {item.expertise && item.expertise.length > 0 && (
-                    <div className="expand-trainer-skills-box">
-                      <span className="expand-skills-label">
-                        <Sparkles size={13} /> Core Expertise:
-                      </span>
-                      <div className="expand-skills-pills">
-                        {item.expertise.map((skill) => (
-                          <span key={skill} className="expand-skill-pill">
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
                   <div className="expand-trainer-footer">
                     <div className="expand-trainer-badge">
-                      <BadgeCheck size={15} /> Verified Industry Expert
+                      <BadgeCheck size={15} /> Verified Mentor
                     </div>
                     <Link href="/demo" className="button button-primary expand-action-btn">
                       Book Demo Class
